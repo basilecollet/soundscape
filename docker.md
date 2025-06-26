@@ -66,6 +66,9 @@ docker-compose exec app php artisan key:generate
 
 # Publish Livewire assets (if needed)
 docker-compose exec app php artisan livewire:publish --assets
+
+# Publish Flux assets (if needed)
+docker-compose exec app php artisan vendor:publish --tag=flux-assets --force
 ```
 
 ## Common Commands
@@ -192,7 +195,11 @@ If you encounter browser console errors related to Vite assets not loading:
    docker-compose exec node yarn dev --host
    ```
 2. If you see connection errors to port 5173, check that the Vite server is running and accessible
-3. For Livewire or Flux JavaScript file errors, make sure your application is properly configured to use these libraries
+3. For Livewire or Flux JavaScript file errors, make sure your application is properly configured to use these libraries and that the assets are published:
+   ```bash
+   docker-compose exec app php artisan livewire:publish --assets
+   docker-compose exec app php artisan vendor:publish --tag=flux-assets --force
+   ```
 4. If you're using a custom domain or IP address to access your application, update the VITE_HMR_HOST in your .env file:
    ```
    VITE_HMR_HOST=your-custom-domain-or-ip

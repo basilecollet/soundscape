@@ -20,6 +20,7 @@ services:
              php artisan config:clear &&
              php artisan view:clear &&
              php artisan livewire:publish --assets &&
+             php artisan vendor:publish --tag=flux-assets --force &&
              php-fpm"
 
   # Node.js Frontend
