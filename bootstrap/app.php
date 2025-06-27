@@ -11,7 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        if ($this->app->environment('production')) {
+        if (env('APP_ENV') === 'production') {
             $middleware->trustProxies(at: env('CC_REVERSE_PROXY_IPS'));
         }
     })
