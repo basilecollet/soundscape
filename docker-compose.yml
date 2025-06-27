@@ -15,6 +15,13 @@ services:
       - laravel-network
     depends_on:
       - db
+    command: >
+      sh -c "php artisan optimize:clear &&
+             php artisan config:clear &&
+             php artisan view:clear &&
+             php artisan livewire:publish --assets &&
+             php artisan vendor:publish --tag=flux-assets --force &&
+             php-fpm"
 
   # Node.js Frontend
   node:
@@ -28,6 +35,8 @@ services:
       - ./:/var/www/html
     ports:
       - "5173:5173"
+    environment:
+      - VITE_HMR_HOST=localhost
     networks:
       - laravel-network
 

@@ -63,6 +63,12 @@ docker-compose exec app php artisan migrate
 
 # Generate application key (if needed)
 docker-compose exec app php artisan key:generate
+
+# Publish Livewire assets (if needed)
+docker-compose exec app php artisan livewire:publish --assets
+
+# Publish Flux assets (if needed)
+docker-compose exec app php artisan vendor:publish --tag=flux-assets --force
 ```
 
 ## Common Commands
@@ -132,12 +138,14 @@ cat backup.sql | docker-compose exec -T db psql -U laravel -d laravel
 
 1. Start the Docker environment: `docker-compose up -d`
 2. Install JavaScript dependencies (if not already done): `docker-compose exec node yarn install`
-3. Start the frontend development server: `docker-compose exec node yarn dev`
+3. Start the frontend development server with host option: `docker-compose exec node yarn dev --host`
 4. Make changes to your code
 5. Access your backend application at http://localhost:8000
 6. Access your frontend development server at http://localhost:5173
 7. Run backend tests: `docker-compose exec app php artisan test`
 8. When finished, stop the environment: `docker-compose down`
+
+> **Note:** The `--host` flag is important when running the Vite development server in Docker. It ensures that the server listens on all network interfaces (0.0.0.0) rather than just localhost, making it accessible from outside the container.
 
 ## Troubleshooting
 
@@ -178,4 +186,21 @@ If you encounter issues with the Node.js container:
 6. If Vite is not detecting file changes, you may need to add the `--force` flag: 
    ```bash
    docker-compose exec node yarn dev --force
+   ```
+
+If you encounter browser console errors related to Vite assets not loading:
+
+1. Make sure you're running the Vite development server:
+   ```bash
+   docker-compose exec node yarn dev --host
+   ```
+2. If you see connection errors to port 5173, check that the Vite server is running and accessible
+3. For Livewire or Flux JavaScript file errors, make sure your application is properly configured to use these libraries and that the assets are published:
+   ```bash
+   docker-compose exec app php artisan livewire:publish --assets
+   docker-compose exec app php artisan vendor:publish --tag=flux-assets --force
+   ```
+4. If you're using a custom domain or IP address to access your application, update the VITE_HMR_HOST in your .env file:
+   ```
+   VITE_HMR_HOST=your-custom-domain-or-ip
    ```
