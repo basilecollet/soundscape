@@ -20,17 +20,23 @@ new class extends Component {
                 {{ $homeContent ?? 'Welcome to Soundscape Audio' }}
             </p>
         </div>
+
         <div class="md:w-1/2 flex justify-center">
-            <!-- SVG Globe -->
-            <svg class="w-full max-w-md" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="250" cy="250" r="240" stroke="black" stroke-width="2"/>
-                <ellipse cx="250" cy="250" rx="240" ry="100" stroke="black" stroke-width="2"/>
-                <line x1="10" y1="250" x2="490" y2="250" stroke="black" stroke-width="2"/>
-                <line x1="250" y1="10" x2="250" y2="490" stroke="black" stroke-width="2"/>
-                <path d="M250 10 C 350 100, 400 200, 250 490" stroke="black" stroke-width="2" fill="none"/>
-                <path d="M250 10 C 150 100, 100 200, 250 490" stroke="black" stroke-width="2" fill="none"/>
-                <path d="M10 250 C 100 350, 200 400, 490 250" stroke="black" stroke-width="2" fill="none"/>
-                <path d="M10 250 C 100 150, 200 100, 490 250" stroke="black" stroke-width="2" fill="none"/>
+            <svg class="w-full max-w-md" width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Globe lines -->
+                <circle cx="150" cy="150" r="120" stroke="black" stroke-width="1" fill="none" />
+
+                <!-- Horizontal lines -->
+                <ellipse cx="150" cy="150" rx="120" ry="30" stroke="black" stroke-width="1" fill="none" />
+                <ellipse cx="150" cy="150" rx="120" ry="60" stroke="black" stroke-width="1" fill="none" />
+                <ellipse cx="150" cy="150" rx="120" ry="90" stroke="black" stroke-width="1" fill="none" />
+
+                <!-- Vertical lines -->
+                <path d="M150 30 C 150 30, 270 150, 150 270" stroke="black" stroke-width="1" fill="none" />
+                <path d="M150 30 C 150 30, 210 150, 150 270" stroke="black" stroke-width="1" fill="none" />
+                <path d="M150 30 C 150 30, 90 150, 150 270" stroke="black" stroke-width="1" fill="none" />
+                <path d="M150 30 C 150 30, 30 150, 150 270" stroke="black" stroke-width="1" fill="none" />
+                <path d="M30 150 L 270 150" stroke="black" stroke-width="1" />
             </svg>
         </div>
     </div>
