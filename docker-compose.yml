@@ -6,37 +6,55 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: development
+      args:
+        - BUILDKIT_INLINE_CACHE=1
     container_name: laravel-app
     restart: unless-stopped
     working_dir: /var/www/html
+    environment:
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_DATABASE=${DB_DATABASE:-laravel}
+      - DB_USERNAME=${DB_USERNAME:-laravel}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - WAIT_FOR_DB=true
+      - PUBLISH_ASSETS=true
     volumes:
       - ./:/var/www/html
+      - composer-cache:/home/www/.composer/cache
     networks:
       - laravel-network
     depends_on:
-      - db
-    command: >
-      sh -c "php artisan optimize:clear &&
-             php artisan config:clear &&
-             php artisan view:clear &&
-             php artisan livewire:publish --assets &&
-             php artisan vendor:publish --tag=flux-assets --force &&
-             php-fpm"
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
 
   # Node.js Frontend
   node:
     build:
       context: .
       dockerfile: Dockerfile.node
+      target: development
+      args:
+        - BUILDKIT_INLINE_CACHE=1
     container_name: laravel-node
     restart: unless-stopped
     working_dir: /var/www/html
+    environment:
+      - NODE_ENV=development
+      - VITE_HMR_HOST=${VITE_HMR_HOST:-localhost}
     volumes:
       - ./:/var/www/html
+      - node-modules:/var/www/html/node_modules
+      - yarn-cache:/home/nodeapp/.yarn
+      - npm-cache:/home/nodeapp/.npm
     ports:
       - "5173:5173"
-    environment:
-      - VITE_HMR_HOST=localhost
     networks:
       - laravel-network
 
@@ -48,12 +66,17 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./:/var/www/html
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./:/var/www/html:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
     networks:
       - laravel-network
     depends_on:
       - app
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # PostgreSQL Database
   db:
@@ -61,15 +84,19 @@ services:
     container_name: laravel-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: laravel
-      POSTGRES_USER: laravel
-      POSTGRES_PASSWORD: secret
+      - POSTGRES_DB=${DB_DATABASE:-laravel}
+      - POSTGRES_USER=${DB_USERNAME:-laravel}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
       - laravel-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-laravel} -d ${DB_DATABASE:-laravel}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   laravel-network:
@@ -77,3 +104,12 @@ networks:
 
 volumes:
   postgres-data:
+    driver: local
+  composer-cache:
+    driver: local
+  node-modules:
+    driver: local
+  yarn-cache:
+    driver: local
+  npm-cache:
+    driver: local

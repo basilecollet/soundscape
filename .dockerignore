@@ -1,0 +1,58 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Laravel
+.env
+.env.backup
+.env.production
+*.log
+storage/*.key
+storage/logs/*
+!storage/logs/.gitkeep
+
+# Dependencies (will be installed in container)
+vendor/
+node_modules/
+
+# Build artifacts
+public/build/
+public/hot
+public/storage
+public/mix-manifest.json
+
+# Testing
+.phpunit.result.cache
+.pest/
+coverage/
+
+# Documentation
+*.md
+!README.md
+!CLAUDE.md
+docs/
+
+# Cache
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
+*.cache
+
+# Temporary files
+*.tmp
+*.temp
+.temp/
+.tmp/
