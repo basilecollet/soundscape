@@ -69,11 +69,39 @@ seed: ## Seed the database
 fresh: ## Fresh migration with seeding
 	$(APP) php artisan migrate:fresh --seed
 
-test: ## Run tests
+## Testing & TDD
+test: ## Run all tests
 	$(APP) php artisan test
 
 test-coverage: ## Run tests with coverage
 	$(APP) php artisan test --coverage
+
+test-unit: ## Run unit tests only
+	$(APP) php artisan test --testsuite=Unit
+
+test-feature: ## Run feature tests only
+	$(APP) php artisan test --testsuite=Feature
+
+test-filter: ## Run specific test (usage: make test-filter filter="contact")
+	$(APP) php artisan test --filter=$(filter)
+
+test-file: ## Run specific test file (usage: make test-file file=ContactSectionTest)
+	$(APP) php artisan test tests/Feature/$(file).php
+
+tdd: ## Start TDD mode with auto-testing
+	$(APP) ./vendor/bin/pest --watch
+
+test-watch: ## Run tests in watch mode
+	$(APP) ./vendor/bin/pest --watch
+
+test-parallel: ## Run tests in parallel
+	$(APP) php artisan test --parallel
+
+test-create: ## Create a new test (usage: make test-create name=Feature/ProductTest)
+	$(APP) php artisan make:test $(name)
+
+test-failed: ## Re-run only failed tests
+	$(APP) php artisan test --rerun-failed
 
 pint: ## Run Laravel Pint
 	$(APP) ./vendor/bin/pint
