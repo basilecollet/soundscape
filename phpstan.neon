@@ -10,17 +10,17 @@ parameters:
         - database
         - routes
         - tests
-    
+
     # Laravel specific configuration
     checkModelProperties: true
     checkOctaneCompatibility: true
-    
+
     # Additional ignore patterns can be added here if needed
-    
+
     # Exclude vendor and generated files
     excludePaths:
         - bootstrap/cache
         - storage
         - vendor
-        - node_modules
+        - node_modules (?)
         - database/migrations
