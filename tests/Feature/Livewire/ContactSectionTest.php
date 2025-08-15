@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Components\ContactSection;
 use App\Models\PageContent;
 use Livewire\Livewire;
 
@@ -23,7 +24,7 @@ test('contact section displays content from database', function () {
     ]);
 
     // Act & Assert
-    Livewire::test('components.contact-section')
+    Livewire::test(ContactSection::class)
         ->assertSee('Please contact us for any inquiries')
         ->assertDontSee('Contact us'); // Should not show default text
 });
@@ -32,14 +33,14 @@ test('contact section shows default text when no content exists', function () {
     // Arrange: No content in database
 
     // Act & Assert
-    Livewire::test('components.contact-section')
+    Livewire::test(ContactSection::class)
         ->assertSee('Contact us')
         ->assertStatus(200);
 });
 
 test('contact form has all required fields', function () {
     // Act & Assert
-    Livewire::test('components.contact-section')
+    Livewire::test(ContactSection::class)
         ->assertSee('Name')
         ->assertSee('Email')
         ->assertSee('Message')
@@ -51,7 +52,7 @@ test('contact form validates required fields', function () {
     $this->markTestIncomplete('Contact form submission not yet implemented');
 
     // Act & Assert
-    Livewire::test('components.contact-section')
+    Livewire::test(ContactSection::class)
         ->set('name', '')
         ->set('email', '')
         ->set('message', '')
@@ -64,7 +65,7 @@ test('contact form validates email format', function () {
     $this->markTestIncomplete('Contact form submission not yet implemented');
 
     // Act & Assert
-    Livewire::test('components.contact-section')
+    Livewire::test(ContactSection::class)
         ->set('name', 'John Doe')
         ->set('email', 'invalid-email')
         ->set('message', 'Test message')
