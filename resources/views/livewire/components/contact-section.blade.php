@@ -4,11 +4,11 @@ use App\Models\PageContent;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public string $homeContent;
+    public string $contactContent;
 
     public function mount()
     {
-        $this->homeContent = PageContent::getContent('contact_text');
+        $this->contactContent = PageContent::getContent('contact_text', 'Contact us');
     }
 }; ?>
 
@@ -17,7 +17,7 @@ new class extends Component {
         <h2 class="text-3xl font-bold mb-12 text-center">Contact Us</h2>
         <div class="max-w-3xl mx-auto">
             <p class="text-lg text-gray-700 mb-8 text-center">
-                {{ $homeContent->contact_text ?? 'Contact us' }}
+                {{ $contactContent }}
             </p>
 
             <form class="space-y-6">

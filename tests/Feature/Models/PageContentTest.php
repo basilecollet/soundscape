@@ -44,12 +44,12 @@ test('page content can be retrieved by key', function () {
     expect($content)->toBe('Welcome to our site');
 });
 
-test('getContent returns null when key does not exist', function () {
+test('getContent returns empty string when key does not exist', function () {
     // Act
     $content = PageContent::getContent('non_existent_key');
     
     // Assert
-    expect($content)->toBeNull();
+    expect($content)->toBe('');
 });
 
 test('page content key must be unique', function () {
