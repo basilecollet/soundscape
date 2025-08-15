@@ -1,0 +1,40 @@
+# Local development overrides
+# This file is automatically loaded by docker-compose and overrides values in docker-compose.yml
+# Perfect for local development settings that shouldn't be committed
+
+services:
+  app:
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - XDEBUG_MODE=develop,debug
+      - XDEBUG_CONFIG=client_host=host.docker.internal
+      - AUTO_MIGRATE=false
+      - OPTIMIZE=false
+    # Uncomment to enable Xdebug
+    # ports:
+    #   - "9003:9003"
+
+  node:
+    environment:
+      - AUTO_START_VITE=false
+    # Uncomment for debugging Node.js
+    # ports:
+    #   - "9229:9229"
+    # command: node --inspect=0.0.0.0:9229 node_modules/.bin/vite
+
+  # Expose PostgreSQL for local database management tools
+  # Comment out in production-like environments
+  db:
+    ports:
+      - "5432:5432"
+
+  # Optional: Add Mailhog for email testing
+  # mailhog:
+  #   image: mailhog/mailhog:latest
+  #   container_name: laravel-mailhog
+  #   ports:
+  #     - "1025:1025"
+  #     - "8025:8025"
+  #   networks:
+  #     - laravel-network

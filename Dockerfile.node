@@ -1,12 +1,48 @@
-FROM node:20-alpine
+# Multi-stage build for Node.js development environment
+FROM node:20-alpine AS base
+
+# Install necessary tools
+RUN apk add --no-cache \
+    bash \
+    git \
+    python3 \
+    make \
+    g++
+
+# Create app user (using 1001 to avoid conflicts)
+RUN addgroup -g 1001 -S nodeapp && \
+    adduser -u 1001 -S nodeapp -G nodeapp
 
 WORKDIR /var/www/html
 
-# Set environment variables
-ENV NODE_ENV=development
+# Stage for development
+FROM base AS development
 
-# Expose port for Vite development server
+# Copy entrypoint script
+COPY docker/node/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Create cache directories for npm/yarn
+RUN mkdir -p /home/nodeapp/.npm /home/nodeapp/.yarn && \
+    chown -R nodeapp:nodeapp /home/nodeapp
+
+# Health check for Vite dev server
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:5173', (r) => {r.statusCode === 200 ? process.exit(0) : process.exit(1)}).on('error', () => process.exit(1))" || exit 1
+
+# Set environment variables for development
+ENV NODE_ENV=development
+ENV CHOKIDAR_USEPOLLING=true
+ENV WATCHPACK_POLLING=true
+
+# Switch to non-root user
+USER nodeapp
+
+# Expose Vite port
 EXPOSE 5173
 
-# Keep container running without starting dev server
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+# Default command - keeps container running
 CMD ["tail", "-f", "/dev/null"]
