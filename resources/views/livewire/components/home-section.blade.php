@@ -1,17 +1,3 @@
-<?php
-
-use App\Models\PageContent;
-use Livewire\Volt\Component;
-
-new class extends Component {
-    public $homeContent;
-
-    public function mount()
-    {
-        $this->homeContent = PageContent::getContent('home_text');
-    }
-}; ?>
-
 <section id="home" class="min-h-screen flex items-center bg-gradient-to-b from-[#F2EFE6] to-[#A4B465] pt-16">
     <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 mb-10 md:mb-0">
