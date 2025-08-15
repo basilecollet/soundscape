@@ -1,11 +1,3 @@
-<?php
-
-use Livewire\Volt\Component;
-
-new class extends Component {
-    // No specific properties or methods needed for the navbar
-}; ?>
-
 <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
      x-data="{ scrolled: false }"
      x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 50 })"
