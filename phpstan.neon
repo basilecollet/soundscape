@@ -1,0 +1,26 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 8
+    paths:
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    
+    # Laravel specific configuration
+    checkModelProperties: true
+    checkOctaneCompatibility: true
+    
+    # Additional ignore patterns can be added here if needed
+    
+    # Exclude vendor and generated files
+    excludePaths:
+        - bootstrap/cache
+        - storage
+        - vendor
+        - node_modules
+        - database/migrations

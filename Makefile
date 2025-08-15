@@ -103,11 +103,28 @@ test-create: ## Create a new test (usage: make test-create name=Feature/ProductT
 test-failed: ## Re-run only failed tests
 	$(APP) php artisan test --rerun-failed
 
+## Code Quality
 pint: ## Run Laravel Pint
 	$(APP) ./vendor/bin/pint
 
 pint-test: ## Test Laravel Pint without fixing
 	$(APP) ./vendor/bin/pint --test
+
+phpstan: ## Run PHPStan analysis
+	$(APP) ./vendor/bin/phpstan analyse
+
+phpstan-baseline: ## Generate PHPStan baseline
+	$(APP) ./vendor/bin/phpstan analyse --generate-baseline
+
+quality: ## Run all code quality tools
+	@make pint
+	@make phpstan
+	@echo "$(GREEN)✅ Code quality checks completed$(NC)"
+
+quality-check: ## Check code quality without fixing
+	@make pint-test
+	@make phpstan
+	@echo "$(GREEN)📊 Code quality analysis completed$(NC)"
 
 tinker: ## Start Laravel Tinker
 	$(APP) php artisan tinker

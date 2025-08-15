@@ -27,6 +27,14 @@ fi
 echo "${YELLOW}🔧 Running code formatting...${NC}"
 make pint
 
+echo "${YELLOW}🔍 Running static analysis...${NC}"
+if ! make phpstan; then
+    echo "${RED}❌ PHPStan analysis failed! Commit rejected.${NC}"
+    echo "${YELLOW}💡 Fix PHPStan errors before committing.${NC}"
+    echo "   Run: make phpstan (to see errors)"
+    exit 1
+fi
+
 echo "${YELLOW}🧪 Running tests...${NC}"
 if ! make test; then
     echo "${RED}❌ Tests failed! Commit rejected.${NC}"
