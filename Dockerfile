@@ -34,7 +34,8 @@ FROM base AS dev-deps
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Xdebug for development
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+RUN apk add --no-cache linux-headers \
+    && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && apk del .build-deps
@@ -55,9 +56,9 @@ WORKDIR /var/www/html
 COPY docker/php/php.ini /usr/local/etc/php/php.ini
 COPY docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Create non-root user
-RUN addgroup -g 1000 -S www && \
-    adduser -u 1000 -S www -G www
+# Create non-root user (using 1001 to avoid conflicts)
+RUN addgroup -g 1001 -S www && \
+    adduser -u 1001 -S www -G www
 
 # Create necessary directories with proper permissions
 RUN mkdir -p \

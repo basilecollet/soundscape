@@ -9,9 +9,9 @@ RUN apk add --no-cache \
     make \
     g++
 
-# Create app user
-RUN addgroup -g 1000 -S nodeapp && \
-    adduser -u 1000 -S nodeapp -G nodeapp
+# Create app user (using 1001 to avoid conflicts)
+RUN addgroup -g 1001 -S nodeapp && \
+    adduser -u 1001 -S nodeapp -G nodeapp
 
 WORKDIR /var/www/html
 
