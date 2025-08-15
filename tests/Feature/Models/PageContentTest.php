@@ -6,20 +6,19 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 /**
  * TDD Example: PageContent Model Tests
- * 
+ *
  * Tests unitaires pour le modèle PageContent
  * suivant l'approche TDD
  */
-
 test('page content can be created with required fields', function () {
     // Arrange & Act
     $content = PageContent::create([
         'key' => 'test_key',
         'content' => 'Test content',
         'title' => 'Test Title',
-        'page' => 'home'
+        'page' => 'home',
     ]);
-    
+
     // Assert
     expect($content)->toBeInstanceOf(PageContent::class)
         ->and($content->key)->toBe('test_key')
@@ -34,12 +33,12 @@ test('page content can be retrieved by key', function () {
         'key' => 'home_text',
         'content' => 'Welcome to our site',
         'title' => 'Home Text',
-        'page' => 'home'
+        'page' => 'home',
     ]);
-    
+
     // Act
     $content = PageContent::getContent('home_text');
-    
+
     // Assert
     expect($content)->toBe('Welcome to our site');
 });
@@ -47,7 +46,7 @@ test('page content can be retrieved by key', function () {
 test('getContent returns empty string when key does not exist', function () {
     // Act
     $content = PageContent::getContent('non_existent_key');
-    
+
     // Assert
     expect($content)->toBe('');
 });
@@ -58,15 +57,15 @@ test('page content key must be unique', function () {
         'key' => 'unique_key',
         'content' => 'First content',
         'title' => 'First',
-        'page' => 'home'
+        'page' => 'home',
     ]);
-    
+
     // Act & Assert
-    expect(fn() => PageContent::create([
+    expect(fn () => PageContent::create([
         'key' => 'unique_key',
         'content' => 'Second content',
         'title' => 'Second',
-        'page' => 'about'
+        'page' => 'about',
     ]))->toThrow(\Illuminate\Database\QueryException::class);
 });
 
@@ -76,14 +75,14 @@ test('page content can be updated', function () {
         'key' => 'update_test',
         'content' => 'Original content',
         'title' => 'Original',
-        'page' => 'home'
+        'page' => 'home',
     ]);
-    
+
     // Act
     $content->update([
-        'content' => 'Updated content'
+        'content' => 'Updated content',
     ]);
-    
+
     // Assert
     expect($content->fresh()->content)->toBe('Updated content');
 });
@@ -93,10 +92,10 @@ test('multiple contents can be retrieved for a specific page', function () {
     PageContent::create(['key' => 'about_1', 'content' => 'Content 1', 'title' => 'About 1', 'page' => 'about']);
     PageContent::create(['key' => 'about_2', 'content' => 'Content 2', 'title' => 'About 2', 'page' => 'about']);
     PageContent::create(['key' => 'home_1', 'content' => 'Home content', 'title' => 'Home 1', 'page' => 'home']);
-    
+
     // Act
     $aboutContents = PageContent::where('page', 'about')->get();
-    
+
     // Assert
     expect($aboutContents)->toHaveCount(2)
         ->and($aboutContents->pluck('key')->toArray())->toBe(['about_1', 'about_2']);
