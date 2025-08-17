@@ -6,45 +6,48 @@
  */
 
 namespace {
-    if (!function_exists('test')) {
+    if (! function_exists('test')) {
         /**
          * @template T of \PHPUnit\Framework\TestCase
-         * @param string $description
-         * @param \Closure(): void $closure
+         *
+         * @param  \Closure(): void  $closure
          * @return T
          */
-        function test(string $description, ?\Closure $closure = null) {
+        function test(string $description, ?\Closure $closure = null)
+        {
             return new class extends \Tests\TestCase {};
         }
     }
 
-    if (!function_exists('it')) {
+    if (! function_exists('it')) {
         /**
          * @template T of \PHPUnit\Framework\TestCase
-         * @param string $description
-         * @param \Closure(): void $closure
+         *
+         * @param  \Closure(): void  $closure
          * @return T
          */
-        function it(string $description, ?\Closure $closure = null) {
+        function it(string $description, ?\Closure $closure = null)
+        {
             return new class extends \Tests\TestCase {};
         }
     }
 
-    if (!function_exists('expect')) {
+    if (! function_exists('expect')) {
         /**
          * @template T
-         * @param T $value
+         *
+         * @param  T  $value
          * @return \Pest\Expectation<T>
          */
-        function expect($value) {
+        function expect($value)
+        {
             return new \Pest\Expectation($value);
         }
     }
 
-    if (!function_exists('uses')) {
+    if (! function_exists('uses')) {
         /**
-         * @param string ...$traits
-         * @return void
+         * @param  string  ...$traits
          */
         function uses(...$traits): void {}
     }
@@ -54,60 +57,86 @@ namespace Pest {
     /**
      * @template T
      */
-    class Expectation {
+    class Expectation
+    {
         /**
-         * @param T $value
+         * @param  T  $value
          */
         public function __construct($value) {}
-        
+
         /**
-         * @param mixed $expected
+         * @param  mixed  $expected
          * @return self<T>
          */
-        public function toBe($expected): self { return $this; }
-        
-        /**
-         * @return self<T>
-         */
-        public function toBeTrue(): self { return $this; }
-        
+        public function toBe($expected): self
+        {
+            return $this;
+        }
+
         /**
          * @return self<T>
          */
-        public function toBeFalse(): self { return $this; }
-        
+        public function toBeTrue(): self
+        {
+            return $this;
+        }
+
         /**
          * @return self<T>
          */
-        public function toBeNull(): self { return $this; }
-        
-        /**
-         * @param mixed $needle
-         * @return self<T>
-         */
-        public function toContain($needle): self { return $this; }
-        
-        /**
-         * @param int $count
-         * @return self<T>
-         */
-        public function toHaveCount(int $count): self { return $this; }
-        
-        /**
-         * @param mixed $expected
-         * @return self<T>
-         */
-        public function toEqual($expected): self { return $this; }
-        
-        /**
-         * @param string $class
-         * @return self<T>
-         */
-        public function toBeInstanceOf(string $class): self { return $this; }
-        
+        public function toBeFalse(): self
+        {
+            return $this;
+        }
+
         /**
          * @return self<T>
          */
-        public function not(): self { return $this; }
+        public function toBeNull(): self
+        {
+            return $this;
+        }
+
+        /**
+         * @param  mixed  $needle
+         * @return self<T>
+         */
+        public function toContain($needle): self
+        {
+            return $this;
+        }
+
+        /**
+         * @return self<T>
+         */
+        public function toHaveCount(int $count): self
+        {
+            return $this;
+        }
+
+        /**
+         * @param  mixed  $expected
+         * @return self<T>
+         */
+        public function toEqual($expected): self
+        {
+            return $this;
+        }
+
+        /**
+         * @return self<T>
+         */
+        public function toBeInstanceOf(string $class): self
+        {
+            return $this;
+        }
+
+        /**
+         * @return self<T>
+         */
+        public function not(): self
+        {
+            return $this;
+        }
     }
 }

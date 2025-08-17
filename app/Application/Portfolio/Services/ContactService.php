@@ -32,6 +32,7 @@ class ContactService
 
     /**
      * Get all messages with pagination
+     *
      * @return LengthAwarePaginator<int, ContactMessage>
      */
     public function getAllMessages(int $perPage = 15): LengthAwarePaginator

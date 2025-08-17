@@ -41,7 +41,8 @@ class ContactMessage extends Model
 
     /**
      * Scope for unread messages
-     * @param Builder<ContactMessage> $query
+     *
+     * @param  Builder<ContactMessage>  $query
      * @return Builder<ContactMessage>
      */
     public function scopeUnread($query): Builder
@@ -51,7 +52,8 @@ class ContactMessage extends Model
 
     /**
      * Scope for read messages
-     * @param Builder<ContactMessage> $query
+     *
+     * @param  Builder<ContactMessage>  $query
      * @return Builder<ContactMessage>
      */
     public function scopeRead($query): Builder

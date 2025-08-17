@@ -6,6 +6,7 @@ class ContentService
 {
     /**
      * Get home page content
+     *
      * @return array{hero_title: string, hero_subtitle: string, hero_text: string, features: array<int, array{title: string, description: string}>}
      */
     public function getHomeContent(): array
@@ -33,6 +34,7 @@ class ContentService
 
     /**
      * Get about page content
+     *
      * @return array{title: string, intro: string, bio: string, experience: array{years: string, projects: string, clients: string}, services: array<int, string>, philosophy: string}
      */
     public function getAboutContent(): array
@@ -60,6 +62,7 @@ class ContentService
 
     /**
      * Get contact page content
+     *
      * @return array{title: string, subtitle: string, description: string, info: array{email: string, phone: string, location: string}}
      */
     public function getContactContent(): array

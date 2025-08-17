@@ -14,7 +14,8 @@ class ContactFormData
 
     /**
      * Create from array (useful for form requests)
-     * @param array<string, mixed> $data
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -29,6 +30,7 @@ class ContactFormData
 
     /**
      * Convert to array
+     *
      * @return array{name: string, email: string, subject: ?string, message: string, gdpr_consent: bool}
      */
     public function toArray(): array
