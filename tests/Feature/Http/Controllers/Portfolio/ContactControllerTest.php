@@ -33,9 +33,9 @@ test('contact page displays content from ContentService', function () {
 test('contact page shows contact form', function () {
     $response = $this->get('/contact');
 
-    $response->assertSee('name="name"', false);
-    $response->assertSee('name="email"', false);
-    $response->assertSee('name="subject"', false);
-    $response->assertSee('name="message"', false);
-    $response->assertSee('name="gdpr_consent"', false);
+    $response->assertSee('wire:model="name"', false);
+    $response->assertSee('wire:model="email"', false);
+    $response->assertSee('wire:model="subject"', false);
+    $response->assertSee('wire:model="message"', false);
+    $response->assertSee('wire:model="gdpr_consent"', false);
 });
