@@ -20,7 +20,7 @@
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-white">
+<body class="min-h-screen bg-white pt-20">
     <livewire:components.navbar />
     
     <main>

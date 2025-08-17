@@ -35,7 +35,7 @@ test('navbar contains brand name', function () {
 test('navbar has dynamic styling based on scroll', function () {
     // Act & Assert - Check Alpine.js data attributes
     Livewire::test(Navbar::class)
-        ->assertSeeHtml('x-data="{ scrolled: false }"')
+        ->assertSeeHtml('x-data="{ scrolled: false, mobileMenuOpen: false }"')
         ->assertSeeHtml('x-init="window.addEventListener')
         ->assertStatus(200);
 });
