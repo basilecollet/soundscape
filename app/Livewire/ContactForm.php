@@ -4,6 +4,9 @@ namespace App\Livewire;
 
 use App\Application\Portfolio\DTOs\ContactFormData;
 use App\Application\Portfolio\Services\ContactService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Client\Factory;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -46,7 +49,7 @@ class ContactForm extends Component
         session()->flash('success', 'Thank you for your message! We will get back to you soon.');
     }
 
-    public function render()
+    public function render(): Factory|View|Application
     {
         return view('livewire.contact-form');
     }
