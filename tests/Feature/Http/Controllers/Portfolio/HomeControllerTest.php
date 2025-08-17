@@ -1,10 +1,8 @@
 <?php
 
-use App\Application\Portfolio\Services\ContentService;
-
 test('home page can be accessed', function () {
     $response = $this->get('/');
-    
+
     $response->assertStatus(200)
         ->assertViewIs('portfolio.home')
         ->assertSee('Soundscape Audio');
@@ -12,7 +10,7 @@ test('home page can be accessed', function () {
 
 test('home page has proper SEO meta tags', function () {
     $response = $this->get('/');
-    
+
     $response->assertStatus(200)
         ->assertSee('<meta name="description"', false)
         ->assertSee('<meta property="og:title"', false)
@@ -21,7 +19,7 @@ test('home page has proper SEO meta tags', function () {
 
 test('home page displays content from ContentService', function () {
     $response = $this->get('/');
-    
+
     $response->assertStatus(200)
         ->assertSee('Professional Audio Engineering')
         ->assertSee('Lorem ipsum dolor sit amet');
