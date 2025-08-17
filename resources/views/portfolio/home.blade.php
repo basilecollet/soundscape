@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white">
     <!-- Hero Section -->
-    <section class="py-20 px-4 text-center">
+    <section class="py-20 pt-32 px-4 text-center">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-5xl font-bold mb-6">{{ $content['hero_title'] }}</h1>
             <p class="text-xl text-slate-300 mb-8">{{ $content['hero_subtitle'] }}</p>
