@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Portfolio\AboutController;
+use App\Http\Controllers\Portfolio\ContactController;
+use App\Http\Controllers\Portfolio\HomeController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Volt::route('/', 'home.index')->name('home');
+Route::get('/', HomeController::class)->name('home');
+Route::get('/about', AboutController::class)->name('about');
+Route::get('/contact', ContactController::class)->name('contact');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
