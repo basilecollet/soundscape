@@ -3,10 +3,12 @@
 namespace App\Livewire\Components;
 
 use App\Models\PageContent;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class AboutSection extends Component
 {
+    /** @var array<string, string> */
     public array $aboutContent = [];
 
     public function mount(): void
@@ -16,7 +18,7 @@ class AboutSection extends Component
         $this->aboutContent['about_section_3'] = PageContent::getContent('about_section_3');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.components.about-section');
     }

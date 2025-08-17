@@ -3,6 +3,7 @@
 namespace App\Livewire\Components;
 
 use App\Models\PageContent;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class ContactSection extends Component
@@ -14,7 +15,7 @@ class ContactSection extends Component
         $this->contactContent = PageContent::getContent('contact_text', 'Contact us');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.components.contact-section');
     }

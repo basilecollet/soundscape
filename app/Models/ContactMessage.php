@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ContactMessage extends Model
@@ -40,16 +41,20 @@ class ContactMessage extends Model
 
     /**
      * Scope for unread messages
+     * @param Builder<ContactMessage> $query
+     * @return Builder<ContactMessage>
      */
-    public function scopeUnread($query)
+    public function scopeUnread($query): Builder
     {
         return $query->whereNull('read_at');
     }
 
     /**
      * Scope for read messages
+     * @param Builder<ContactMessage> $query
+     * @return Builder<ContactMessage>
      */
-    public function scopeRead($query)
+    public function scopeRead($query): Builder
     {
         return $query->whereNotNull('read_at');
     }

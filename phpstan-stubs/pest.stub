@@ -1,0 +1,57 @@
+<?php
+
+namespace {
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function test(string $description, ?callable $callback = null) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function it(string $description, ?callable $callback = null) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function beforeEach(callable $callback) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function afterEach(callable $callback) {}
+
+    /**
+     * @param string ...$traits
+     * @return void
+     */
+    function uses(string ...$traits) {}
+
+    /**
+     * @param mixed $value
+     * @return \Pest\Expectation
+     */
+    function expect($value) {}
+}
+
+namespace Pest {
+    class Expectation {
+        public function toBe($expected): self {}
+        public function toBeTrue(): self {}
+        public function toBeFalse(): self {}
+        public function toBeNull(): self {}
+        public function toContain($needle): self {}
+        public function toHaveCount(int $count): self {}
+        public function toEqual($expected): self {}
+        public function toBeInstanceOf(string $class): self {}
+        public function not(): self {}
+    }
+}

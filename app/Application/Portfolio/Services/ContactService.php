@@ -4,6 +4,7 @@ namespace App\Application\Portfolio\Services;
 
 use App\Application\Portfolio\DTOs\ContactFormData;
 use App\Models\ContactMessage;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ContactService
 {
@@ -31,8 +32,9 @@ class ContactService
 
     /**
      * Get all messages with pagination
+     * @return LengthAwarePaginator<int, ContactMessage>
      */
-    public function getAllMessages(int $perPage = 15)
+    public function getAllMessages(int $perPage = 15): LengthAwarePaginator
     {
         return ContactMessage::latest()->paginate($perPage);
     }
