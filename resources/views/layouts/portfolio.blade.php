@@ -18,15 +18,20 @@
     <meta name="twitter:title" content="{{ $seo['title'] ?? 'Soundscape Audio' }}">
     <meta name="twitter:description" content="{{ $seo['description'] ?? 'Professional audio engineering services' }}">
     
+    <!-- Google Fonts - Kode Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-white">
-    <livewire:components.navbar />
+<body class="min-h-screen bg-portfolio-light font-mono text-portfolio-text">
+    <x-portfolio.navbar />
     
     <main>
         @yield('content')
     </main>
     
-    <livewire:components.footer />
+    <x-portfolio.footer />
 </body>
 </html>
