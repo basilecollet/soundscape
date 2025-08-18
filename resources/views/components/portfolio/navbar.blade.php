@@ -31,11 +31,7 @@
                 <img 
                     src="{{ asset('images/logos/logo.svg') }}" 
                     alt="Soundscape Audio" 
-                    class="h-8 w-auto"
-                    :class="{
-                        'brightness-0': scrolled || open,
-                        'brightness-0 mix-blend-difference': !scrolled && !open
-                    }"
+                    class="h-8 w-auto brightness-0"
                 >
             </a>
             
