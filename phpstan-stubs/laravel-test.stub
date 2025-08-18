@@ -1,5 +1,9 @@
 <?php
 
+namespace Illuminate\Contracts\Auth {
+    interface Authenticatable {}
+}
+
 namespace PHPUnit\Framework {
     abstract class TestCase {
         /**

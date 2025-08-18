@@ -11,7 +11,7 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # Pest test closures bind $this to TestCase
-        - 
+        -
             message: '#Undefined variable: \$this#'
             paths:
                 - tests/Feature/*
