@@ -3,7 +3,23 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
+    stubFiles:
+        - phpstan-stubs/pest.stub
+        - phpstan-stubs/laravel-test.stub
     level: 8
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Pest test closures bind $this to TestCase
+        -
+            message: '#Undefined variable: \$this#'
+            paths:
+                - tests/Feature/*
+                - tests/Unit/*
+        # Carbon properties
+        - '#Cannot access property \$timestamp on Carbon\\Carbon\|null#'
+        # User model nullable
+        - '#Cannot call method hasVerifiedEmail\(\) on App\\Models\\User\|null#'
     paths:
         - app
         - config

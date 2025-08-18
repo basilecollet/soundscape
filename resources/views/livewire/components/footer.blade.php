@@ -1,11 +1,3 @@
-<?php
-
-use Livewire\Volt\Component;
-
-new class extends Component {
-    // No specific properties or methods needed for the footer
-}; ?>
-
 <footer class="bg-[#494949] text-white py-12">
     <div class="container mx-auto px-4">
         <div class="flex justify-center space-x-8 mb-8">

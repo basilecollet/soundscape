@@ -1,0 +1,106 @@
+<?php
+
+namespace Illuminate\Contracts\Auth {
+    interface Authenticatable {}
+}
+
+namespace PHPUnit\Framework {
+    abstract class TestCase {
+        /**
+         * @param string $uri
+         * @param array<string, mixed> $headers
+         * @return \Illuminate\Testing\TestResponse
+         */
+        public function get($uri, array $headers = []) {}
+
+        /**
+         * @param string $uri
+         * @param array<string, mixed> $data
+         * @param array<string, mixed> $headers
+         * @return \Illuminate\Testing\TestResponse
+         */
+        public function post($uri, array $data = [], array $headers = []) {}
+
+        /**
+         * @param string $uri
+         * @param array<string, mixed> $data
+         * @param array<string, mixed> $headers
+         * @return \Illuminate\Testing\TestResponse
+         */
+        public function put($uri, array $data = [], array $headers = []) {}
+
+        /**
+         * @param string $uri
+         * @param array<string, mixed> $data
+         * @param array<string, mixed> $headers
+         * @return \Illuminate\Testing\TestResponse
+         */
+        public function delete($uri, array $data = [], array $headers = []) {}
+
+        /**
+         * @param \Illuminate\Contracts\Auth\Authenticatable $user
+         * @param string|null $guard
+         * @return static
+         */
+        public function actingAs($user, $guard = null) {}
+
+        /**
+         * @param string $table
+         * @param array<string, mixed> $data
+         * @param string|null $connection
+         * @return static
+         */
+        public function assertDatabaseHas($table, array $data = [], $connection = null) {}
+
+        /**
+         * @param \DateTimeInterface|string $date
+         * @param callable|null $callback
+         * @return mixed
+         */
+        public function travelTo($date, $callback = null) {}
+    }
+}
+
+namespace Illuminate\Testing {
+    class TestResponse {
+        /**
+         * @param int $status
+         * @return static
+         */
+        public function assertStatus($status) {}
+
+        /**
+         * @param string $value
+         * @param bool $escaped
+         * @return static
+         */
+        public function assertSee($value, $escaped = true) {}
+
+        /**
+         * @param string $value
+         * @param bool $escaped
+         * @return static
+         */
+        public function assertSeeHtml($value, $escaped = false) {}
+
+        /**
+         * @param string $value
+         * @param bool $escaped
+         * @return static
+         */
+        public function assertDontSee($value, $escaped = true) {}
+
+        /**
+         * @param string $name
+         * @return static
+         */
+        public function assertViewIs($name) {}
+
+        /**
+         * @param string $key
+         * @param mixed $value
+         * @return static
+         */
+        public function assertViewHas($key, $value = null) {}
+    }
+}

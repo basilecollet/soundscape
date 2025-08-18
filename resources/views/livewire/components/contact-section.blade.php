@@ -1,17 +1,3 @@
-<?php
-
-use App\Models\PageContent;
-use Livewire\Volt\Component;
-
-new class extends Component {
-    public string $contactContent;
-
-    public function mount()
-    {
-        $this->contactContent = PageContent::getContent('contact_text', 'Contact us');
-    }
-}; ?>
-
 <section id="contact" class="py-16 bg-gray-100">
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold mb-12 text-center">Contact Us</h2>

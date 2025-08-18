@@ -1,0 +1,97 @@
+<?php
+
+namespace {
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function test(string $description, ?callable $callback = null) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function it(string $description, ?callable $callback = null) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function beforeEach(callable $callback) {}
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    function afterEach(callable $callback) {}
+
+    /**
+     * @param string ...$traits
+     * @return void
+     */
+    function uses(string ...$traits) {}
+
+    /**
+     * @param mixed $value
+     * @return \Pest\Expectation
+     */
+    function expect($value) {}
+}
+
+namespace Pest {
+    class Expectation {
+        /**
+         * @param mixed $expected
+         * @return self
+         */
+        public function toBe($expected): self {}
+        
+        /**
+         * @return self
+         */
+        public function toBeTrue(): self {}
+        
+        /**
+         * @return self
+         */
+        public function toBeFalse(): self {}
+        
+        /**
+         * @return self
+         */
+        public function toBeNull(): self {}
+        
+        /**
+         * @param mixed $needle
+         * @return self
+         */
+        public function toContain($needle): self {}
+        
+        /**
+         * @param int $count
+         * @return self
+         */
+        public function toHaveCount(int $count): self {}
+        
+        /**
+         * @param mixed $expected
+         * @return self
+         */
+        public function toEqual($expected): self {}
+        
+        /**
+         * @param string $class
+         * @return self
+         */
+        public function toBeInstanceOf(string $class): self {}
+        
+        /**
+         * @return self
+         */
+        public function not(): self {}
+    }
+}
