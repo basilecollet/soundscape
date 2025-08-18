@@ -19,8 +19,8 @@
     <div 
         class="transition-all duration-300"
         :class="{
-            'bg-portfolio-light shadow-lg md:rounded-full': scrolled,
-            'bg-transparent': !scrolled
+            'bg-white shadow-lg md:rounded-full': scrolled || open,
+            'bg-transparent': !scrolled && !open
         }"
     >
         <div class="container mx-auto px-6 lg:px-12 py-6">
@@ -33,8 +33,8 @@
                     alt="Soundscape Audio" 
                     class="h-8 w-auto"
                     :class="{
-                        'brightness-0': scrolled,
-                        'brightness-0 mix-blend-difference': !scrolled
+                        'brightness-0': scrolled || open,
+                        'brightness-0 mix-blend-difference': !scrolled && !open
                     }"
                 >
             </a>
@@ -44,8 +44,8 @@
                 <a href="{{ route('home') }}" 
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
                     home
                     @if(request()->routeIs('home'))
@@ -55,8 +55,8 @@
                 <a href="{{ route('about') }}" 
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
                     about
                     @if(request()->routeIs('about'))
@@ -66,8 +66,8 @@
                 <a href="{{ route('contact') }}" 
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
                     contact
                     @if(request()->routeIs('contact'))
@@ -107,7 +107,7 @@
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 -translate-y-4"
             @click.away="open = false"
-            class="md:hidden mt-2 bg-portfolio-light border-t border-portfolio-dark/10 shadow-lg"
+            class="md:hidden mt-2 bg-white border-t border-portfolio-dark/10 shadow-lg"
         >
             <div class="container mx-auto px-6 py-6 space-y-4">
                 <a href="{{ route('home') }}" 
