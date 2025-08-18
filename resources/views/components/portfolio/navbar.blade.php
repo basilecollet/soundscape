@@ -10,14 +10,21 @@
         handleScroll();
         window.addEventListener('scroll', () => handleScroll());
     "
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+    class="fixed z-50 transition-all duration-300"
     :class="{
-        'bg-portfolio-light shadow-lg': scrolled,
-        'bg-transparent': !scrolled
+        'md:top-4 md:left-4 md:right-4 md:w-auto top-0 left-0 w-full': scrolled,
+        'top-0 left-0 w-full': !scrolled
     }"
 >
-    <div class="container mx-auto px-6 lg:px-12 py-6">
-        <div class="flex justify-between items-center">
+    <div 
+        class="transition-all duration-300"
+        :class="{
+            'bg-portfolio-light shadow-lg md:rounded-full': scrolled,
+            'bg-transparent': !scrolled
+        }"
+    >
+        <div class="container mx-auto px-6 lg:px-12 py-6">
+            <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ route('home') }}" 
                class="font-semibold text-lg tracking-tight transition-colors duration-200"
@@ -74,6 +81,7 @@
                     :class="{ '-rotate-45 -translate-y-[7.5px]': open }"
                 ></span>
             </button>
+            </div>
         </div>
         
         <!-- Mobile Navigation -->
@@ -86,7 +94,7 @@
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 -translate-y-4"
             @click.away="open = false"
-            class="md:hidden absolute top-full left-0 w-full bg-portfolio-light border-t border-portfolio-dark/10 shadow-lg"
+            class="md:hidden mt-2 bg-portfolio-light border-t border-portfolio-dark/10 shadow-lg"
         >
             <div class="container mx-auto px-6 py-6 space-y-4">
                 <a href="{{ route('home') }}" 
