@@ -38,28 +38,37 @@
             <!-- Navigation Links - Desktop -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('home') }}" 
-                   class="transition-colors duration-200 text-sm {{ request()->routeIs('home') ? 'text-portfolio-accent' : '' }}"
+                   class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || {{ request()->routeIs('home') ? 'false' : 'true' }},
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && {{ request()->routeIs('home') ? 'true' : 'false' }}
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
                    }">
                     home
+                    @if(request()->routeIs('home'))
+                        <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
+                    @endif
                 </a>
                 <a href="{{ route('about') }}" 
-                   class="transition-colors duration-200 text-sm {{ request()->routeIs('about') ? 'text-portfolio-accent' : '' }}"
+                   class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || {{ request()->routeIs('about') ? 'false' : 'true' }},
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && {{ request()->routeIs('about') ? 'true' : 'false' }}
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
                    }">
                     about
+                    @if(request()->routeIs('about'))
+                        <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
+                    @endif
                 </a>
                 <a href="{{ route('contact') }}" 
-                   class="transition-colors duration-200 text-sm {{ request()->routeIs('contact') ? 'text-portfolio-accent' : '' }}"
+                   class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
-                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || {{ request()->routeIs('contact') ? 'false' : 'true' }},
-                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && {{ request()->routeIs('contact') ? 'true' : 'false' }}
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
                    }">
                     contact
+                    @if(request()->routeIs('contact'))
+                        <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
+                    @endif
                 </a>
             </div>
             
@@ -99,17 +108,32 @@
             <div class="container mx-auto px-6 py-6 space-y-4">
                 <a href="{{ route('home') }}" 
                    @click="open = false"
-                   class="block text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm {{ request()->routeIs('home') ? 'text-portfolio-accent' : '' }}">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                    @if(request()->routeIs('home'))
+                        <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
+                    @else
+                        <span class="w-2 h-2"></span>
+                    @endif
                     home
                 </a>
                 <a href="{{ route('about') }}" 
                    @click="open = false"
-                   class="block text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm {{ request()->routeIs('about') ? 'text-portfolio-accent' : '' }}">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                    @if(request()->routeIs('about'))
+                        <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
+                    @else
+                        <span class="w-2 h-2"></span>
+                    @endif
                     about
                 </a>
                 <a href="{{ route('contact') }}" 
                    @click="open = false"
-                   class="block text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm {{ request()->routeIs('contact') ? 'text-portfolio-accent' : '' }}">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                    @if(request()->routeIs('contact'))
+                        <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
+                    @else
+                        <span class="w-2 h-2"></span>
+                    @endif
                     contact
                 </a>
             </div>
