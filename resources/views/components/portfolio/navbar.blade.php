@@ -27,12 +27,16 @@
             <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ route('home') }}" 
-               class="font-semibold text-lg tracking-tight transition-colors duration-200"
-               :class="{
-                   'text-portfolio-dark hover:text-portfolio-accent': scrolled,
-                   'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled
-               }">
-                soundscape
+               class="flex items-center transition-all duration-200 hover:scale-105">
+                <img 
+                    src="{{ asset('images/logos/logo.svg') }}" 
+                    alt="Soundscape Audio" 
+                    class="h-8 w-auto"
+                    :class="{
+                        'brightness-0': scrolled,
+                        'brightness-0 mix-blend-difference': !scrolled
+                    }"
+                >
             </a>
             
             <!-- Navigation Links - Desktop -->
