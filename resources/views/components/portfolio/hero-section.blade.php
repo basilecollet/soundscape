@@ -47,49 +47,11 @@
             @if($showIllustration)
                 <div class="flex justify-center lg:justify-end">
                     <div class="relative w-full max-w-md">
-                        <!-- Wireframe Globe SVG -->
-                        <svg viewBox="0 0 400 400" class="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Outer circle -->
-                            <circle cx="200" cy="200" r="150" 
-                                    stroke="currentColor" 
-                                    stroke-width="1.5" 
-                                    fill="none" 
-                                    class="text-portfolio-accent" />
-                            
-                            <!-- Horizontal lines (latitude) -->
-                            <ellipse cx="200" cy="200" rx="150" ry="50" 
-                                     stroke="currentColor" 
-                                     stroke-width="1" 
-                                     fill="none" 
-                                     class="text-portfolio-accent/50" />
-                            <ellipse cx="200" cy="200" rx="150" ry="100" 
-                                     stroke="currentColor" 
-                                     stroke-width="1" 
-                                     fill="none" 
-                                     class="text-portfolio-accent/50" />
-                            
-                            <!-- Vertical lines (longitude) -->
-                            <ellipse cx="200" cy="200" rx="50" ry="150" 
-                                     stroke="currentColor" 
-                                     stroke-width="1" 
-                                     fill="none" 
-                                     class="text-portfolio-accent/50" />
-                            <ellipse cx="200" cy="200" rx="100" ry="150" 
-                                     stroke="currentColor" 
-                                     stroke-width="1" 
-                                     fill="none" 
-                                     class="text-portfolio-accent/50" />
-                            
-                            <!-- Center lines -->
-                            <line x1="50" y1="200" x2="350" y2="200" 
-                                  stroke="currentColor" 
-                                  stroke-width="1" 
-                                  class="text-portfolio-accent/70" />
-                            <line x1="200" y1="50" x2="200" y2="350" 
-                                  stroke="currentColor" 
-                                  stroke-width="1" 
-                                  class="text-portfolio-accent/70" />
-                        </svg>
+                        <img 
+                            src="{{ asset('images/icons/globe.svg') }}" 
+                            alt="Globe wireframe" 
+                            class="w-full h-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+                        >
                     </div>
                 </div>
             @endif
