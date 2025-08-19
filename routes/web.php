@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Portfolio\AboutController;
 use App\Http\Controllers\Portfolio\ContactController;
 use App\Http\Controllers\Portfolio\HomeController;
@@ -20,6 +21,9 @@ Route::middleware('auth')->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+    
+    // Admin routes
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';
