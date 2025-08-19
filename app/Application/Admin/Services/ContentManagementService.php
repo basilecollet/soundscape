@@ -15,15 +15,13 @@ class ContentManagementService
         private readonly ContentRepository $contentRepository
     ) {}
 
-    public function updateContent(ContentUpdateData $data): bool
+    public function updateContent(ContentUpdateData $data): void
     {
-        $stored = $this->contentRepository->store([
+        $this->contentRepository->store([
             'key' => $this->getContentById($data->id)->key, // Garder la même clé
             'content' => $data->content,
             'title' => $data->title,
         ]);
-
-        return $stored !== null;
     }
 
     public function getContentById(int $id): PageContent
