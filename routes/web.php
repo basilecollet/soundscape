@@ -23,7 +23,12 @@ Route::middleware('auth')->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
     
     // Admin routes
-    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/content', [AdminController::class, 'content'])->name('content.index');
+        Route::get('/content/{id}/edit', [AdminController::class, 'editContent'])->name('content.edit');
+        Route::put('/content/{id}', [AdminController::class, 'updateContent'])->name('content.update');
+    });
 });
 
 require __DIR__.'/auth.php';
