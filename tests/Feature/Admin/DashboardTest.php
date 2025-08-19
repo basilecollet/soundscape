@@ -22,3 +22,15 @@ test('guest cannot access admin dashboard', function () {
 
     $response->assertRedirect('/login');
 });
+
+test('dashboard displays content statistics', function () {
+    // Créer quelques contenus de test
+    \App\Models\PageContent::factory()->count(5)->create();
+    
+    $response = $this->actingAs($this->admin)
+        ->get('/admin');
+    
+    $response->assertOk();
+    $response->assertSeeText('Total Content');
+    $response->assertSeeText('5'); // Le nombre de contenus créés
+});
