@@ -13,7 +13,8 @@ interface ContentRepository
 
     /**
      * Create or update content
-     * @param array<string, mixed> $data
+     *
+     * @param  array<string, mixed>  $data
      */
     public function store(array $data): PageContent;
 

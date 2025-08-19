@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->repository = new ContentDatabaseRepository();
+    $this->repository = new ContentDatabaseRepository;
 });
 
 test('can find content by id', function () {
@@ -60,7 +60,7 @@ test('can store new content', function () {
     expect($content->content)->toBe('New content');
     expect($content->title)->toBe('New title');
     expect($content->page)->toBe('new_page');
-    
+
     $this->assertDatabaseHas('page_contents', $data);
 });
 
@@ -83,7 +83,7 @@ test('can update existing content by key', function () {
     expect($content->id)->toBe($existing->id); // Même ID = mise à jour
     expect($content->content)->toBe('Updated content');
     expect($content->title)->toBe('Updated title');
-    
+
     // Vérifier qu'il n'y a toujours qu'un seul enregistrement avec cette clé
     expect(PageContent::where('key', 'existing_key')->count())->toBe(1);
 });
