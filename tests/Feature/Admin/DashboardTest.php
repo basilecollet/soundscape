@@ -34,3 +34,24 @@ test('dashboard displays content statistics', function () {
     $response->assertSeeText('Total Content');
     $response->assertSeeText('5'); // Le nombre de contenus créés
 });
+
+test('dashboard shows recent contact messages', function () {
+    // Créer 3 messages de contact
+    $messages = \App\Models\ContactMessage::factory()->count(3)->create([
+        'read_at' => null, // Messages non lus
+    ]);
+    
+    $response = $this->actingAs($this->admin)
+        ->get('/admin');
+    
+    $response->assertOk();
+    $response->assertSeeText('Recent Contact Messages');
+    
+    // Vérifier que les noms et sujets sont affichés
+    foreach ($messages as $message) {
+        $response->assertSeeText($message->name);
+        if ($message->subject) {
+            $response->assertSeeText($message->subject);
+        }
+    }
+});
