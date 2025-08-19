@@ -6,14 +6,9 @@ use Database\Factories\PageContentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @template TFactory of PageContentFactory
- *
- * @implements HasFactory<TFactory>
- */
 class PageContent extends Model
 {
-    /** @use HasFactory<TFactory> */
+    /** @use HasFactory<PageContentFactory> */
     use HasFactory;
 
     protected $fillable = [

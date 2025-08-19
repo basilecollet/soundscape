@@ -10,11 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PageContentFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<model property of \App\Models\PageContent, mixed>
-     */
+    protected $model = PageContent::class;
+
     public function definition(): array
     {
         return [

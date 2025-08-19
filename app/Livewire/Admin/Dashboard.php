@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire\Admin;
 
 use App\Application\Admin\Services\DashboardService;
+use App\Models\ContactMessage;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -17,7 +19,7 @@ class Dashboard extends Component
     public ?string $lastContentUpdate = null;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\ContactMessage>
+     * @var Collection<int, ContactMessage>
      */
     public Collection $recentMessages;
 
@@ -31,7 +33,7 @@ class Dashboard extends Component
         $this->recentMessages = $dashboardService->getRecentContactMessages();
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view('livewire.admin.dashboard');
     }

@@ -12,11 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ContactMessageFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<model property of \App\Models\ContactMessage, mixed>
-     */
+    protected $model = ContactMessage::class;
+
     public function definition(): array
     {
         return [
