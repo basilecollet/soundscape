@@ -30,8 +30,9 @@ test('can find content by id', function () {
 });
 
 test('throws exception when content not found', function () {
-    $this->repository->findById(999);
-})->throws(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    expect(fn() => $this->repository->findById(999))
+        ->toThrow(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+});
 
 test('can get all content ordered by page and key', function () {
     PageContent::factory()->create(['page' => 'home', 'key' => 'z_key']);
