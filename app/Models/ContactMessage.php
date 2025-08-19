@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @template TFactory of ContactMessageFactory
+ *
  * @implements HasFactory<TFactory>
  */
 class ContactMessage extends Model

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @template TFactory of PageContentFactory
+ *
  * @implements HasFactory<TFactory>
  */
 class PageContent extends Model
