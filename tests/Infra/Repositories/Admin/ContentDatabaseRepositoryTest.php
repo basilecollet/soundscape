@@ -30,7 +30,7 @@ test('can find content by id', function () {
 });
 
 test('throws exception when content not found', function () {
-    expect(fn() => $this->repository->findById(999))
+    expect(fn () => $this->repository->findById(999))
         ->toThrow(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
 });
 
