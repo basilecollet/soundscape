@@ -24,6 +24,9 @@ class DashboardService
         );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, ContactMessage>
+     */
     public function getRecentContactMessages(int $limit = 5): Collection
     {
         return ContactMessage::latest()

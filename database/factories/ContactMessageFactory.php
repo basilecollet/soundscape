@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\ContactMessage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactMessage>
+ * @extends Factory<ContactMessage>
  */
 class ContactMessageFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array<model property of \App\Models\ContactMessage, mixed>
      */
     public function definition(): array
     {

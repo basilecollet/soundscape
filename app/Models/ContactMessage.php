@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ContactMessageFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @template TFactory of ContactMessageFactory
+ * @implements HasFactory<TFactory>
+ */
 class ContactMessage extends Model
 {
+    /** @use HasFactory<TFactory> */
     use HasFactory;
 
     protected $fillable = [

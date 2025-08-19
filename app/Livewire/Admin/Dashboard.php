@@ -16,6 +16,9 @@ class Dashboard extends Component
 
     public ?string $lastContentUpdate = null;
 
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\ContactMessage>
+     */
     public Collection $recentMessages;
 
     public function mount(DashboardService $dashboardService): void
@@ -28,7 +31,7 @@ class Dashboard extends Component
         $this->recentMessages = $dashboardService->getRecentContactMessages();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.admin.dashboard');
     }

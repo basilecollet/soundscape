@@ -24,6 +24,9 @@ class ContentManagementService
         return PageContent::findOrFail($id);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, PageContent>
+     */
     public function getAllContent()
     {
         return PageContent::orderBy('page')
