@@ -19,8 +19,8 @@ class DashboardStatistics
         return new self(
             totalContent: $data['totalContent'] ?? 0,
             recentMessages: $data['recentMessages'] ?? 0,
-            lastContentUpdate: isset($data['lastContentUpdate']) 
-                ? Carbon::parse($data['lastContentUpdate']) 
+            lastContentUpdate: isset($data['lastContentUpdate'])
+                ? Carbon::parse($data['lastContentUpdate'])
                 : null
         );
     }

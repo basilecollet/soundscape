@@ -12,7 +12,7 @@ class ContentManagementService
     public function updateContent(ContentUpdateData $data): bool
     {
         $pageContent = PageContent::findOrFail($data->id);
-        
+
         return $pageContent->update([
             'content' => $data->content,
             'title' => $data->title,

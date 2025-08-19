@@ -11,8 +11,11 @@ use Livewire\Component;
 class Dashboard extends Component
 {
     public int $totalContent = 0;
+
     public int $recentMessagesCount = 0;
+
     public ?string $lastContentUpdate = null;
+
     public Collection $recentMessages;
 
     public function mount(DashboardService $dashboardService): void
@@ -21,7 +24,7 @@ class Dashboard extends Component
         $this->totalContent = $statistics->totalContent;
         $this->recentMessagesCount = $statistics->recentMessages;
         $this->lastContentUpdate = $statistics->lastContentUpdate?->diffForHumans();
-        
+
         $this->recentMessages = $dashboardService->getRecentContactMessages();
     }
 

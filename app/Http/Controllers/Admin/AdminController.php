@@ -46,7 +46,7 @@ class AdminController extends Controller
         ]);
 
         $this->contentManagementService->updateContent($updateData);
-        
+
         return redirect()->route('admin.content.index');
     }
 }
