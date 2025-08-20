@@ -11,7 +11,7 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
 Route::get('/contact', ContactController::class)->name('contact');
 
-Route::view('dashboard', 'dashboard')
+Route::redirect('dashboard', 'admin')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
