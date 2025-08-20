@@ -8,7 +8,6 @@ use App\Domain\Admin\Enums\ContentKeys;
 use App\Models\PageContent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +16,7 @@ class ContentList extends Component
     use WithPagination;
 
     public string $selectedPage = 'all';
+
     public string $search = '';
 
     public function mount(): void
@@ -46,9 +46,9 @@ class ContentList extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('key', 'like', '%' . $this->search . '%')
-                  ->orWhere('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('content', 'like', '%' . $this->search . '%');
+                $q->where('key', 'like', '%'.$this->search.'%')
+                    ->orWhere('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('content', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -63,17 +63,17 @@ class ContentList extends Component
     public function getMissingKeysProperty(): array
     {
         $missingKeys = [];
-        
+
         foreach (ContentKeys::getAvailablePages() as $page) {
             $existingKeys = PageContent::where('page', $page)->pluck('key')->toArray();
             $requiredKeys = ContentKeys::getKeysForPage($page);
             $missing = array_diff($requiredKeys, $existingKeys);
-            
-            if (!empty($missing)) {
+
+            if (! empty($missing)) {
                 $missingKeys[$page] = $missing;
             }
         }
-        
+
         return $missingKeys;
     }
 

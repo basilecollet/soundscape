@@ -75,7 +75,7 @@ enum ContentKeys: string
      */
     public static function getAllKeys(): array
     {
-        return array_map(fn($case) => $case->value, self::cases());
+        return array_map(fn ($case) => $case->value, self::cases());
     }
 
     /**
@@ -88,19 +88,19 @@ enum ContentKeys: string
             self::HOME_TEXT->value => 'Welcome Text',
             self::HOME_SERVICES->value => 'Services Section',
             self::HOME_TESTIMONIALS->value => 'Testimonials',
-            
+
             self::ABOUT_HERO->value => 'Hero Section',
             self::ABOUT_SECTION_1->value => 'About Text 1',
             self::ABOUT_SECTION_2->value => 'About Text 2',
             self::ABOUT_SECTION_3->value => 'About Text 3',
             self::ABOUT_TEAM->value => 'Team Section',
             self::ABOUT_MISSION->value => 'Mission & Vision',
-            
+
             self::CONTACT_HERO->value => 'Hero Section',
             self::CONTACT_TEXT->value => 'Contact Text',
             self::CONTACT_INFO->value => 'Contact Information',
             self::CONTACT_HOURS->value => 'Opening Hours',
-            
+
             default => ucwords(str_replace('_', ' ', $key)),
         };
     }

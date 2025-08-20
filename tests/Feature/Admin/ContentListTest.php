@@ -46,17 +46,17 @@ it('can search contents by key, title and content', function () {
     PageContent::factory()->create([
         'key' => 'home_text',
         'title' => 'Welcome Message',
-        'content' => 'Welcome to our website'
+        'content' => 'Welcome to our website',
     ]);
     PageContent::factory()->create([
         'key' => 'about_section_1',
         'title' => 'About Us',
-        'content' => 'Learn about our company'
+        'content' => 'Learn about our company',
     ]);
 
     $component = Livewire::test(ContentList::class)
         ->set('search', 'Welcome');
-    
+
     $contents = $component->get('contents');
     expect($contents)->toHaveCount(1);
     expect($contents->first()->key)->toBe('home_text');
@@ -68,12 +68,12 @@ it('displays missing keys for each page', function () {
 
     $component = Livewire::test(ContentList::class);
     $missingKeys = $component->get('missingKeys');
-    
+
     // Home page should have missing keys (all except home_text)
     expect($missingKeys)->toHaveKey('home');
     expect($missingKeys['home'])->toContain('home_hero');
     expect($missingKeys['home'])->not->toContain('home_text');
-    
+
     // About and contact pages should have all their keys missing
     expect($missingKeys)->toHaveKey('about');
     expect($missingKeys)->toHaveKey('contact');
@@ -90,26 +90,26 @@ it('can create missing content', function () {
         'page' => 'home',
         'key' => 'home_hero',
         'title' => ContentKeys::getLabel('home_hero'),
-        'content' => ''
+        'content' => '',
     ])->exists())->toBeTrue();
 });
 
 it('resets pagination when page filter changes', function () {
     PageContent::factory()->count(20)->create(); // Create enough content for pagination
-    
+
     $component = Livewire::test(ContentList::class)
         ->set('selectedPage', 'home');
-    
+
     // The pagination should be reset when changing the filter
     expect($component->instance()->getPage())->toBe(1);
 });
 
 it('resets pagination when search changes', function () {
     PageContent::factory()->count(20)->create(); // Create enough content for pagination
-    
+
     $component = Livewire::test(ContentList::class)
         ->set('search', 'test');
-    
+
     // The pagination should be reset when changing the search
     expect($component->instance()->getPage())->toBe(1);
 });
@@ -132,6 +132,6 @@ it('orders contents by page then key', function () {
 it('provides available pages from ContentKeys enum', function () {
     $component = Livewire::test(ContentList::class);
     $availablePages = $component->get('availablePages');
-    
+
     expect($availablePages)->toBe(['home', 'about', 'contact']);
 });

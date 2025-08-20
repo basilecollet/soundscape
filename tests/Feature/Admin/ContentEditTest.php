@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Domain\Admin\Enums\ContentKeys;
 use App\Livewire\Admin\ContentEdit;
 use App\Models\PageContent;
 use App\Models\User;
@@ -21,7 +20,7 @@ it('can render content edit component with existing content', function () {
         'key' => 'home_hero',
         'title' => 'Home Hero',
         'content' => 'Welcome to our site',
-        'page' => 'home'
+        'page' => 'home',
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $content->id])
@@ -46,7 +45,7 @@ it('can save existing content', function () {
         'key' => 'home_hero',
         'title' => 'Old Title',
         'content' => 'Old content',
-        'page' => 'home'
+        'page' => 'home',
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $pageContent->id])
@@ -66,7 +65,7 @@ it('can create new content', function () {
     // Test the creation by verifying the database directly
     $component = Livewire::test(ContentEdit::class, ['contentId' => null]);
     $component->set('content', 'New content');
-    $component->set('title', 'New Title'); 
+    $component->set('title', 'New Title');
     $component->set('page', 'home');
     $component->set('key', 'home_hero');
     $component->call('save');
@@ -106,7 +105,7 @@ it('allows updating existing content without key uniqueness error', function () 
     $content = PageContent::factory()->create([
         'key' => 'home_hero',
         'page' => 'home',
-        'content' => 'Old content'
+        'content' => 'Old content',
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $content->id])
@@ -148,7 +147,7 @@ it('provides available pages from ContentKeys enum', function () {
 it('can cancel editing and reset form', function () {
     $content = PageContent::factory()->create([
         'content' => 'Original content',
-        'title' => 'Original title'
+        'title' => 'Original title',
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $content->id])
