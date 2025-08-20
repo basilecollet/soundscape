@@ -21,8 +21,9 @@
             <flux:spacer />
 
             <!-- Desktop User Menu -->
-            <flux:dropdown class="hidden lg:block" position="bottom" align="start">
+            <flux:dropdown class="hidden lg:block" position="top" align="start">
                 <flux:profile
+                    class="cursor-pointer"
                     :name="auth()->user()->name"
                     :initials="auth()->user()->initials()"
                     icon:trailing="chevrons-up-down"
@@ -74,6 +75,7 @@
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
+                    class="cursor-pointer"
                     :initials="auth()->user()->initials()"
                     icon-trailing="chevron-down"
                 />
