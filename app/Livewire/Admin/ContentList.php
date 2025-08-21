@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin;
 
+use App\Application\Admin\Services\ContentManagementService;
 use App\Domain\Admin\Enums\ContentKeys;
 use App\Models\PageContent;
 use Illuminate\Contracts\View\View;
@@ -18,6 +19,11 @@ class ContentList extends Component
     public string $selectedPage = 'all';
 
     public string $search = '';
+
+    private function getContentManagementService(): ContentManagementService
+    {
+        return app(ContentManagementService::class);
+    }
 
     public function mount(): void
     {
@@ -36,23 +42,7 @@ class ContentList extends Component
 
     public function getContentsProperty(): Collection
     {
-        $query = PageContent::query()
-            ->orderBy('page')
-            ->orderBy('key');
-
-        if ($this->selectedPage !== 'all') {
-            $query->where('page', $this->selectedPage);
-        }
-
-        if ($this->search) {
-            $query->where(function ($q) {
-                $q->where('key', 'like', '%'.$this->search.'%')
-                    ->orWhere('title', 'like', '%'.$this->search.'%')
-                    ->orWhere('content', 'like', '%'.$this->search.'%');
-            });
-        }
-
-        return $query->get();
+        return $this->getContentManagementService()->getFilteredAndSortedContents($this->selectedPage, $this->search);
     }
 
     public function getAvailablePagesProperty(): array
@@ -62,30 +52,12 @@ class ContentList extends Component
 
     public function getMissingKeysProperty(): array
     {
-        $missingKeys = [];
-
-        foreach (ContentKeys::getAvailablePages() as $page) {
-            $existingKeys = PageContent::where('page', $page)->pluck('key')->toArray();
-            $requiredKeys = ContentKeys::getKeysForPage($page);
-            $missing = array_diff($requiredKeys, $existingKeys);
-
-            if (! empty($missing)) {
-                $missingKeys[$page] = $missing;
-            }
-        }
-
-        return $missingKeys;
+        return $this->getContentManagementService()->getMissingKeysForAllPages();
     }
 
     public function createMissingContent(string $page, string $key): void
     {
-        PageContent::create([
-            'key' => $key,
-            'content' => '',
-            'title' => ContentKeys::getLabel($key),
-            'page' => $page,
-        ]);
-
+        $this->getContentManagementService()->createContentFromKey($page, $key, ContentKeys::getLabel($key));
         $this->dispatch('content-created', key: $key);
     }
 
