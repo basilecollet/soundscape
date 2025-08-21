@@ -59,4 +59,9 @@ class ContentDatabaseRepository implements ContentRepository
             ->pluck('key')
             ->toArray();
     }
+
+    public function count(): int
+    {
+        return PageContent::count();
+    }
 }

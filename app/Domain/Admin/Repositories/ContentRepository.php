@@ -39,4 +39,6 @@ interface ContentRepository
      * @return array<string>
      */
     public function getExistingKeysForPage(string $page): array;
+
+    public function count(): int;
 }

@@ -214,3 +214,19 @@ describe('getExistingKeysForPage method', function () {
         expect($keys)->toBe([]);
     });
 });
+
+describe('count method', function () {
+    test('can count total content items', function () {
+        PageContent::factory()->count(5)->create();
+
+        $count = $this->repository->count();
+
+        expect($count)->toBe(5);
+    });
+
+    test('returns zero when no content exists', function () {
+        $count = $this->repository->count();
+
+        expect($count)->toBe(0);
+    });
+});
