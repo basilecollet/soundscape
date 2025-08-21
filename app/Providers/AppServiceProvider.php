@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Admin\Repositories\ContentRepository::class,
             \App\Infra\Repositories\Admin\ContentDatabaseRepository::class
         );
-        
+
         $this->app->bind(
             \App\Domain\Admin\Repositories\ContactRepository::class,
             \App\Infra\Repositories\Admin\ContactDatabaseRepository::class

@@ -19,7 +19,7 @@ class PageContentFactory extends Factory
         $page = $this->faker->randomElement(ContentKeys::getAvailablePages());
         $availableKeys = ContentKeys::getKeysForPage($page);
         $baseKey = $this->faker->randomElement($availableKeys);
-        $key = $baseKey . '_' . $this->faker->unique()->randomNumber(4);
+        $key = $baseKey.'_'.$this->faker->unique()->randomNumber(4);
 
         return [
             'key' => $key,

@@ -38,7 +38,7 @@ class ContentListFilterData
 
     public function hasSearch(): bool
     {
-        return !empty($this->search);
+        return ! empty($this->search);
     }
 
     public function isAllPages(): bool

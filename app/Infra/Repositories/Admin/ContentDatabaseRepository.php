@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infra\Repositories\Admin;
 
-use App\Domain\Admin\Repositories\ContentRepository;
 use App\Domain\Admin\Enums\ContentKeys;
+use App\Domain\Admin\Repositories\ContentRepository;
 use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -95,7 +95,7 @@ class ContentDatabaseRepository implements ContentRepository
         }
 
         // Filter by search term if provided
-        if (!empty($search)) {
+        if (! empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('key', 'like', "%{$search}%")
                     ->orWhere('title', 'like', "%{$search}%")
@@ -114,11 +114,11 @@ class ContentDatabaseRepository implements ContentRepository
             $existingKeys = PageContent::where('page', $page)
                 ->pluck('key')
                 ->toArray();
-            
+
             $requiredKeys = ContentKeys::getKeysForPage($page);
             $missing = array_diff($requiredKeys, $existingKeys);
 
-            if (!empty($missing)) {
+            if (! empty($missing)) {
                 $missingKeys[$page] = $missing;
             }
         }

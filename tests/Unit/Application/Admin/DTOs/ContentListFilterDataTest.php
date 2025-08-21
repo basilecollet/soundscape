@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Application\Admin\DTOs\ContentListFilterData;
 
 it('can create ContentListFilterData with default values', function () {
-    $filter = new ContentListFilterData();
+    $filter = new ContentListFilterData;
 
     expect($filter->page)->toBe('all');
     expect($filter->search)->toBe('');
@@ -36,7 +36,7 @@ it('can create ContentListFilterData from array', function () {
     $data = [
         'page' => 'contact',
         'search' => 'phone',
-        'perPage' => 20
+        'perPage' => 20,
     ];
 
     $filter = ContentListFilterData::fromArray($data);
@@ -48,7 +48,7 @@ it('can create ContentListFilterData from array', function () {
 
 it('can create ContentListFilterData from array with missing values', function () {
     $data = [
-        'page' => 'home'
+        'page' => 'home',
     ];
 
     $filter = ContentListFilterData::fromArray($data);
@@ -78,20 +78,20 @@ it('can convert ContentListFilterData to array', function () {
     expect($array)->toBe([
         'page' => 'about',
         'search' => 'story',
-        'perPage' => 25
+        'perPage' => 25,
     ]);
 });
 
 it('can check if filter has search term', function () {
     $filterWithSearch = new ContentListFilterData(search: 'test');
-    $filterWithoutSearch = new ContentListFilterData();
+    $filterWithoutSearch = new ContentListFilterData;
 
     expect($filterWithSearch->hasSearch())->toBeTrue();
     expect($filterWithoutSearch->hasSearch())->toBeFalse();
 });
 
 it('can check if filter is for all pages', function () {
-    $allPagesFilter = new ContentListFilterData(); // Default 'all'
+    $allPagesFilter = new ContentListFilterData; // Default 'all'
     $specificPageFilter = new ContentListFilterData(page: 'home');
 
     expect($allPagesFilter->isAllPages())->toBeTrue();

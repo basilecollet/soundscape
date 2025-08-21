@@ -6,7 +6,6 @@ namespace App\Livewire\Admin;
 
 use App\Application\Admin\Services\ContentManagementService;
 use App\Domain\Admin\Enums\ContentKeys;
-use App\Models\PageContent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;

@@ -22,7 +22,7 @@ describe('existing methods', function () {
             'key' => 'test_key',
             'content' => 'Test content',
             'title' => 'Test title',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         $this->repository->shouldReceive('findById')
@@ -63,7 +63,7 @@ describe('new methods for enhanced content management', function () {
             'key' => 'home_hero',
             'content' => 'Welcome to our site',
             'page' => 'home',
-            'title' => 'Hero Section'
+            'title' => 'Hero Section',
         ]);
 
         $this->repository->shouldReceive('store')
@@ -71,7 +71,7 @@ describe('new methods for enhanced content management', function () {
                 'key' => 'home_hero',
                 'content' => 'Welcome to our site',
                 'page' => 'home',
-                'title' => 'Hero Section'
+                'title' => 'Hero Section',
             ])
             ->andReturn($expectedContent);
 
@@ -84,7 +84,7 @@ describe('new methods for enhanced content management', function () {
         $existingContent = new PageContent([
             'id' => 1,
             'key' => 'home_hero',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         $contentData = ContentData::forUpdate(
@@ -102,12 +102,12 @@ describe('new methods for enhanced content management', function () {
                 'key' => 'home_hero',
                 'content' => 'Updated content',
                 'title' => 'Updated Title',
-                'page' => 'home'
+                'page' => 'home',
             ])
             ->andReturn($existingContent);
 
         $this->service->updateContentWithData($contentData);
-        
+
         // Assert that the mock expectations were fulfilled
         expect(true)->toBeTrue(); // Explicit assertion for the test
     });
@@ -189,7 +189,7 @@ describe('new methods for enhanced content management', function () {
     });
 
     test('can get all contents when filter is for all pages', function () {
-        $filter = new ContentListFilterData(); // Default is 'all' pages
+        $filter = new ContentListFilterData; // Default is 'all' pages
 
         $contents = new Collection([
             new PageContent(['page' => 'home']),
@@ -230,9 +230,9 @@ describe('new methods for enhanced content management', function () {
 
         $this->repository->shouldReceive('findById')
             ->with(999)
-            ->andThrow(new ModelNotFoundException());
+            ->andThrow(new ModelNotFoundException);
 
-        expect(fn() => $this->service->updateContentWithData($contentData))
+        expect(fn () => $this->service->updateContentWithData($contentData))
             ->toThrow(ModelNotFoundException::class);
     });
 });
@@ -244,7 +244,7 @@ describe('new methods for Livewire components integration', function () {
             'key' => 'home_hero',
             'content' => 'Welcome content',
             'title' => 'Hero Title',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         $this->repository->shouldReceive('findById')
@@ -260,7 +260,7 @@ describe('new methods for Livewire components integration', function () {
     test('returns null when content not found for editing', function () {
         $this->repository->shouldReceive('findById')
             ->with(999)
-            ->andThrow(new ModelNotFoundException());
+            ->andThrow(new ModelNotFoundException);
 
         $result = $this->service->findContentForEditing(999);
 
@@ -326,7 +326,7 @@ describe('new methods for Livewire components integration', function () {
     test('can get missing keys for all pages', function () {
         $missingKeys = [
             'home' => ['home_missing_key'],
-            'about' => ['about_missing_1', 'about_missing_2']
+            'about' => ['about_missing_1', 'about_missing_2'],
         ];
 
         $this->repository->shouldReceive('getMissingKeysForAllPages')
@@ -344,7 +344,7 @@ describe('new methods for Livewire components integration', function () {
             'key' => 'home_new_section',
             'content' => '',
             'title' => 'New Section',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         $this->repository->shouldReceive('store')
@@ -352,7 +352,7 @@ describe('new methods for Livewire components integration', function () {
                 'key' => 'home_new_section',
                 'content' => '',
                 'title' => 'New Section',
-                'page' => 'home'
+                'page' => 'home',
             ])
             ->andReturn($expectedContent);
 
@@ -368,7 +368,7 @@ describe('new methods for Livewire components integration', function () {
             'key' => 'home_no_title',
             'content' => '',
             'title' => '',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         $this->repository->shouldReceive('store')
@@ -376,7 +376,7 @@ describe('new methods for Livewire components integration', function () {
                 'key' => 'home_no_title',
                 'content' => '',
                 'title' => '',
-                'page' => 'home'
+                'page' => 'home',
             ])
             ->andReturn($expectedContent);
 

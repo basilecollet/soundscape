@@ -44,12 +44,13 @@ class ContactDatabaseRepository implements ContactRepository
     public function markAsRead(int $id): bool
     {
         $message = ContactMessage::find($id);
-        
+
         if ($message) {
             $message->markAsRead();
+
             return true;
         }
-        
+
         return false;
     }
 }

@@ -42,7 +42,7 @@ class ContentManagementService
     public function createContent(ContentData $data): PageContent
     {
         $storeData = [];
-        
+
         if ($data->key) {
             $storeData['key'] = $data->key;
         }
@@ -67,7 +67,7 @@ class ContentManagementService
             'key' => $existing->key,
             'page' => $existing->page,
         ];
-        
+
         if ($data->content) {
             $storeData['content'] = $data->content;
         }
@@ -114,15 +114,15 @@ class ContentManagementService
     {
         if ($filter->hasSearch()) {
             $contents = $this->searchContents($filter->search);
-            
-            if (!$filter->isAllPages()) {
-                $contents = $contents->filter(fn($content) => $content->page === $filter->page);
+
+            if (! $filter->isAllPages()) {
+                $contents = $contents->filter(fn ($content) => $content->page === $filter->page);
             }
-            
+
             return $contents;
         }
 
-        if (!$filter->isAllPages()) {
+        if (! $filter->isAllPages()) {
             return $this->getContentsByPage($filter->page);
         }
 
@@ -147,15 +147,15 @@ class ContentManagementService
     public function validateUniqueKey(string $key, ?int $excludeId = null): bool
     {
         if ($excludeId !== null) {
-            return !$this->contentRepository->existsByKeyExcludingId($key, $excludeId);
+            return ! $this->contentRepository->existsByKeyExcludingId($key, $excludeId);
         }
 
-        return !$this->contentRepository->existsByKey($key);
+        return ! $this->contentRepository->existsByKey($key);
     }
 
     /**
      * Get filtered and sorted contents for Livewire components
-     * 
+     *
      * @return Collection<int, PageContent>
      */
     public function getFilteredAndSortedContents(string $page, string $search): Collection
@@ -165,7 +165,7 @@ class ContentManagementService
 
     /**
      * Get missing keys for all pages
-     * 
+     *
      * @return array<string, array<string>>
      */
     public function getMissingKeysForAllPages(): array

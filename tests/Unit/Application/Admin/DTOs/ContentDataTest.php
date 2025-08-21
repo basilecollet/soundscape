@@ -70,7 +70,7 @@ it('can create ContentData from array for creation', function () {
         'content' => 'Test content',
         'title' => 'Test Title',
         'key' => 'home_text',
-        'page' => 'home'
+        'page' => 'home',
     ];
 
     $data = ContentData::fromArray($array);
@@ -87,7 +87,7 @@ it('can create ContentData from array for update', function () {
     $array = [
         'id' => 456,
         'content' => 'Updated test content',
-        'title' => 'Updated Test Title'
+        'title' => 'Updated Test Title',
     ];
 
     $data = ContentData::fromArray($array);
@@ -115,7 +115,7 @@ it('can convert ContentData to array for creation', function () {
         'content' => 'About us content',
         'title' => 'About Section',
         'key' => 'about_section_1',
-        'page' => 'about'
+        'page' => 'about',
     ]);
 });
 
@@ -133,7 +133,7 @@ it('can convert ContentData to array for update', function () {
         'content' => 'Updated about content',
         'title' => 'Updated About',
         'key' => null,
-        'page' => null
+        'page' => null,
     ]);
 });
 
@@ -141,7 +141,7 @@ it('can handle array without optional fields', function () {
     $array = [
         'content' => 'Minimal content',
         'key' => 'contact_text',
-        'page' => 'contact'
+        'page' => 'contact',
     ];
 
     $data = ContentData::fromArray($array);

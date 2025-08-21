@@ -96,7 +96,7 @@ describe('delete method', function () {
         $content = PageContent::factory()->create([
             'key' => 'home_hero',
             'content' => 'Test content',
-            'page' => 'home'
+            'page' => 'home',
         ]);
 
         expect(PageContent::find($content->id))->not->toBeNull();
@@ -107,7 +107,7 @@ describe('delete method', function () {
     });
 
     test('throws exception when trying to delete non-existent content', function () {
-        expect(fn() => $this->repository->delete(999))
+        expect(fn () => $this->repository->delete(999))
             ->toThrow(ModelNotFoundException::class);
     });
 });

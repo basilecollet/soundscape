@@ -36,7 +36,7 @@ class ContentEdit extends Component
 
         if ($contentId) {
             $this->originalContent = $this->getContentManagementService()->findContentForEditing($contentId);
-            
+
             if ($this->originalContent) {
                 $this->content = $this->originalContent->content;
                 $this->title = $this->originalContent->title;
@@ -76,6 +76,7 @@ class ContentEdit extends Component
         // Validate uniqueness using service
         if (! $this->getContentManagementService()->validateUniqueKey($this->key, $this->contentId)) {
             $this->addError('key', 'The key has already been taken.');
+
             return;
         }
 
@@ -84,6 +85,7 @@ class ContentEdit extends Component
         // Validate key is valid for the selected page
         if (! ContentKeys::isValidKeyForPage($this->key, $this->page)) {
             $this->addError('key', 'The selected key is not valid for the '.$this->page.' page.');
+
             return;
         }
 
@@ -117,7 +119,7 @@ class ContentEdit extends Component
             if (! $this->originalContent) {
                 $this->originalContent = $this->getContentManagementService()->findContentForEditing($this->contentId);
             }
-            
+
             if ($this->originalContent) {
                 $this->content = $this->originalContent->content;
                 $this->title = $this->originalContent->title;

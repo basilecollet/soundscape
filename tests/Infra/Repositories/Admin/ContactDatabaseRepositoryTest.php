@@ -69,7 +69,7 @@ test('can create contact message', function () {
 test('can find contact message by id', function () {
     $message = ContactMessage::factory()->create([
         'name' => 'Jane Doe',
-        'email' => 'jane@example.com'
+        'email' => 'jane@example.com',
     ]);
 
     $found = $this->repository->findById($message->id);

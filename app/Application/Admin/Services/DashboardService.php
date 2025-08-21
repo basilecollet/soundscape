@@ -19,10 +19,10 @@ class DashboardService
     {
         $totalContent = $this->contentRepository->count();
         $recentMessages = $this->contactManagementService->getUnreadCount();
-        
+
         $latestContents = $this->contentRepository->findLatest(1);
-        $lastContentUpdate = $latestContents->isNotEmpty() 
-            ? $latestContents->first()->updated_at 
+        $lastContentUpdate = $latestContents->isNotEmpty()
+            ? $latestContents->first()->updated_at
             : null;
 
         return new DashboardStatistics(

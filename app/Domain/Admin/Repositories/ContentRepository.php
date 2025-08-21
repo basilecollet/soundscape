@@ -59,14 +59,14 @@ interface ContentRepository
 
     /**
      * Get filtered and sorted contents for Livewire components
-     * 
+     *
      * @return Collection<int, PageContent>
      */
     public function getFilteredAndSortedContents(string $page, string $search): Collection;
 
     /**
      * Get missing keys for all pages
-     * 
+     *
      * @return array<string, array<string>>
      */
     public function getMissingKeysForAllPages(): array;
