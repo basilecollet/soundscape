@@ -64,4 +64,9 @@ class ContentDatabaseRepository implements ContentRepository
     {
         return PageContent::count();
     }
+
+    public function findLatest(int $limit): Collection
+    {
+        return PageContent::latest('updated_at')->take($limit)->get();
+    }
 }

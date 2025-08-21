@@ -41,4 +41,9 @@ interface ContentRepository
     public function getExistingKeysForPage(string $page): array;
 
     public function count(): int;
+
+    /**
+     * @return Collection<int, PageContent>
+     */
+    public function findLatest(int $limit): Collection;
 }

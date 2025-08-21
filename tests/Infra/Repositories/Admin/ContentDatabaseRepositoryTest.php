@@ -230,3 +230,25 @@ describe('count method', function () {
         expect($count)->toBe(0);
     });
 });
+
+describe('findLatest method', function () {
+    test('can find latest content items with limit', function () {
+        // Create contents with different timestamps
+        PageContent::factory()->create(['updated_at' => now()->subDays(3)]);
+        PageContent::factory()->create(['updated_at' => now()->subDays(1)]);
+        PageContent::factory()->create(['updated_at' => now()]);
+
+        $latest = $this->repository->findLatest(2);
+
+        expect($latest)->toHaveCount(2);
+        // Should return newest first
+        expect($latest->first()->updated_at->format('Y-m-d'))->toBe(now()->format('Y-m-d'));
+    });
+
+    test('returns empty collection when no content exists', function () {
+        $contents = $this->repository->findLatest(5);
+
+        expect($contents)->toHaveCount(0);
+        expect($contents)->toBeInstanceOf(Collection::class);
+    });
+});
