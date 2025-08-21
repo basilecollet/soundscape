@@ -46,4 +46,28 @@ interface ContentRepository
      * @return Collection<int, PageContent>
      */
     public function findLatest(int $limit): Collection;
+
+    /**
+     * Check if a key already exists
+     */
+    public function existsByKey(string $key): bool;
+
+    /**
+     * Check if a key exists excluding a specific ID (for updates)
+     */
+    public function existsByKeyExcludingId(string $key, int $excludeId): bool;
+
+    /**
+     * Get filtered and sorted contents for Livewire components
+     * 
+     * @return Collection<int, PageContent>
+     */
+    public function getFilteredAndSortedContents(string $page, string $search): Collection;
+
+    /**
+     * Get missing keys for all pages
+     * 
+     * @return array<string, array<string>>
+     */
+    public function getMissingKeysForAllPages(): array;
 }

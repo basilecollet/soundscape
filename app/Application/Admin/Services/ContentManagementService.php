@@ -128,4 +128,61 @@ class ContentManagementService
 
         return $this->getAllContent();
     }
+
+    /**
+     * Find content for editing purposes (allows null return)
+     */
+    public function findContentForEditing(int $id): ?PageContent
+    {
+        try {
+            return $this->contentRepository->findById($id);
+        } catch (\Exception) {
+            return null;
+        }
+    }
+
+    /**
+     * Validate if a key is unique (for new content) or unique excluding current ID (for updates)
+     */
+    public function validateUniqueKey(string $key, ?int $excludeId = null): bool
+    {
+        if ($excludeId !== null) {
+            return !$this->contentRepository->existsByKeyExcludingId($key, $excludeId);
+        }
+
+        return !$this->contentRepository->existsByKey($key);
+    }
+
+    /**
+     * Get filtered and sorted contents for Livewire components
+     * 
+     * @return Collection<int, PageContent>
+     */
+    public function getFilteredAndSortedContents(string $page, string $search): Collection
+    {
+        return $this->contentRepository->getFilteredAndSortedContents($page, $search);
+    }
+
+    /**
+     * Get missing keys for all pages
+     * 
+     * @return array<string, array<string>>
+     */
+    public function getMissingKeysForAllPages(): array
+    {
+        return $this->contentRepository->getMissingKeysForAllPages();
+    }
+
+    /**
+     * Create content from key with optional default title
+     */
+    public function createContentFromKey(string $page, string $key, ?string $defaultTitle = null): PageContent
+    {
+        return $this->contentRepository->store([
+            'key' => $key,
+            'content' => '',
+            'title' => $defaultTitle ?? '',
+            'page' => $page,
+        ]);
+    }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Repositories\Admin;
 
 use App\Domain\Admin\Repositories\ContentRepository;
+use App\Domain\Admin\Enums\ContentKeys;
 use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -68,5 +69,60 @@ class ContentDatabaseRepository implements ContentRepository
     public function findLatest(int $limit): Collection
     {
         return PageContent::latest('updated_at')->take($limit)->get();
+    }
+
+    public function existsByKey(string $key): bool
+    {
+        return PageContent::where('key', $key)->exists();
+    }
+
+    public function existsByKeyExcludingId(string $key, int $excludeId): bool
+    {
+        return PageContent::where('key', $key)
+            ->where('id', '!=', $excludeId)
+            ->exists();
+    }
+
+    public function getFilteredAndSortedContents(string $page, string $search): Collection
+    {
+        $query = PageContent::query()
+            ->orderBy('page')
+            ->orderBy('key');
+
+        // Filter by page if not 'all'
+        if ($page !== 'all') {
+            $query->where('page', $page);
+        }
+
+        // Filter by search term if provided
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('key', 'like', "%{$search}%")
+                    ->orWhere('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        return $query->get();
+    }
+
+    public function getMissingKeysForAllPages(): array
+    {
+        $missingKeys = [];
+
+        foreach (ContentKeys::getAvailablePages() as $page) {
+            $existingKeys = PageContent::where('page', $page)
+                ->pluck('key')
+                ->toArray();
+            
+            $requiredKeys = ContentKeys::getKeysForPage($page);
+            $missing = array_diff($requiredKeys, $existingKeys);
+
+            if (!empty($missing)) {
+                $missingKeys[$page] = $missing;
+            }
+        }
+
+        return $missingKeys;
     }
 }
