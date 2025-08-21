@@ -108,3 +108,22 @@ test('paginated messages are ordered by latest first', function () {
     expect($paginated->items()[1]->id)->toBe($middle->id);
     expect($paginated->items()[2]->id)->toBe($oldest->id);
 });
+
+test('can mark existing message as read', function () {
+    $message = ContactMessage::factory()->create(['read_at' => null]);
+
+    expect($message->read_at)->toBeNull();
+
+    $result = $this->repository->markAsRead($message->id);
+
+    expect($result)->toBeTrue();
+
+    $message->refresh();
+    expect($message->read_at)->not->toBeNull();
+});
+
+test('returns false when trying to mark non-existent message as read', function () {
+    $result = $this->repository->markAsRead(999);
+
+    expect($result)->toBeFalse();
+});

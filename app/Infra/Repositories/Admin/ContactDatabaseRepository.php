@@ -40,4 +40,16 @@ class ContactDatabaseRepository implements ContactRepository
     {
         return ContactMessage::latest()->paginate($perPage);
     }
+
+    public function markAsRead(int $id): bool
+    {
+        $message = ContactMessage::find($id);
+        
+        if ($message) {
+            $message->markAsRead();
+            return true;
+        }
+        
+        return false;
+    }
 }

@@ -27,4 +27,6 @@ interface ContactRepository
      * @return LengthAwarePaginator<int, ContactMessage>
      */
     public function paginate(int $perPage): LengthAwarePaginator;
+
+    public function markAsRead(int $id): bool;
 }

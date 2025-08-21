@@ -3,17 +3,16 @@
 declare(strict_types=1);
 
 use App\Application\Admin\DTOs\DashboardStatistics;
+use App\Application\Admin\Services\ContactManagementService;
 use App\Application\Admin\Services\DashboardService;
-use App\Domain\Admin\Repositories\ContactRepository;
 use App\Domain\Admin\Repositories\ContentRepository;
 use App\Models\ContactMessage;
-use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Collection;
 
 beforeEach(function () {
     $this->contentRepository = Mockery::mock(ContentRepository::class);
-    $this->contactRepository = Mockery::mock(ContactRepository::class);
-    $this->service = new DashboardService($this->contentRepository, $this->contactRepository);
+    $this->contactManagementService = Mockery::mock(ContactManagementService::class);
+    $this->service = new DashboardService($this->contentRepository, $this->contactManagementService);
 });
 
 describe('getStatistics method', function () {
@@ -21,7 +20,7 @@ describe('getStatistics method', function () {
         $this->contentRepository->shouldReceive('count')
             ->andReturn(15);
 
-        $this->contactRepository->shouldReceive('unreadCount')
+        $this->contactManagementService->shouldReceive('getUnreadCount')
             ->andReturn(3);
 
         $lastUpdate = now();
@@ -44,7 +43,7 @@ describe('getStatistics method', function () {
         $this->contentRepository->shouldReceive('count')
             ->andReturn(0);
 
-        $this->contactRepository->shouldReceive('unreadCount')
+        $this->contactManagementService->shouldReceive('getUnreadCount')
             ->andReturn(0);
 
         $this->contentRepository->shouldReceive('findLatest')
@@ -66,7 +65,7 @@ describe('getRecentContactMessages method', function () {
             new ContactMessage(['name' => 'Jane Smith', 'email' => 'jane@example.com']),
         ]);
 
-        $this->contactRepository->shouldReceive('findLatest')
+        $this->contactManagementService->shouldReceive('getRecentMessages')
             ->with(5)
             ->andReturn($messages);
 
@@ -81,7 +80,7 @@ describe('getRecentContactMessages method', function () {
             new ContactMessage(['name' => 'John Doe']),
         ]);
 
-        $this->contactRepository->shouldReceive('findLatest')
+        $this->contactManagementService->shouldReceive('getRecentMessages')
             ->with(10)
             ->andReturn($messages);
 
@@ -94,7 +93,7 @@ describe('getRecentContactMessages method', function () {
     test('uses default limit when no limit provided', function () {
         $messages = new Collection([]);
 
-        $this->contactRepository->shouldReceive('findLatest')
+        $this->contactManagementService->shouldReceive('getRecentMessages')
             ->with(5) // Default limit
             ->andReturn($messages);
 
