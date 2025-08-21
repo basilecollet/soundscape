@@ -22,4 +22,21 @@ interface ContentRepository
      * @return Collection<int, PageContent>
      */
     public function getAll(): Collection;
+
+    public function delete(int $id): void;
+
+    /**
+     * @return Collection<int, PageContent>
+     */
+    public function findByPage(string $page): Collection;
+
+    /**
+     * @return Collection<int, PageContent>
+     */
+    public function search(string $term): Collection;
+
+    /**
+     * @return array<string>
+     */
+    public function getExistingKeysForPage(string $page): array;
 }

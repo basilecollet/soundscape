@@ -29,4 +29,34 @@ class ContentDatabaseRepository implements ContentRepository
             ->orderBy('key')
             ->get();
     }
+
+    public function delete(int $id): void
+    {
+        PageContent::findOrFail($id)->delete();
+    }
+
+    public function findByPage(string $page): Collection
+    {
+        return PageContent::where('page', $page)
+            ->orderBy('key')
+            ->get();
+    }
+
+    public function search(string $term): Collection
+    {
+        return PageContent::where(function ($query) use ($term) {
+            $query->where('key', 'like', "%{$term}%")
+                ->orWhere('title', 'like', "%{$term}%")
+                ->orWhere('content', 'like', "%{$term}%");
+        })->orderBy('page')
+            ->orderBy('key')
+            ->get();
+    }
+
+    public function getExistingKeysForPage(string $page): array
+    {
+        return PageContent::where('page', $page)
+            ->pluck('key')
+            ->toArray();
+    }
 }
