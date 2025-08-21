@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domain\Admin\Enums\ContentKeys;
 use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,11 +15,35 @@ class PageContentFactory extends Factory
 
     public function definition(): array
     {
+        // Générer une clé unique en combinant une clé de l'enum avec un suffix aléatoire
+        $page = $this->faker->randomElement(ContentKeys::getAvailablePages());
+        $availableKeys = ContentKeys::getKeysForPage($page);
+        $baseKey = $this->faker->randomElement($availableKeys);
+        $key = $baseKey . '_' . $this->faker->unique()->randomNumber(4);
+
         return [
-            'key' => $this->faker->unique()->words(2, true),
+            'key' => $key,
             'content' => $this->faker->paragraph(),
             'title' => $this->faker->sentence(3),
-            'page' => $this->faker->randomElement(['home', 'about', 'contact']),
+            'page' => $page,
         ];
+    }
+
+    /**
+     * Use exact enum keys for seeding
+     */
+    public function withExactKey(): static
+    {
+        return $this->state(function (array $attributes) {
+            $page = $this->faker->randomElement(ContentKeys::getAvailablePages());
+            $availableKeys = ContentKeys::getKeysForPage($page);
+            $key = $this->faker->randomElement($availableKeys);
+
+            return [
+                'key' => $key,
+                'title' => ContentKeys::getLabel($key),
+                'page' => $page,
+            ];
+        });
     }
 }
