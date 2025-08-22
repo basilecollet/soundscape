@@ -20,7 +20,7 @@
                 @endif
             </span>
         </div>
-        
+
         <!-- Title and Description -->
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div class="flex-1">
@@ -37,7 +37,7 @@
                     <p class="text-gray-600">Add new content to your website</p>
                 @endif
             </div>
-            
+
             <!-- Status Indicators -->
             @if($contentId && $key)
                 <div class="flex items-center space-x-2 flex-shrink-0">
@@ -56,7 +56,7 @@
                             Empty
                         </span>
                     @endif
-                    
+
                     @if($title)
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
@@ -110,7 +110,7 @@
                         <flux:label>Content Key</flux:label>
                         <flux:input value="{{ $key }}" readonly />
                     </flux:field>
-                    
+
                     <flux:field>
                         <flux:label>Page</flux:label>
                         <flux:input value="{{ ucfirst($page) }}" readonly />
@@ -132,11 +132,11 @@
                             <span wire:ignore>{{ strlen($content) }}</span> characters
                         </div>
                     </div>
-                    <flux:textarea 
-                        wire:model.live="content" 
-                        rows="10" 
+                    <flux:textarea
+                        wire:model.live="content"
+                        rows="10"
                         placeholder="Enter your content here..."
-                        onInput="this.nextElementSibling?.querySelector('span')?.textContent = this.value.length + ' characters'" 
+                        onInput="this.nextElementSibling?.querySelector('span')?.textContent = this.value.length + ' characters'"
                     />
                     <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
                         <div>
@@ -166,18 +166,18 @@
                             </svg>
                             {{ $contentId ? 'Update Content' : 'Create Content' }}
                         </flux:button>
-                        
+
                         <div class="flex items-center space-x-2 text-xs text-gray-500">
                             💡 Press <kbd class="px-1.5 py-0.5 text-xs font-mono bg-gray-100 rounded">Ctrl+S</kbd> to save
                         </div>
                     </div>
-                    
+
                     <!-- Secondary Actions -->
                     @if($contentId)
                         <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                             <div class="flex items-center space-x-3">
                                 @if($content)
-                                    <flux:button 
+                                    <flux:button
                                         type="button"
                                         variant="ghost"
                                         size="sm"
@@ -190,16 +190,16 @@
                                         Copy Content
                                     </flux:button>
                                 @endif
-                                
+
                                 <flux:button type="button" wire:click="cancel" variant="ghost" size="sm" class="text-gray-600 hover:text-gray-800">
                                     Cancel
                                 </flux:button>
                             </div>
-                            
-                            <flux:button 
-                                type="button" 
-                                wire:click="delete" 
-                                variant="danger" 
+
+                            <flux:button
+                                type="button"
+                                wire:click="delete"
+                                variant="danger"
                                 size="sm"
                                 onclick="return confirm('⚠️ Are you sure you want to delete this content?\\n\\nThis action cannot be undone.')"
                                 class="text-red-600 hover:text-red-800"
@@ -223,13 +223,13 @@
             <!-- Preview Column -->
             <div class="space-y-6">
                 <h3 class="text-lg font-semibold text-gray-900">Preview</h3>
-                
+
                 <div class="bg-white border border-gray-200 rounded-lg p-6 min-h-[300px] shadow-sm">
                     @if($title || $content)
                         @if($title)
                             <h4 class="text-lg font-semibold text-gray-900 mb-4">{{ $title }}</h4>
                         @endif
-                        
+
                         @if($content)
                             <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed">
                                 {!! nl2br(e($content)) !!}
