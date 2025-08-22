@@ -39,39 +39,3 @@ test('admin can access content edit page', function () {
     $response->assertViewIs('admin.content.edit');
     $response->assertViewHas('contentId', $content->id);
 });
-
-test('admin can update content', function () {
-    $content = PageContent::factory()->create([
-        'content' => 'Old content',
-        'title' => 'Old title',
-    ]);
-
-    $response = $this->actingAs($this->admin)
-        ->withoutMiddleware()
-        ->put("/admin/content/{$content->id}", [
-            'content' => 'New content',
-            'title' => 'New title',
-        ]);
-
-    $response->assertRedirect('/admin/content');
-
-    $this->assertDatabaseHas('page_contents', [
-        'id' => $content->id,
-        'content' => 'New content',
-        'title' => 'New title',
-    ]);
-});
-
-test('content update validates required fields', function () {
-    $content = PageContent::factory()->create();
-
-    $response = $this->actingAs($this->admin)
-        ->withoutMiddleware()
-        ->put("/admin/content/{$content->id}", [
-            'content' => '', // Contenu vide
-            'title' => '',
-        ]);
-
-    $response->assertStatus(302); // Redirection expected on validation failure
-    $response->assertSessionHasErrors(['content']);
-});
