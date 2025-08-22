@@ -14,11 +14,11 @@ beforeEach(function () {
     /** @var ContentRepository&\Mockery\MockInterface $contentRepository */
     $contentRepository = Mockery::mock(ContentRepository::class);
     $this->contentRepository = $contentRepository;
-    
+
     /** @var ContactManagementService&\Mockery\MockInterface $contactManagementService */
     $contactManagementService = Mockery::mock(ContactManagementService::class);
     $this->contactManagementService = $contactManagementService;
-    
+
     $this->service = new DashboardService($this->contentRepository, $this->contactManagementService);
 });
 

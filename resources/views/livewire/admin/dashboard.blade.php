@@ -5,31 +5,33 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Total Content Card -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200 border-l-4 border-l-blue-500">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Total Content</h3>
-                        <p class="text-3xl font-bold text-gray-900">{{ $totalContent }}</p>
-                        <p class="text-sm text-gray-600 mt-1">Content pieces</p>
-                    </div>
-                    <div class="p-3 bg-blue-100 rounded-lg">
-                        <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
+            <a href="{{ route('admin.content.index') }}" wire:navigate class="block group">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-blue-500 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2 group-hover:text-blue-600 transition-colors">Total Content</h3>
+                            <p class="text-3xl font-bold text-gray-900 group-hover:text-blue-800 transition-colors">{{ $totalContent }}</p>
+                            <p class="text-sm text-gray-600 mt-1">Content pieces</p>
+                        </div>
+                        <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                            <svg class="h-8 w-8 text-blue-600 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Recent Messages Card -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200 border-l-4 border-l-green-500">
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-green-500 group cursor-pointer">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Recent Messages</h3>
-                        <p class="text-3xl font-bold text-gray-900">{{ $recentMessagesCount }}</p>
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2 group-hover:text-green-600 transition-colors">Recent Messages</h3>
+                        <p class="text-3xl font-bold text-gray-900 group-hover:text-green-800 transition-colors">{{ $recentMessagesCount }}</p>
                         <p class="text-sm text-gray-600 mt-1">Unread messages</p>
                     </div>
-                    <div class="p-3 bg-green-100 rounded-lg">
-                        <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
+                        <svg class="h-8 w-8 text-green-600 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
@@ -38,15 +40,15 @@
 
             <!-- Last Update Card -->
             @if($lastContentUpdate)
-            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200 border-l-4 border-l-purple-500">
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-purple-500 group">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">Last Update</h3>
-                        <p class="text-lg font-semibold text-gray-900">{{ $lastContentUpdate }}</p>
+                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2 group-hover:text-purple-600 transition-colors">Last Update</h3>
+                        <p class="text-lg font-semibold text-gray-900 group-hover:text-purple-800 transition-colors">{{ $lastContentUpdate }}</p>
                         <p class="text-sm text-gray-600 mt-1">Content modified</p>
                     </div>
-                    <div class="p-3 bg-purple-100 rounded-lg">
-                        <svg class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                        <svg class="h-8 w-8 text-purple-600 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>

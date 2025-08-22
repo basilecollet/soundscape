@@ -71,7 +71,7 @@ it('can create new content', function () {
     // Verify the content was actually created in database
     $content = PageContent::where('key', 'home_hero')->first();
     expect($content)->not->toBeNull();
-    
+
     /** @var PageContent $content */
     expect($content->title)->toBe('New Title');
     expect($content->content)->toBe('New content');

@@ -27,7 +27,7 @@ class ContactDatabaseRepository implements ContactRepository
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function create(array $data): ContactMessage
     {

@@ -64,7 +64,7 @@ class ContentManagementService
         if ($data->id === null) {
             throw new \InvalidArgumentException('Content ID is required for updates');
         }
-        
+
         $existing = $this->getContentById($data->id);
 
         $storeData = [
