@@ -181,11 +181,7 @@
                                         type="button"
                                         variant="ghost"
                                         size="sm"
-                                        onclick="navigator.clipboard.writeText('{{ addslashes($content) }}'); 
-                                                 const btn = this; 
-                                                 const original = btn.innerHTML; 
-                                                 btn.innerHTML = '<svg class=\"w-4 h-4 mr-1\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M5 13l4 4L19 7\"/></svg>Copied!'; 
-                                                 setTimeout(() => btn.innerHTML = original, 2000);"
+                                        onclick="copyToClipboard('{{ addslashes($content) }}', this)"
                                         class="text-blue-600 hover:text-blue-800"
                                     >
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
