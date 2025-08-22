@@ -1,20 +1,60 @@
 <div>
-    <!-- Filters Bar -->
-    <div class="mb-8 flex flex-col sm:flex-row gap-4 p-4 bg-gray-50 rounded-lg">
-        <flux:field class="flex-1">
-            <flux:label>Filter by page</flux:label>
-            <flux:select wire:model.live="selectedPage" placeholder="All pages">
-                <flux:select.option value="all">All pages</flux:select.option>
-                @foreach($availablePages as $page)
-                    <flux:select.option value="{{ $page }}">{{ ucfirst($page) }}</flux:select.option>
-                @endforeach
-            </flux:select>
-        </flux:field>
+    <!-- Enhanced Filters Bar -->
+    <div class="mb-8">        
+        <!-- Filters -->
+        <div class="flex flex-col lg:flex-row gap-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border">
+            <flux:field class="flex-1">
+                <flux:label class="text-gray-700 font-medium">Filter by page</flux:label>
+                <flux:select wire:model.live="selectedPage" placeholder="All pages">
+                    <flux:select.option value="all">All pages</flux:select.option>
+                    @foreach($availablePages as $page)
+                        <flux:select.option value="{{ $page }}">{{ ucfirst($page) }}</flux:select.option>
+                    @endforeach
+                </flux:select>
+            </flux:field>
 
-        <flux:field class="flex-1">
-            <flux:label>Search</flux:label>
-            <flux:input wire:model.live="search" placeholder="Search contents..." />
-        </flux:field>
+            <flux:field class="flex-1">
+                <flux:label class="text-gray-700 font-medium">Search content</flux:label>
+                <flux:input wire:model.live="search" placeholder="Search by key, title, or content..." />
+            </flux:field>
+
+            @if($search || $selectedPage !== 'all')
+                <div class="flex items-end">
+                    <flux:button 
+                        size="sm" 
+                        variant="ghost" 
+                        wire:click="$set('search', ''); $set('selectedPage', 'all')"
+                        class="text-gray-500 hover:text-gray-700"
+                    >
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Clear
+                    </flux:button>
+                </div>
+            @endif
+        </div>
+
+        <!-- Results Summary -->
+        @if($contents->count() > 0)
+            <div class="flex items-center justify-between mt-4 px-1">
+                <div class="text-sm text-gray-600">
+                    Showing <span class="font-medium">{{ $contents->count() }}</span> content{{ $contents->count() !== 1 ? 's' : '' }}
+                    @if($search)
+                        for "<span class="font-medium">{{ $search }}</span>"
+                    @endif
+                    @if($selectedPage !== 'all')
+                        on <span class="font-medium">{{ $selectedPage }}</span> page
+                    @endif
+                </div>
+                
+                @if($contents->count() > 5)
+                    <div class="text-xs text-gray-500">
+                        Use Ctrl+F to search within results
+                    </div>
+                @endif
+            </div>
+        @endif
     </div>
 
     @if($contents->count() > 0)
@@ -31,30 +71,85 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($contents as $content)
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="group hover:bg-gray-50 transition-all duration-150">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <code class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">{{ $content->key }}</code>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $content->title ?: '—' }}
+                                <div class="flex items-center space-x-2">
+                                    <code class="text-sm font-mono bg-gray-100 group-hover:bg-gray-200 px-2 py-1 rounded transition-colors">
+                                        {{ $content->key }}
+                                    </code>
+                                    @if($content->updated_at->gt(now()->subDay()))
+                                        <span class="flex h-2 w-2">
+                                            <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                        </span>
+                                    @endif
+                                </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ $content->page }}
+                                <div class="text-sm">
+                                    @if($content->title)
+                                        <div class="font-medium text-gray-900">{{ $content->title }}</div>
+                                        <div class="text-gray-500 text-xs">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
+                                    @else
+                                        <div class="font-medium text-gray-500">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
+                                        <div class="text-gray-400 text-xs">No title set</div>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @php
+                                    $pageColors = [
+                                        'home' => 'bg-blue-100 text-blue-800',
+                                        'about' => 'bg-purple-100 text-purple-800',
+                                        'contact' => 'bg-green-100 text-green-800',
+                                        'services' => 'bg-yellow-100 text-yellow-800',
+                                    ];
+                                    $colorClass = $pageColors[$content->page] ?? 'bg-gray-100 text-gray-800';
+                                @endphp
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $colorClass }}">
+                                    <svg class="mr-1.5 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                                        <circle cx="4" cy="4" r="3" />
+                                    </svg>
+                                    {{ ucfirst($content->page) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">
-                                {{ Str::limit($content->content, 50) }}
+                            <td class="px-6 py-4 text-sm text-gray-600">
+                                <div class="max-w-xs">
+                                    @if($content->content)
+                                        <p class="truncate">{{ Str::limit($content->content, 60) }}</p>
+                                        <p class="text-xs text-gray-400 mt-1">{{ strlen($content->content) }} characters</p>
+                                    @else
+                                        <span class="italic text-gray-400">Empty content</span>
+                                    @endif
+                                </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <flux:button 
-                                    size="xs" 
-                                    variant="ghost" 
-                                    :href="route('admin.content.edit', $content->id)" 
-                                    wire:navigate
-                                >
-                                    Edit
-                                </flux:button>
+                                <div class="flex items-center space-x-2">
+                                    <flux:button 
+                                        size="xs" 
+                                        variant="ghost" 
+                                        :href="route('admin.content.edit', $content->id)" 
+                                        wire:navigate
+                                    >
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        Edit
+                                    </flux:button>
+                                    
+                                    @if($content->content)
+                                        <flux:button 
+                                            size="xs" 
+                                            variant="ghost"
+                                            onclick="navigator.clipboard.writeText('{{ addslashes($content->content) }}'); alert('Content copied to clipboard!')"
+                                            class="text-gray-500 hover:text-gray-700"
+                                        >
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                            </svg>
+                                        </flux:button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
