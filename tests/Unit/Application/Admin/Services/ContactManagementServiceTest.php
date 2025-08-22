@@ -9,7 +9,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(ContactRepository::class);
+    /** @var ContactRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(ContactRepository::class);
+    $this->repository = $repository;
     $this->service = new ContactManagementService($this->repository);
 });
 

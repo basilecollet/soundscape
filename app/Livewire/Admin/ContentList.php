@@ -39,16 +39,25 @@ class ContentList extends Component
         $this->resetPage();
     }
 
+    /**
+     * @return Collection<int, \App\Models\PageContent>
+     */
     public function getContentsProperty(): Collection
     {
         return $this->getContentManagementService()->getFilteredAndSortedContents($this->selectedPage, $this->search);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAvailablePagesProperty(): array
     {
         return ContentKeys::getAvailablePages();
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     public function getMissingKeysProperty(): array
     {
         return $this->getContentManagementService()->getMissingKeysForAllPages();
@@ -63,9 +72,9 @@ class ContentList extends Component
     public function render(): View
     {
         return view('livewire.admin.content-list', [
-            'contents' => $this->contents,
-            'availablePages' => $this->availablePages,
-            'missingKeys' => $this->missingKeys,
+            'contents' => $this->getContentsProperty(),
+            'availablePages' => $this->getAvailablePagesProperty(),
+            'missingKeys' => $this->getMissingKeysProperty(),
         ]);
     }
 }

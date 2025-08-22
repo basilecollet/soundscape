@@ -19,6 +19,9 @@ interface ContactRepository
      */
     public function findLatest(int $limit): Collection;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function create(array $data): ContactMessage;
 
     public function findById(int $id): ?ContactMessage;

@@ -39,18 +39,24 @@ class ContentEdit extends Component
 
             if ($this->originalContent) {
                 $this->content = $this->originalContent->content;
-                $this->title = $this->originalContent->title;
+                $this->title = $this->originalContent->title ?? '';
                 $this->key = $this->originalContent->key;
                 $this->page = $this->originalContent->page;
             }
         }
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAvailablePagesProperty(): array
     {
         return ContentKeys::getAvailablePages();
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAvailableKeysProperty(): array
     {
         return ContentKeys::getKeysForPage($this->page);
@@ -122,7 +128,7 @@ class ContentEdit extends Component
 
             if ($this->originalContent) {
                 $this->content = $this->originalContent->content;
-                $this->title = $this->originalContent->title;
+                $this->title = $this->originalContent->title ?? '';
                 $this->key = $this->originalContent->key;
                 $this->page = $this->originalContent->page;
             }
@@ -143,8 +149,8 @@ class ContentEdit extends Component
     public function render(): View
     {
         return view('livewire.admin.content-edit', [
-            'availablePages' => $this->availablePages,
-            'availableKeys' => $this->availableKeys,
+            'availablePages' => $this->getAvailablePagesProperty(),
+            'availableKeys' => $this->getAvailableKeysProperty(),
         ]);
     }
 }

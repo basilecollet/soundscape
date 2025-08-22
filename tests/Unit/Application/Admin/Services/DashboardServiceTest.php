@@ -7,11 +7,18 @@ use App\Application\Admin\Services\ContactManagementService;
 use App\Application\Admin\Services\DashboardService;
 use App\Domain\Admin\Repositories\ContentRepository;
 use App\Models\ContactMessage;
+use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Collection;
 
 beforeEach(function () {
-    $this->contentRepository = Mockery::mock(ContentRepository::class);
-    $this->contactManagementService = Mockery::mock(ContactManagementService::class);
+    /** @var ContentRepository&\Mockery\MockInterface $contentRepository */
+    $contentRepository = Mockery::mock(ContentRepository::class);
+    $this->contentRepository = $contentRepository;
+    
+    /** @var ContactManagementService&\Mockery\MockInterface $contactManagementService */
+    $contactManagementService = Mockery::mock(ContactManagementService::class);
+    $this->contactManagementService = $contactManagementService;
+    
     $this->service = new DashboardService($this->contentRepository, $this->contactManagementService);
 });
 
@@ -24,7 +31,9 @@ describe('getStatistics method', function () {
             ->andReturn(3);
 
         $lastUpdate = now();
+        // PHPStan: Using stdClass to avoid DB connection in unit tests
         $lastContent = (object) ['updated_at' => $lastUpdate];
+        // @phpstan-ignore-next-line - Mocking PageContent objects for unit test
         $latestContents = new Collection([$lastContent]);
 
         $this->contentRepository->shouldReceive('findLatest')

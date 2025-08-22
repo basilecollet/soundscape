@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(ContentRepository::class);
+    /** @var ContentRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(ContentRepository::class);
+    $this->repository = $repository;
     $this->service = new ContentManagementService($this->repository);
 });
 

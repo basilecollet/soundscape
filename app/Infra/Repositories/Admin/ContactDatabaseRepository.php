@@ -26,6 +26,9 @@ class ContactDatabaseRepository implements ContactRepository
         return ContactMessage::latest()->take($limit)->get();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function create(array $data): ContactMessage
     {
         return ContactMessage::create($data);

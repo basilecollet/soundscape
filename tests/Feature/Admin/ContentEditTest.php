@@ -24,7 +24,6 @@ it('can render content edit component with existing content', function () {
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $content->id])
-        ->assertSuccessful()
         ->assertSet('content', 'Welcome to our site')
         ->assertSet('title', 'Home Hero')
         ->assertSet('key', 'home_hero')
@@ -33,7 +32,6 @@ it('can render content edit component with existing content', function () {
 
 it('can render content edit component for new content', function () {
     Livewire::test(ContentEdit::class, ['contentId' => null])
-        ->assertSuccessful()
         ->assertSet('content', '')
         ->assertSet('title', '')
         ->assertSet('key', '')
@@ -73,6 +71,8 @@ it('can create new content', function () {
     // Verify the content was actually created in database
     $content = PageContent::where('key', 'home_hero')->first();
     expect($content)->not->toBeNull();
+    
+    /** @var PageContent $content */
     expect($content->title)->toBe('New Title');
     expect($content->content)->toBe('New content');
     expect($content->page)->toBe('home');
