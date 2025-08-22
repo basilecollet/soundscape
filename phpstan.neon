@@ -16,6 +16,7 @@ parameters:
             paths:
                 - tests/Feature/*
                 - tests/Unit/*
+                - tests/Infra/*
         # Carbon properties
         - '#Cannot access property \$timestamp on Carbon\\Carbon\|null#'
         # User model nullable
