@@ -1,6 +1,6 @@
 # 🎵 Soundscape Audio
 
-A modern web application for Soundscape Audio, built with Laravel 12, Livewire Volt, and Tailwind CSS. This application provides a professional web presence for an audio equipment and services company.
+A modern portfolio and content management web application built with Laravel 12, featuring a comprehensive admin dashboard, contact system, and dynamic content management. Built with Domain-Driven Design architecture and extensive testing coverage.
 
 ![Laravel](https://img.shields.io/badge/Laravel-v12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)
@@ -25,27 +25,33 @@ A modern web application for Soundscape Audio, built with Laravel 12, Livewire V
 ## ✨ Features
 
 ### Current Features
-- 🏠 **Dynamic Homepage** - Customizable content sections with CMS
-- 🔐 **User Authentication** - Complete auth system with registration, login, password reset
-- 👤 **User Dashboard** - Profile management and settings
-- 📱 **Responsive Design** - Mobile-first approach with Tailwind CSS
-- 🎨 **Modern UI** - Flux UI components with smooth animations
-- 🌐 **SEO Ready** - Clean URLs and meta tag support
-- 🐳 **Docker Development** - Optimized containerized environment
+- 📈 **Admin Dashboard** - Comprehensive admin interface with statistics and content management
+- 📝 **Content Management System** - Dynamic page content with real-time editing
+- 📬 **Contact System** - Contact form with GDPR compliance and message management
+- 🏠 **Portfolio Website** - Modern portfolio with Home, About, and Contact pages
+- 🔐 **Authentication System** - Complete auth with registration, login, password reset
+- 👤 **User Settings** - Profile management, password change, appearance settings
+- 🎨 **Modern UI** - Flux UI components with Tailwind CSS 4
+- 📊 **Testing Coverage** - Comprehensive Pest PHP tests with high coverage
+- 🔍 **Code Quality** - PHPStan level 9 analysis and Laravel Pint formatting
+- 🏢 **DDD Architecture** - Domain-Driven Design with Application/Domain/Infrastructure layers
+- 🐳 **Docker Development** - Optimized multi-stage containerized environment
 
-### Sections
-- **Home** - Hero section with animated SVG globe
-- **About** - Three-column layout with content management
-- **Contact** - Contact form (frontend ready)
-- **Dashboard** - User area with settings management
+### Application Areas
+- **Public Portfolio** - Home, About, and Contact pages with dynamic content
+- **Admin Dashboard** - Content management, contact messages, and statistics
+- **User Settings** - Profile, password, and appearance management
+- **Authentication** - Registration, login, password reset, and email verification
 
 ## 🛠 Tech Stack
 
 ### Backend
 - **Laravel 12** - Latest PHP framework
-- **Livewire Volt** - Single-file reactive components
-- **PostgreSQL** - Primary database (Docker)
 - **PHP 8.3** - With OPcache and Xdebug
+- **Livewire Volt** - Single-file reactive components
+- **PostgreSQL 15** - Primary database (Docker)
+- **Domain-Driven Design** - Clean architecture with Application/Domain/Infra layers
+- **Repository Pattern** - Database abstraction with interfaces
 
 ### Frontend
 - **Tailwind CSS 4** - Utility-first CSS framework
@@ -53,11 +59,14 @@ A modern web application for Soundscape Audio, built with Laravel 12, Livewire V
 - **Alpine.js** - Lightweight JavaScript framework
 - **Vite** - Fast build tool with HMR
 
-### Infrastructure
-- **Docker** - Containerized development
-- **Nginx** - Web server
-- **Make** - Task automation
-- **Pest PHP** - Testing framework
+### Infrastructure & Quality
+- **Docker** - Multi-stage containerized development with health checks
+- **Nginx** - Optimized web server configuration
+- **Make** - 40+ automated tasks and workflows
+- **Pest PHP** - Comprehensive testing framework
+- **PHPStan** - Static analysis (level 9)
+- **Laravel Pint** - Code formatting and style
+- **Coverage Reports** - HTML test coverage generation
 
 ## 📦 Prerequisites
 
@@ -178,17 +187,45 @@ make down      # Stop containers
 
 ### Available Make Commands
 
-Run `make help` to see all available commands:
+Run `make help` to see all 40+ available commands. Key commands:
 
+#### Development
 | Command | Description |
 |---------|-------------|
 | `make init` | Complete project initialization |
-| `make dev` | Start development environment |
-| `make test` | Run tests |
-| `make pint` | Format PHP code |
-| `make fresh` | Fresh migration with seeding |
-| `make shell` | Access PHP container |
+| `make dev` | Start development environment with Vite |
+| `make up/down` | Start/stop Docker containers |
+| `make shell` | Access PHP container shell |
+| `make shell-node` | Access Node container shell |
 | `make logs` | View container logs |
+
+#### Laravel & Database
+| Command | Description |
+|---------|-------------|
+| `make artisan cmd="..."` | Run any artisan command |
+| `make migrate` | Run database migrations |
+| `make fresh` | Fresh migration with seeding |
+| `make seed` | Seed the database |
+| `make tinker` | Start Laravel Tinker |
+
+#### Testing & Quality
+| Command | Description |
+|---------|-------------|
+| `make test` | Run all tests |
+| `make test-coverage` | Run tests with HTML coverage |
+| `make test-unit` | Run unit tests only |
+| `make test-feature` | Run feature tests only |
+| `make tdd` | Start TDD watch mode |
+| `make pint` | Format PHP code |
+| `make phpstan` | Run static analysis |
+| `make quality` | Run all quality tools |
+
+#### Frontend
+| Command | Description |
+|---------|-------------|
+| `make vite` | Start Vite dev server |
+| `make vite-build` | Build for production |
+| `make yarn cmd="..."` | Run yarn commands |
 
 ### Code Style
 
@@ -204,30 +241,43 @@ make pint-test
 
 ## 📁 Project Structure
 
+### Domain-Driven Design Architecture
+
 ```
 soundscape/
 ├── app/
-│   ├── Http/          # HTTP layer
-│   ├── Livewire/      # Livewire components
-│   └── Models/        # Eloquent models
-├── database/
-│   ├── migrations/    # Database migrations
-│   └── seeders/       # Data seeders
-├── docker/            # Docker configuration
-│   ├── php/          # PHP configs
-│   ├── node/         # Node configs
-│   └── nginx/        # Nginx configs
-├── resources/
-│   ├── css/          # Stylesheets
-│   ├── js/           # JavaScript
-│   └── views/        # Blade templates
-│       └── livewire/ # Livewire components
-├── routes/           # Application routes
-├── tests/            # Test files
-├── .env.example      # Environment template
-├── docker-compose.yml # Docker services
-├── Makefile          # Task automation
-└── README.md         # This file
+│   ├── Application/   # Application services & DTOs
+│   │   ├── Admin/    # Admin services (Content, Dashboard)
+│   │   └── Portfolio/ # Portfolio services (Contact, Content)
+│   ├── Domain/       # Domain logic & contracts
+│   │   └── Admin/    # Admin domain (Enums, Repositories)
+│   ├── Infra/        # Infrastructure implementations
+│   │   └── Repositories/ # Database repositories
+│   ├── Http/         # Controllers by domain
+│   │   ├── Admin/    # Admin controllers
+│   │   ├── Portfolio/ # Portfolio controllers
+│   │   └── Auth/     # Auth controllers
+│   ├── Livewire/     # Livewire components
+│   │   ├── Admin/    # Admin components
+│   │   ├── Components/ # Reusable components
+│   │   └── Actions/  # Livewire actions
+│   └── Models/       # Eloquent models
+├── resources/views/
+│   ├── livewire/     # Livewire component views
+│   │   ├── admin/    # Admin dashboard views
+│   │   ├── auth/     # Authentication views
+│   │   └── components/ # Reusable components
+│   ├── admin/        # Admin layouts
+│   ├── portfolio/    # Portfolio pages
+│   └── flux/         # Flux UI overrides
+├── tests/            # Comprehensive test suite
+│   ├── Feature/      # Feature tests by domain
+│   ├── Unit/         # Unit tests for services
+│   └── Infra/        # Infrastructure tests
+├── docker/           # Optimized Docker configs
+├── database/         # Migrations & seeders
+├── Makefile          # 40+ automated commands
+└── README.md         # This documentation
 ```
 
 ## 🧪 Testing
@@ -246,11 +296,16 @@ docker-compose exec app php artisan test tests/Feature/DashboardTest.php
 ```
 
 ### Current Test Coverage
-- ✅ Authentication flows
-- ✅ Dashboard access
-- ✅ Profile management
-- ⚠️ Homepage components (needs implementation)
-- ⚠️ Contact form (needs implementation)
+- ✅ **Authentication System** - Complete auth flows and email verification
+- ✅ **Admin Dashboard** - Content management, statistics, and admin interface
+- ✅ **Contact System** - Contact form, message persistence, and GDPR compliance
+- ✅ **User Management** - Profile management, settings, and password changes
+- ✅ **Livewire Components** - All portfolio components (Home, About, Contact sections)
+- ✅ **Application Services** - Unit tests for all DTOs and application services
+- ✅ **Infrastructure** - Repository implementations and database interactions
+- ✅ **Controllers** - HTTP controllers for all domains (Admin, Portfolio, Auth)
+
+The project maintains **high test coverage** across all architecture layers with comprehensive Feature, Unit, and Infrastructure tests.
 
 ## 🚢 Deployment
 
@@ -354,6 +409,13 @@ This project is proprietary software. All rights reserved.
 - **Production** - Coming soon
 - **Documentation** - [docker.md](docker.md)
 - **Issues** - GitHub Issues
+
+---
+
+## Images
+![img.png](Docs/Images/accueil.png)
+
+![img.png](Docs/Images/dashboard.png)
 
 ---
 
