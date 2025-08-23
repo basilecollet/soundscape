@@ -7,6 +7,8 @@
 /storage/*.key
 /storage/pail
 /vendor
+.claude
+CLAUDE.md
 .env
 .env.backup
 .env.production
