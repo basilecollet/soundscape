@@ -1,6 +1,6 @@
 # 🎵 Soundscape Audio
 
-A modern portfolio and content management web application built with Laravel 12, featuring a comprehensive admin dashboard, contact system, and dynamic content management. Built with Domain-Driven Design architecture and extensive testing coverage.
+A modern portfolio and e-commerce platform for a sound engineer, built with Laravel 12. Features a comprehensive portfolio showcase, audio sample sales platform with guest checkout, admin dashboard, and content management system. Built with Domain-Driven Design architecture and extensive testing coverage.
 
 ![Laravel](https://img.shields.io/badge/Laravel-v12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)
@@ -24,7 +24,7 @@ A modern portfolio and content management web application built with Laravel 12,
 
 ## ✨ Features
 
-### Current Features
+### Current Features (Portfolio Foundation)
 - 📈 **Admin Dashboard** - Comprehensive admin interface with statistics and content management
 - 📝 **Content Management System** - Dynamic page content with real-time editing
 - 📬 **Contact System** - Contact form with GDPR compliance and message management
@@ -37,11 +37,22 @@ A modern portfolio and content management web application built with Laravel 12,
 - 🏢 **DDD Architecture** - Domain-Driven Design with Application/Domain/Infrastructure layers
 - 🐳 **Docker Development** - Optimized multi-stage containerized environment
 
+### Planned Features (In Development)
+- 🛒 **E-commerce Platform** - Audio sample sales with guest checkout
+- 🎵 **Sample Catalog** - Browse and purchase audio samples and loops
+- 💳 **Payment Integration** - Stripe/PayPal integration for secure payments
+- 📥 **Digital Downloads** - Secure temporary download links for purchased samples
+- 🔒 **GDPR Compliance** - Full European data protection compliance
+- 📊 **Sales Analytics** - Track sales, downloads, and customer behavior
+- 🏷️ **License Management** - Different license types for audio samples
+- 📧 **Email Notifications** - Purchase confirmations and download instructions
+
 ### Application Areas
-- **Public Portfolio** - Home, About, and Contact pages with dynamic content
-- **Admin Dashboard** - Content management, contact messages, and statistics
-- **User Settings** - Profile, password, and appearance management
-- **Authentication** - Registration, login, password reset, and email verification
+- **Sound Engineer Portfolio** - Showcase of audio projects, skills, and experience
+- **Sample Marketplace** - Commercial platform for selling audio samples and loops
+- **Admin Dashboard** - Product management, order tracking, and sales analytics
+- **Client Management** - Customers information, order history, and settings
+- **GDPR Tools** - Data export, deletion, and consent management
 
 ## 🛠 Tech Stack
 
