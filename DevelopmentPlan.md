@@ -302,19 +302,10 @@ main
 └── feature/current-work  # Une seule feature branch active
 ```
 
-### Organisation quotidienne
-```markdown
-Matin : Développement features (3-4h)
-Après-midi : Tests, bugfix, refactoring (2-3h)
-Fin : Commit, documentation, planification lendemain (1h)
-```
-
 ### Outils de suivi
 ```markdown
-- [ ] GitHub Issues pour les bugs
-- [ ] TODO.md dans le projet pour les tâches
-- [ ] CHANGELOG.md pour l'historique
-- [ ] GitHub Projects board simple (Todo/Doing/Done)
+- [ ] GitHub
+- [ ] DevelopmentPlan.md dans le projet pour les tâches
 ```
 
 ## 📝 Quick Wins (à faire en premier)
@@ -396,7 +387,7 @@ Fin : Commit, documentation, planification lendemain (1h)
 ---
 
 **Document créé le** : 2025-08-16  
-**Dernière mise à jour** : 2025-08-16  
-**Version** : 1.0.0
+**Dernière mise à jour** : 2025-08-23  
+**Version** : 1.1.0
 
 Ce plan **pragmatique** réutilise 70% de l'existant et se concentre sur l'essentiel pour un développeur solo.
