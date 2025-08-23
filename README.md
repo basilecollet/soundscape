@@ -327,7 +327,7 @@ DB_HOST=your-db-host
 DB_PORT=5432
 DB_DATABASE=your-database
 DB_USERNAME=your-username
-DB_PASSWORD=your-password
+DB_PASSWORD=your-secret-password
 
 # Mail configuration
 MAIL_MAILER=smtp
@@ -396,7 +396,12 @@ Contributions are welcome! Please follow these steps:
 
 ## 📄 License
 
-This project is proprietary software. All rights reserved.
+This project is proprietary software made publicly available for demonstration and portfolio purposes only. 
+
+**Permitted**: Viewing, reading, and learning from the code  
+**Prohibited**: Cloning, copying, modifying, or using any part of this code in other projects
+
+See [LICENSE](LICENSE) for complete terms.
 
 ## 👥 Team
 

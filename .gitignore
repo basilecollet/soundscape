@@ -9,18 +9,43 @@
 /vendor
 .claude
 CLAUDE.md
-.env
-.env.backup
-.env.production
+
+# Environment configuration
+.env*
+!.env.example
+!.env.docker.example
+
+# Security & secrets
+/auth.json
+*.key
+*.pem
+*.p12
+*.pfx
+deployment.yaml
+deployment/
+
+# Database dumps & backups
+*.sql
+*.dump
+backup*
+*.backup
+
+# Development tools
 .phpactor.json
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
 npm-debug.log
 yarn-error.log
-/auth.json
+
+# IDE & editors
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
+*.swp
+*.swo
+*~
+
+# Legacy Laravel
+Homestead.json
+Homestead.yaml
