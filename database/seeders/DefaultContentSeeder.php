@@ -17,7 +17,7 @@ class DefaultContentSeeder extends Seeder
             ['key' => 'home_hero_title', 'content' => 'Soundscape Audio', 'title' => 'Home - Hero Title', 'page' => 'home'],
             ['key' => 'home_hero_subtitle', 'content' => 'Professional Audio Engineering', 'title' => 'Home - Hero Subtitle', 'page' => 'home'],
             ['key' => 'home_hero_text', 'content' => 'Transform your audio projects with industry-standard expertise. Professional mixing, mastering, and sound design services.', 'title' => 'Home - Hero Text', 'page' => 'home'],
-            
+
             // Home features
             ['key' => 'home_feature_1_title', 'content' => 'Mixing', 'title' => 'Home - Feature 1 Title', 'page' => 'home'],
             ['key' => 'home_feature_1_description', 'content' => 'Professional mixing services for all genres', 'title' => 'Home - Feature 1 Description', 'page' => 'home'],
