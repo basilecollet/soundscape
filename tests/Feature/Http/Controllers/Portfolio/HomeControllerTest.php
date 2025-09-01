@@ -22,5 +22,5 @@ test('home page displays content from ContentService', function () {
 
     $response->assertStatus(200)
         ->assertSee('Professional Audio Engineering')
-        ->assertSee('Lorem ipsum dolor sit amet');
+        ->assertSee('Transform your audio projects with industry-standard expertise');
 });
