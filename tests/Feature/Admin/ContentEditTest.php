@@ -17,16 +17,16 @@ beforeEach(function () {
 
 it('can render content edit component with existing content', function () {
     $content = PageContent::factory()->create([
-        'key' => 'home_hero',
-        'title' => 'Home Hero',
+        'key' => 'home_hero_title',
+        'title' => 'Home Hero Title',
         'content' => 'Welcome to our site',
         'page' => 'home',
     ]);
 
     Livewire::test(ContentEdit::class, ['contentId' => $content->id])
         ->assertSet('content', 'Welcome to our site')
-        ->assertSet('title', 'Home Hero')
-        ->assertSet('key', 'home_hero')
+        ->assertSet('title', 'Home Hero Title')
+        ->assertSet('key', 'home_hero_title')
         ->assertSet('page', 'home');
 });
 
@@ -40,7 +40,7 @@ it('can render content edit component for new content', function () {
 
 it('can save existing content', function () {
     $pageContent = PageContent::factory()->create([
-        'key' => 'home_hero',
+        'key' => 'home_hero_title',
         'title' => 'Old Title',
         'content' => 'Old content',
         'page' => 'home',
@@ -58,18 +58,18 @@ it('can save existing content', function () {
 });
 
 it('can create new content', function () {
-    expect(PageContent::where('key', 'home_hero')->exists())->toBeFalse();
+    expect(PageContent::where('key', 'home_hero_title')->exists())->toBeFalse();
 
     // Test the creation by verifying the database directly
     $component = Livewire::test(ContentEdit::class, ['contentId' => null]);
     $component->set('content', 'New content');
     $component->set('title', 'New Title');
     $component->set('page', 'home');
-    $component->set('key', 'home_hero');
+    $component->set('key', 'home_hero_title');
     $component->call('save');
 
     // Verify the content was actually created in database
-    $content = PageContent::where('key', 'home_hero')->first();
+    $content = PageContent::where('key', 'home_hero_title')->first();
     expect($content)->not->toBeNull();
 
     /** @var PageContent $content */
@@ -91,11 +91,11 @@ it('validates required fields when saving', function () {
 });
 
 it('validates key uniqueness for new content', function () {
-    PageContent::factory()->create(['key' => 'home_hero', 'page' => 'home']);
+    PageContent::factory()->create(['key' => 'home_hero_title', 'page' => 'home']);
 
     Livewire::test(ContentEdit::class, ['contentId' => null])
         ->set('content', 'Some content')
-        ->set('key', 'home_hero')
+        ->set('key', 'home_hero_title')
         ->set('page', 'home')
         ->call('save')
         ->assertHasErrors(['key']);
@@ -103,7 +103,7 @@ it('validates key uniqueness for new content', function () {
 
 it('allows updating existing content without key uniqueness error', function () {
     $content = PageContent::factory()->create([
-        'key' => 'home_hero',
+        'key' => 'home_hero_title',
         'page' => 'home',
         'content' => 'Old content',
     ]);
@@ -117,7 +117,7 @@ it('allows updating existing content without key uniqueness error', function () 
 it('validates key is valid for selected page', function () {
     Livewire::test(ContentEdit::class, ['contentId' => null])
         ->set('content', 'Some content')
-        ->set('key', 'home_hero')
+        ->set('key', 'home_hero_title')
         ->set('page', 'about')
         ->call('save')
         ->assertHasErrors(['key']);
@@ -128,13 +128,13 @@ it('updates available keys when page changes', function () {
         ->set('page', 'home');
 
     $availableKeys = $component->get('availableKeys');
-    expect($availableKeys)->toContain('home_hero');
-    expect($availableKeys)->not->toContain('about_hero');
+    expect($availableKeys)->toContain('home_hero_title');
+    expect($availableKeys)->not->toContain('about_title');
 
     $component->set('page', 'about');
     $availableKeys = $component->get('availableKeys');
-    expect($availableKeys)->toContain('about_hero');
-    expect($availableKeys)->not->toContain('home_hero');
+    expect($availableKeys)->toContain('about_title');
+    expect($availableKeys)->not->toContain('home_hero_title');
 });
 
 it('provides available pages from ContentKeys enum', function () {

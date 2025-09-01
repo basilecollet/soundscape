@@ -10,9 +10,9 @@ uses(RefreshDatabase::class);
 test('home section retrieves content from database', function () {
     // Arrange
     PageContent::create([
-        'key' => 'home_text',
+        'key' => 'home_hero_text',
         'content' => 'Welcome to Soundscape - Your audio journey starts here',
-        'title' => 'Home Text',
+        'title' => 'Home Hero Text',
         'page' => 'home',
     ]);
 
@@ -28,7 +28,7 @@ test('home section handles missing content gracefully', function () {
     // Act & Assert
     Livewire::test(HomeSection::class)
         ->assertStatus(200)
-        ->assertViewHas('homeContent', '');
+        ->assertViewHas('homeContent', 'Transform your audio projects with industry-standard expertise. Professional mixing, mastering, and sound design services.');
 });
 
 test('home section component renders the correct view', function () {
@@ -40,9 +40,9 @@ test('home section component renders the correct view', function () {
 test('home section updates when content changes', function () {
     // Arrange - Create initial content
     $content = PageContent::create([
-        'key' => 'home_text',
+        'key' => 'home_hero_text',
         'content' => 'Original content',
-        'title' => 'Home Text',
+        'title' => 'Home Hero Text',
         'page' => 'home',
     ]);
 
