@@ -2,22 +2,35 @@
 
 namespace App\Application\Portfolio\Services;
 
+use App\Application\Admin\Services\SectionVisibilityService;
 use App\Models\PageContent;
 
 class ContentService
 {
+    public function __construct(
+        private readonly SectionVisibilityService $sectionVisibilityService
+    ) {}
+
     /**
      * Get home page content
      *
-     * @return array{hero_title: string, hero_subtitle: string, hero_text: string, features: array<int, array{title: string, description: string}>}
+     * @return array{hero_title: string, hero_subtitle: string, hero_text: string, features?: array<int, array{title: string, description: string}>, show_features: bool, show_cta: bool}
      */
     public function getHomeContent(): array
     {
-        return [
+        $content = [
+            // Hero section is always enabled
             'hero_title' => PageContent::getContent('home_hero_title', 'Soundscape Audio'),
             'hero_subtitle' => PageContent::getContent('home_hero_subtitle', 'Professional Audio Engineering'),
             'hero_text' => PageContent::getContent('home_hero_text', 'Transform your audio projects with industry-standard expertise. Professional mixing, mastering, and sound design services.'),
-            'features' => [
+        ];
+
+        // Check if features section is enabled
+        $showFeatures = $this->sectionVisibilityService->isSectionEnabled('features', 'home');
+        $content['show_features'] = $showFeatures;
+
+        if ($showFeatures) {
+            $content['features'] = [
                 [
                     'title' => PageContent::getContent('home_feature_1_title', 'Mixing'),
                     'description' => PageContent::getContent('home_feature_1_description', 'Professional mixing services for all genres'),
@@ -30,36 +43,65 @@ class ContentService
                     'title' => PageContent::getContent('home_feature_3_title', 'Sound Design'),
                     'description' => PageContent::getContent('home_feature_3_description', 'Creative sound design for media projects'),
                 ],
-            ],
-        ];
+            ];
+        }
+
+        // Check if CTA section is enabled
+        $content['show_cta'] = $this->sectionVisibilityService->isSectionEnabled('cta', 'home');
+
+        return $content;
     }
 
     /**
      * Get about page content
      *
-     * @return array{title: string, intro: string, bio: string, experience: array{years: string, projects: string, clients: string}, services: array<int, string>, philosophy: string}
+     * @return array{title: string, intro: string, bio: string, experience?: array{years: string, projects: string, clients: string}, services?: array<int, string>, philosophy?: string, show_experience: bool, show_services: bool, show_philosophy: bool}
      */
     public function getAboutContent(): array
     {
-        return [
+        $content = [
+            // Hero and bio sections are always enabled
             'title' => PageContent::getContent('about_title', 'About Soundscape'),
             'intro' => PageContent::getContent('about_intro', 'Professional audio engineer with over 10 years of experience in music production and sound design.'),
             'bio' => PageContent::getContent('about_bio', 'Specializing in mixing, mastering, and sound design, I bring technical expertise and creative vision to every project. My approach combines industry-standard techniques with innovative solutions to deliver exceptional audio results.'),
-            'experience' => [
+        ];
+
+        // Check if experience section is enabled
+        $showExperience = $this->sectionVisibilityService->isSectionEnabled('experience', 'about');
+        $content['show_experience'] = $showExperience;
+
+        if ($showExperience) {
+            $content['experience'] = [
                 'years' => PageContent::getContent('about_experience_years', '10+'),
                 'projects' => PageContent::getContent('about_experience_projects', '500+'),
                 'clients' => PageContent::getContent('about_experience_clients', '200+'),
-            ],
-            'services' => [
+            ];
+        }
+
+        // Check if services section is enabled
+        $showServices = $this->sectionVisibilityService->isSectionEnabled('services', 'about');
+        $content['show_services'] = $showServices;
+
+        if ($showServices) {
+            $content['services'] = [
                 PageContent::getContent('about_service_1', 'Recording'),
                 PageContent::getContent('about_service_2', 'Mixing'),
                 PageContent::getContent('about_service_3', 'Mastering'),
                 PageContent::getContent('about_service_4', 'Sound Design'),
                 PageContent::getContent('about_service_5', 'Audio Restoration'),
                 PageContent::getContent('about_service_6', 'Podcast Production'),
-            ],
-            'philosophy' => PageContent::getContent('about_philosophy', 'Every audio project tells a story. My mission is to enhance that story through precise technical execution and creative excellence.'),
-        ];
+            ];
+        }
+
+        // Check if philosophy section is enabled
+        $showPhilosophy = $this->sectionVisibilityService->isSectionEnabled('philosophy', 'about');
+        $content['show_philosophy'] = $showPhilosophy;
+
+        if ($showPhilosophy) {
+            $content['philosophy'] = PageContent::getContent('about_philosophy', 'Every audio project tells a story. My mission is to enhance that story through precise technical execution and creative excellence.');
+        }
+
+        return $content;
     }
 
     /**

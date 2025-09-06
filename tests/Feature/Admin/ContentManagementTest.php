@@ -54,18 +54,18 @@ test('admin can access dashboard', function () {
 });
 
 test('admin controller methods return correct views', function () {
-    $controller = new \App\Http\Controllers\Admin\AdminController();
-    
+    $controller = new \App\Http\Controllers\Admin\AdminController;
+
     // Test dashboard method
     $dashboardResponse = $controller->dashboard();
     expect($dashboardResponse)->toBeInstanceOf(\Illuminate\View\View::class);
     expect($dashboardResponse->getName())->toBe('admin.dashboard');
-    
+
     // Test content method
     $contentResponse = $controller->content();
     expect($contentResponse)->toBeInstanceOf(\Illuminate\View\View::class);
     expect($contentResponse->getName())->toBe('admin.content.index');
-    
+
     // Test editContent method
     $contentId = 123;
     $editResponse = $controller->editContent($contentId);
