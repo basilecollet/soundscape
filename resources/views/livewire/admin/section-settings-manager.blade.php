@@ -50,7 +50,7 @@
                                 
                                 <flux:switch 
                                     wire:click="toggleSection('{{ $section['section_key'] }}', '{{ $page }}')"
-                                    {{ $section['is_enabled'] ? 'checked' : '' }}
+                                    :checked="$section['is_enabled']"
                                 />
                             </div>
                         @endforeach

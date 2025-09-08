@@ -17,17 +17,20 @@ class SectionSettingsManager extends Component
 
     public function toggleSection(string $sectionKey, string $page, SectionVisibilityService $sectionVisibilityService): void
     {
-        $currentState = $this->sectionSettings[$page][$sectionKey] ?? true;
+        $currentState = $sectionVisibilityService->isSectionEnabled($sectionKey, $page);
         $newState = ! $currentState;
 
         if ($sectionVisibilityService->setSectionEnabled($sectionKey, $page, $newState)) {
+            // Update local state for immediate UI feedback
             $this->sectionSettings[$page][$sectionKey] = $newState;
 
             $label = SectionKeys::getLabel($sectionKey);
             $status = $newState ? 'enabled' : 'disabled';
 
+            $this->dispatch('section-toggled', ['message' => "Section '{$label}' has been {$status}."]);
             session()->flash('message', "Section '{$label}' has been {$status}.");
         } else {
+            $this->dispatch('section-toggle-error', ['message' => 'Unable to modify this section.']);
             session()->flash('error', 'Unable to modify this section.');
         }
     }
