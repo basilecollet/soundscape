@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/content', [AdminController::class, 'content'])->name('content.index');
         Route::get('/content/{id}/edit', [AdminController::class, 'editContent'])->name('content.edit');
+        Route::get('/section-settings', [AdminController::class, 'sectionSettings'])->name('section-settings');
     });
 });
 

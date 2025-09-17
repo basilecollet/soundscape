@@ -22,34 +22,34 @@ it('can render content list component', function () {
 });
 
 it('displays all contents by default', function () {
-    PageContent::factory()->create(['page' => 'home', 'key' => 'home_text']);
-    PageContent::factory()->create(['page' => 'about', 'key' => 'about_section_1']);
-    PageContent::factory()->create(['page' => 'contact', 'key' => 'contact_text']);
+    PageContent::factory()->create(['page' => 'home', 'key' => 'home_hero_title']);
+    PageContent::factory()->create(['page' => 'about', 'key' => 'about_title']);
+    PageContent::factory()->create(['page' => 'contact', 'key' => 'contact_title']);
 
     Livewire::test(ContentList::class)
-        ->assertSee('home_text')
-        ->assertSee('about_section_1')
-        ->assertSee('contact_text');
+        ->assertSee('home_hero_title')
+        ->assertSee('about_title')
+        ->assertSee('contact_title');
 });
 
 it('can filter contents by page', function () {
-    PageContent::factory()->create(['page' => 'home', 'key' => 'home_text']);
-    PageContent::factory()->create(['page' => 'about', 'key' => 'about_section_1']);
+    PageContent::factory()->create(['page' => 'home', 'key' => 'home_hero_title']);
+    PageContent::factory()->create(['page' => 'about', 'key' => 'about_title']);
 
     Livewire::test(ContentList::class)
         ->set('selectedPage', 'home')
-        ->assertSee('home_text')
-        ->assertDontSee('about_section_1');
+        ->assertSee('home_hero_title')
+        ->assertDontSee('about_title');
 });
 
 it('can search contents by key, title and content', function () {
     PageContent::factory()->create([
-        'key' => 'home_text',
+        'key' => 'home_hero_title',
         'title' => 'Welcome Message',
         'content' => 'Welcome to our website',
     ]);
     PageContent::factory()->create([
-        'key' => 'about_section_1',
+        'key' => 'about_title',
         'title' => 'About Us',
         'content' => 'Learn about our company',
     ]);
@@ -59,20 +59,20 @@ it('can search contents by key, title and content', function () {
 
     $contents = $component->get('contents');
     expect($contents)->toHaveCount(1);
-    expect($contents->first()->key)->toBe('home_text');
+    expect($contents->first()->key)->toBe('home_hero_title');
 });
 
 it('displays missing keys for each page', function () {
     // Only create one content for home page, others should be missing
-    PageContent::factory()->create(['page' => 'home', 'key' => 'home_text']);
+    PageContent::factory()->create(['page' => 'home', 'key' => 'home_hero_title']);
 
     $component = Livewire::test(ContentList::class);
     $missingKeys = $component->get('missingKeys');
 
-    // Home page should have missing keys (all except home_text)
+    // Home page should have missing keys (all except home_hero_title)
     expect($missingKeys)->toHaveKey('home');
-    expect($missingKeys['home'])->toContain('home_hero');
-    expect($missingKeys['home'])->not->toContain('home_text');
+    expect($missingKeys['home'])->toContain('home_hero_subtitle');
+    expect($missingKeys['home'])->not->toContain('home_hero_title');
 
     // About and contact pages should have all their keys missing
     expect($missingKeys)->toHaveKey('about');

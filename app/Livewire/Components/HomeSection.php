@@ -12,7 +12,7 @@ class HomeSection extends Component
 
     public function mount(): void
     {
-        $this->homeContent = PageContent::getContent('home_text');
+        $this->homeContent = PageContent::getContent('home_hero_text', 'Transform your audio projects with industry-standard expertise. Professional mixing, mastering, and sound design services.');
     }
 
     public function render(): View

@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Admin\Repositories\ContactRepository::class,
             \App\Infra\Repositories\Admin\ContactDatabaseRepository::class
         );
+
+        $this->app->bind(
+            \App\Domain\Admin\Repositories\SectionSettingRepository::class,
+            \App\Infra\Repositories\Admin\SectionSettingDatabaseRepository::class
+        );
     }
 
     /**

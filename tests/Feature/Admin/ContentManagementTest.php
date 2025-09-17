@@ -39,3 +39,37 @@ test('admin can access content edit page', function () {
     $response->assertViewIs('admin.content.edit');
     $response->assertViewHas('contentId', $content->id);
 });
+
+test('guest cannot access admin dashboard', function () {
+    $response = $this->get('/admin');
+
+    $response->assertRedirect('/login');
+});
+
+test('admin can access dashboard', function () {
+    $response = $this->actingAs($this->admin)->get('/admin');
+
+    $response->assertOk()
+        ->assertViewIs('admin.dashboard');
+});
+
+test('admin controller methods return correct views', function () {
+    $controller = new \App\Http\Controllers\Admin\AdminController;
+
+    // Test dashboard method
+    $dashboardResponse = $controller->dashboard();
+    expect($dashboardResponse)->toBeInstanceOf(\Illuminate\View\View::class);
+    expect($dashboardResponse->getName())->toBe('admin.dashboard');
+
+    // Test content method
+    $contentResponse = $controller->content();
+    expect($contentResponse)->toBeInstanceOf(\Illuminate\View\View::class);
+    expect($contentResponse->getName())->toBe('admin.content.index');
+
+    // Test editContent method
+    $contentId = 123;
+    $editResponse = $controller->editContent($contentId);
+    expect($editResponse)->toBeInstanceOf(\Illuminate\View\View::class);
+    expect($editResponse->getName())->toBe('admin.content.edit');
+    expect($editResponse->getData()['contentId'])->toBe($contentId);
+});

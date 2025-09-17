@@ -20,6 +20,7 @@
         </div>
     </section>
 
+    @if($content['show_experience'])
     <!-- Experience Stats -->
     <section class="py-20 bg-portfolio-secondary">
         <div class="container mx-auto px-6 lg:px-12">
@@ -39,7 +40,9 @@
             </div>
         </div>
     </section>
+    @endif
 
+    @if($content['show_services'])
     <!-- Services -->
     <section class="py-20 bg-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
@@ -54,7 +57,9 @@
             </div>
         </div>
     </section>
+    @endif
 
+    @if($content['show_philosophy'])
     <!-- Philosophy -->
     <section class="py-20 bg-portfolio-dark text-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
@@ -64,4 +69,5 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection

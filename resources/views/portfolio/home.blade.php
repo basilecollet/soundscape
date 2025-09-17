@@ -13,6 +13,7 @@
         ]"
     />
 
+    @if($content['show_features'])
     <!-- Features Section -->
     <section class="py-20 bg-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
@@ -31,10 +32,14 @@
             </div>
         </div>
     </section>
+    @endif
 
+    @if($content['show_features'] && $content['show_cta'])
     <!-- Divider -->
     <div class="h-px bg-gradient-to-r from-transparent via-portfolio-accent/30 to-transparent"></div>
+    @endif
 
+    @if($content['show_cta'])
     <!-- CTA Section -->
     <section class="py-20 bg-gradient-to-b from-portfolio-light to-portfolio-secondary">
         <div class="container mx-auto px-6 lg:px-12 text-center">
@@ -49,4 +54,5 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection

@@ -25,4 +25,9 @@ class AdminController extends Controller
     {
         return view('admin.content.edit', ['contentId' => $id]);
     }
+
+    public function sectionSettings(): View
+    {
+        return view('admin.section-settings');
+    }
 }
