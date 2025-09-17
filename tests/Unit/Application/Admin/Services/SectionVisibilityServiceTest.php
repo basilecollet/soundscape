@@ -3,22 +3,28 @@
 use App\Application\Admin\Services\SectionVisibilityService;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
 use App\Models\SectionSetting;
+use Mockery\Expectation;
+use Mockery\MockInterface;
 
 test('isSectionEnabled returns true for non-disableable sections', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
     $service = new SectionVisibilityService($repository);
 
     // Hero sections are not disableable, should always return true
-    expect($service->isSectionEnabled('hero', 'home'))->toBeTrue();
-    expect($service->isSectionEnabled('hero', 'about'))->toBeTrue();
-    expect($service->isSectionEnabled('form', 'contact'))->toBeTrue();
+    expect($service->isSectionEnabled('hero', 'home'))->toBeTrue()
+        ->and($service->isSectionEnabled('hero', 'about'))->toBeTrue()
+        ->and($service->isSectionEnabled('form', 'contact'))->toBeTrue();
 });
 
 test('isSectionEnabled delegates to repository for disableable sections', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
-    $repository->shouldReceive('isSectionEnabled')
+
+    /** @var Expectation $expectation */
+    $expectation= $repository->shouldReceive('isSectionEnabled');
+    $expectation->once()
         ->with('features', 'home')
-        ->once()
         ->andReturn(true);
 
     $service = new SectionVisibilityService($repository);
@@ -27,19 +33,23 @@ test('isSectionEnabled delegates to repository for disableable sections', functi
 });
 
 test('setSectionEnabled returns false for non-disableable sections', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
     $service = new SectionVisibilityService($repository);
 
     // Should not be able to disable hero sections
-    expect($service->setSectionEnabled('hero', 'home', false))->toBeFalse();
-    expect($service->setSectionEnabled('form', 'contact', false))->toBeFalse();
+    expect($service->setSectionEnabled('hero', 'home', false))->toBeFalse()
+        ->and($service->setSectionEnabled('form', 'contact', false))->toBeFalse();
 });
 
 test('setSectionEnabled delegates to repository for disableable sections', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
-    $repository->shouldReceive('setSectionEnabled')
+
+    /** @var Expectation $expectation */
+    $expectation = $repository->shouldReceive('setSectionEnabled');
+    $expectation->once()
         ->with('features', 'home', false)
-        ->once()
         ->andReturn(new SectionSetting(['section_key' => 'features', 'page' => 'home', 'is_enabled' => false]));
 
     $service = new SectionVisibilityService($repository);
@@ -48,10 +58,13 @@ test('setSectionEnabled delegates to repository for disableable sections', funct
 });
 
 test('getEnabledSectionsForPage returns both disableable and non-disableable sections', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
-    $repository->shouldReceive('getEnabledSectionsForPage')
+
+    /** @var Expectation $expectation */
+    $expectation = $repository->shouldReceive('getEnabledSectionsForPage');
+    $expectation->once()
         ->with('home')
-        ->once()
         ->andReturn(['features', 'cta']);
 
     $service = new SectionVisibilityService($repository);
@@ -64,11 +77,12 @@ test('getEnabledSectionsForPage returns both disableable and non-disableable sec
 });
 
 test('getNonDisableableSectionsForPage returns correct sections for each page', function () {
+    /** @var SectionSettingRepository&MockInterface $repository */
     $repository = Mockery::mock(SectionSettingRepository::class);
     $service = new SectionVisibilityService($repository);
 
-    expect($service->getNonDisableableSectionsForPage('home'))->toEqual(['hero']);
-    expect($service->getNonDisableableSectionsForPage('about'))->toEqual(['hero', 'bio']);
-    expect($service->getNonDisableableSectionsForPage('contact'))->toEqual(['hero', 'form', 'info']);
-    expect($service->getNonDisableableSectionsForPage('unknown'))->toEqual([]);
+    expect($service->getNonDisableableSectionsForPage('home'))->toEqual(['hero'])
+        ->and($service->getNonDisableableSectionsForPage('about'))->toEqual(['hero', 'bio'])
+        ->and($service->getNonDisableableSectionsForPage('contact'))->toEqual(['hero', 'form', 'info'])
+        ->and($service->getNonDisableableSectionsForPage('unknown'))->toEqual([]);
 });
