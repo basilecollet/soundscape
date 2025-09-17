@@ -22,7 +22,7 @@ test('isSectionEnabled delegates to repository for disableable sections', functi
     $repository = Mockery::mock(SectionSettingRepository::class);
 
     /** @var Expectation $expectation */
-    $expectation= $repository->shouldReceive('isSectionEnabled');
+    $expectation = $repository->shouldReceive('isSectionEnabled');
     $expectation->once()
         ->with('features', 'home')
         ->andReturn(true);
