@@ -8,6 +8,11 @@ use Livewire\Component;
 
 class SectionSettingsManager extends Component
 {
+    /**
+     * Map of page => sectionKey => isEnabled
+     *
+     * @var array<string, array<string, bool>>
+     */
     public array $sectionSettings = [];
 
     public function mount(SectionVisibilityService $sectionVisibilityService): void

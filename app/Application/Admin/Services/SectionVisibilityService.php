@@ -7,10 +7,10 @@ namespace App\Application\Admin\Services;
 use App\Domain\Admin\Enums\SectionKeys;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
 
-class SectionVisibilityService
+readonly class SectionVisibilityService
 {
     public function __construct(
-        private readonly SectionSettingRepository $sectionSettingRepository
+        private SectionSettingRepository $sectionSettingRepository
     ) {}
 
     /**
@@ -73,9 +73,9 @@ class SectionVisibilityService
     }
 
     /**
-     * Get available section settings for admin interface
+     * Get available section settings for the admin interface
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, list<array{section_key: string, label: string, is_enabled: bool}>>
      */
     public function getAvailableSectionSettings(): array
     {
