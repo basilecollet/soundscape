@@ -6,8 +6,7 @@ final readonly class ProjectTitle
 {
     private function __construct(
         private string $title,
-    ) {
-    }
+    ) {}
 
     public static function fromString(string $title): self
     {

@@ -10,8 +10,7 @@ final readonly class ProjectSlug
 {
     private function __construct(
         private string $slug,
-    ) {
-    }
+    ) {}
 
     public static function fromTitle(ProjectTitle $title): self
     {
