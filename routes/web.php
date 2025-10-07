@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Portfolio\AboutController;
 use App\Http\Controllers\Portfolio\ContactController;
 use App\Http\Controllers\Portfolio\HomeController;
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::resource('/project', ProjectController::class)->only('index');
         Route::get('/content', [AdminController::class, 'content'])->name('content.index');
         Route::get('/content/{id}/edit', [AdminController::class, 'editContent'])->name('content.edit');
         Route::get('/section-settings', [AdminController::class, 'sectionSettings'])->name('section-settings');
