@@ -19,4 +19,14 @@ final readonly class Project
     {
         return $this->title;
     }
+
+    /**
+     * @return string[]
+     */
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
 }
