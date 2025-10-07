@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('can access a project add form if user is connected', function () {
+test('can access a project edit form if user is connected', function () {
     $project = Project::factory()->create();
 
     $response = $this
