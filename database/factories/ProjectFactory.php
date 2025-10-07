@@ -24,4 +24,9 @@ class ProjectFactory extends Factory
             'updated_at' => now(),
         ];
     }
+
+    public function withATitle(string $string): static
+    {
+        return $this->state(fn (array $attributes) => ['title' => $string]);
+    }
 }

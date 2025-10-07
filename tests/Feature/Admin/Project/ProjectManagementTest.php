@@ -26,3 +26,16 @@ test('list all projects in database', function () {
 
     expect($projects)->toHaveCount(5);
 });
+
+test('projects contain required attributes', function () {
+    Project::factory()->withATitle('Test Project')->create();
+
+    $response = $this
+        ->actingAs(User::factory()->create())
+        ->get(route('admin.project.index'));
+
+    $projects = $response->viewData('projects');
+    $firstProject = $projects->first();
+
+    expect($firstProject->title)->toBe('Test Project');
+});
