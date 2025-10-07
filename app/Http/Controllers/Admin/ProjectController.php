@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
@@ -23,5 +24,10 @@ class ProjectController extends Controller
     public function edit(Project $project): View
     {
         return view('admin.project.edit', compact('project'));
+    }
+
+    public function destroy(Project $project): RedirectResponse
+    {
+        return to_route('admin.project.index');
     }
 }

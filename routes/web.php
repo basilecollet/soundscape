@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::resource('/project', ProjectController::class)->only('index', 'create', 'edit');
+        Route::resource('/project', ProjectController::class)->only('index', 'create', 'edit', 'destroy');
         Route::get('/content', [AdminController::class, 'content'])->name('content.index');
         Route::get('/content/{id}/edit', [AdminController::class, 'editContent'])->name('content.edit');
         Route::get('/section-settings', [AdminController::class, 'sectionSettings'])->name('section-settings');
