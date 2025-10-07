@@ -14,7 +14,7 @@ final readonly class ProjectSlug
 
     public static function fromTitle(ProjectTitle $title): self
     {
-        $slug = Str::slug($title, '-');
+        $slug = Str::slug((string) $title, '-');
 
         return new self($slug);
     }
