@@ -10,6 +10,7 @@ use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 test('can create project with only title', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
+    /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
@@ -27,6 +28,7 @@ test('can create project with only title', function () {
 test('can create project with all fields', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
+    /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
@@ -48,6 +50,7 @@ test('can create project with all fields', function () {
 test('handler calls repository to store project', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
+    /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')
         ->once()
         ->withArgs(function ($project) {
@@ -69,6 +72,7 @@ test('handler calls repository to store project', function () {
 test('handler creates project with correct optional fields', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
+    /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')
         ->once()
         ->withArgs(function ($project) {
