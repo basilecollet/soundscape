@@ -14,6 +14,7 @@ class Project extends Model
     protected $fillable = [
         'title',
         'slug',
+        'status',
     ];
 
     protected $hidden = [

@@ -63,3 +63,44 @@ test('can store multiple projects with different slugs', function () {
 
     expect(ProjectDatabase::count())->toBe(3);
 });
+
+test('stores project with draft status by default', function () {
+    $project = Project::new('My Project');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'status' => 'draft',
+    ]);
+});
+
+test('stores project with published status', function () {
+    $project = Project::new('My Project');
+    $project->publish();
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'status' => 'published',
+    ]);
+});
+
+test('stores project with archived status', function () {
+    $project = Project::new('My Project');
+    $project->archive();
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'status' => 'archived',
+    ]);
+});

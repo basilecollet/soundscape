@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
@@ -24,6 +25,7 @@ class ProjectFactory extends Factory
         return [
             'title' => $title,
             'slug' => Str::slug($title),
+            'status' => ProjectStatus::Draft->value,
 
             'created_at' => now(),
             'updated_at' => now(),
