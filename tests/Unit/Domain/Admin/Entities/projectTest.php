@@ -78,7 +78,7 @@ test('project toArray includes status', function () {
 
 test('published project toArray has published status', function () {
     $project = Project::new('My Project');
-    
+
     $project->publish();
     $array = $project->toArray();
 
