@@ -16,7 +16,7 @@ class ProjectFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array{title: string, slug: string, created_at: Carbon, updated_at: Carbon}
+     * @return array{title: string, slug: string, description: ?string, created_at: Carbon, updated_at: Carbon}
      */
     public function definition(): array
     {
