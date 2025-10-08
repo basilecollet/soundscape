@@ -22,8 +22,6 @@ final readonly class CreateProjectData
      *     client_name?: string,
      *     project_date?: string,
      * } $data
-     *
-     * @return self
      */
     public static function fromArray(array $data): self
     {
