@@ -143,9 +143,10 @@ test('project can have null client name', function () {
 
 test('project can have a project date', function () {
     $project = Project::new('My Project', null, null, null, '2024-06-15');
+    $projectDate = $project->getProjectDate();
 
-    expect($project->getProjectDate())->not->toBeNull()
-        ->and($project->getProjectDate()->format('Y-m-d'))->toBe('2024-06-15');
+    expect($projectDate)->not->toBeNull()
+        ->and($projectDate?->format('Y-m-d'))->toBe('2024-06-15');
 });
 
 test('project can have null project date', function () {
