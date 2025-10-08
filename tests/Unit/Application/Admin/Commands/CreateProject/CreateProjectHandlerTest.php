@@ -8,8 +8,9 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 
 test('can create project with only title', function () {
+    /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
-    $repository->shouldReceive('store')->once();
+    $repository->shouldReceive('store')->once()->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
 
@@ -24,8 +25,9 @@ test('can create project with only title', function () {
 });
 
 test('can create project with all fields', function () {
+    /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
-    $repository->shouldReceive('store')->once();
+    $repository->shouldReceive('store')->once()->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
 
@@ -44,6 +46,7 @@ test('can create project with all fields', function () {
 });
 
 test('handler calls repository to store project', function () {
+    /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
     $repository->shouldReceive('store')
         ->once()
@@ -51,7 +54,8 @@ test('handler calls repository to store project', function () {
             return (string) $project->getTitle() === 'Test Project'
                 && (string) $project->getSlug() === 'test-project'
                 && $project->getStatus()->isDraft();
-        });
+        })
+        ->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
 
@@ -63,6 +67,7 @@ test('handler calls repository to store project', function () {
 });
 
 test('handler creates project with correct optional fields', function () {
+    /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
     $repository->shouldReceive('store')
         ->once()
@@ -71,7 +76,8 @@ test('handler creates project with correct optional fields', function () {
                 && (string) $project->getShortDescription() === 'Short'
                 && (string) $project->getClientName() === 'Acme Corporation'
                 && $project->getProjectDate()?->format('Y-m-d') === '2024-06-15';
-        });
+        })
+        ->andReturnNull();
 
     $handler = new CreateProjectHandler($repository);
 
