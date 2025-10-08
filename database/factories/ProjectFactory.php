@@ -30,7 +30,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->unique()->words(3, true);
+        $title = (string) $this->faker->unique()->words(3, true);
 
         return [
             'title' => $title,
