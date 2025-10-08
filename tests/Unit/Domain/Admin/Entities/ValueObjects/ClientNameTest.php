@@ -22,6 +22,42 @@ test('client name trims whitespace', function () {
     expect((string) $clientName)->toBe('Client Name');
 });
 
+test('client name converts to title case', function () {
+    $clientName = ClientName::fromString('acme corporation');
+
+    expect((string) $clientName)->toBe('Acme Corporation');
+});
+
+test('client name converts uppercase to title case', function () {
+    $clientName = ClientName::fromString('ACME CORPORATION');
+
+    expect((string) $clientName)->toBe('Acme Corporation');
+});
+
+test('client name handles mixed case', function () {
+    $clientName = ClientName::fromString('aCmE coRPoRaTion');
+
+    expect((string) $clientName)->toBe('Acme Corporation');
+});
+
+test('client name handles accented characters', function () {
+    $clientName = ClientName::fromString('café société');
+
+    expect((string) $clientName)->toBe('Café Société');
+});
+
+test('client name handles special characters and accents', function () {
+    $clientName = ClientName::fromString('société d\'étude');
+
+    expect((string) $clientName)->toBe('Société D\'Étude');
+});
+
+test('client name handles multiple spaces', function () {
+    $clientName = ClientName::fromString('acme   corporation');
+
+    expect((string) $clientName)->toBe('Acme Corporation');
+});
+
 test('two client names with same content are equal', function () {
     $name1 = ClientName::fromString('Same Client');
     $name2 = ClientName::fromString('Same Client');

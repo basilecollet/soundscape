@@ -12,7 +12,18 @@ final readonly class ClientName
 
     public static function fromString(string $name): self
     {
-        return new self(trim($name));
+        $normalized = trim($name);
+        $normalized = preg_replace('/\s+/', ' ', $normalized);
+        $normalized = mb_convert_case($normalized, MB_CASE_TITLE, 'UTF-8');
+
+        // Force uppercase after apostrophes for visual consistency
+        $normalized = preg_replace_callback(
+            '/\'(\p{L})/u',
+            fn ($matches) => "'".mb_strtoupper($matches[1], 'UTF-8'),
+            $normalized
+        );
+
+        return new self($normalized);
     }
 
     public function __toString(): string
