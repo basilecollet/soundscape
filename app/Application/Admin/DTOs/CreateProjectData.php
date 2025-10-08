@@ -14,6 +14,17 @@ final readonly class CreateProjectData
         public ?string $projectDate = null,
     ) {}
 
+    /**
+     * @param array{
+     *     title: string,
+     *     description?: string,
+     *     short_description?: string,
+     *     client_name?: string,
+     *     project_date?: string,
+     * } $data
+     *
+     * @return self
+     */
     public static function fromArray(array $data): self
     {
         return new self(
@@ -25,6 +36,15 @@ final readonly class CreateProjectData
         );
     }
 
+    /**
+     * @return array{
+     *     title: string,
+     *     description?: string|null,
+     *     short_description?: string|null,
+     *     client_name?: string|null,
+     *     project_date?: string|null,
+     * }
+     */
     public function toArray(): array
     {
         return [
