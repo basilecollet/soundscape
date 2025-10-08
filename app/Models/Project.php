@@ -13,10 +13,11 @@ class Project extends Model
 
     protected $fillable = [
         'title',
+        'slug',
     ];
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 }

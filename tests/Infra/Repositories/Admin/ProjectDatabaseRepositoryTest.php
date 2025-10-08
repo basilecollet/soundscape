@@ -15,5 +15,6 @@ test('can store a project from the domain entity', function () {
 
     $this->assertDatabaseHas('projects', [
         'title' => 'My project',
+        'slug' => 'my-project',
     ]);
 });
