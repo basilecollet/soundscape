@@ -13,11 +13,11 @@ final readonly class ClientName
     public static function fromString(string $name): self
     {
         $normalized = trim($name);
-        $normalized = preg_replace('/\s+/', ' ', $normalized);
+        $normalized = (string) preg_replace('/\s+/', ' ', $normalized);
         $normalized = mb_convert_case($normalized, MB_CASE_TITLE, 'UTF-8');
 
         // Force uppercase after apostrophes for visual consistency
-        $normalized = preg_replace_callback(
+        $normalized = (string) preg_replace_callback(
             '/\'(\p{L})/u',
             fn ($matches) => "'".mb_strtoupper($matches[1], 'UTF-8'),
             $normalized
