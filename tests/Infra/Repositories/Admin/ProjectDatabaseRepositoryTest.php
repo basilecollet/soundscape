@@ -104,3 +104,29 @@ test('stores project with archived status', function () {
         'status' => 'archived',
     ]);
 });
+
+test('stores project with description', function () {
+    $project = Project::new('My Project', 'This is a **markdown** description');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'description' => 'This is a **markdown** description',
+    ]);
+});
+
+test('stores project with null description', function () {
+    $project = Project::new('My Project');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'description' => null,
+    ]);
+});

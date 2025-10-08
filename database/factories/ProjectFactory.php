@@ -26,6 +26,7 @@ class ProjectFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'status' => ProjectStatus::Draft->value,
+            'description' => null,
 
             'created_at' => now(),
             'updated_at' => now(),
@@ -37,6 +38,13 @@ class ProjectFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'title' => $string,
             'slug' => Str::slug($string),
+        ]);
+    }
+
+    public function withDescription(string $string): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'description' => $string,
         ]);
     }
 }
