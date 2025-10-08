@@ -114,3 +114,54 @@ test('project toArray has null description when not set', function () {
     expect($array)->toHaveKey('description')
         ->and($array['description'])->toBeNull();
 });
+
+test('project can have a short description', function () {
+    $project = Project::new('My Project', null, 'A brief summary');
+
+    expect($project->getShortDescription())->not->toBeNull()
+        ->and((string) $project->getShortDescription())->toBe('A brief summary');
+});
+
+test('project can have null short description', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getShortDescription())->toBeNull();
+});
+
+test('project can have a client name', function () {
+    $project = Project::new('My Project', null, null, 'Acme Corporation');
+
+    expect($project->getClientName())->not->toBeNull()
+        ->and((string) $project->getClientName())->toBe('Acme Corporation');
+});
+
+test('project can have null client name', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getClientName())->toBeNull();
+});
+
+test('project can have a project date', function () {
+    $project = Project::new('My Project', null, null, null, '2024-06-15');
+
+    expect($project->getProjectDate())->not->toBeNull()
+        ->and($project->getProjectDate()->format('Y-m-d'))->toBe('2024-06-15');
+});
+
+test('project can have null project date', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getProjectDate())->toBeNull();
+});
+
+test('project toArray includes all optional fields', function () {
+    $project = Project::new('My Project', 'Long description', 'Short desc', 'Client Inc', '2024-06-15');
+    $array = $project->toArray();
+
+    expect($array)->toHaveKey('short_description')
+        ->and($array)->toHaveKey('client_name')
+        ->and($array)->toHaveKey('project_date')
+        ->and($array['short_description'])->toBe('Short desc')
+        ->and($array['client_name'])->toBe('Client Inc')
+        ->and($array['project_date'])->toBe('2024-06-15');
+});
