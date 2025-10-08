@@ -130,3 +130,103 @@ test('stores project with null description', function () {
         'description' => null,
     ]);
 });
+
+test('stores project with short description', function () {
+    $project = Project::new('My Project', null, 'A brief summary');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'short_description' => 'A brief summary',
+    ]);
+});
+
+test('stores project with null short description', function () {
+    $project = Project::new('My Project');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'short_description' => null,
+    ]);
+});
+
+test('stores project with client name', function () {
+    $project = Project::new('My Project', null, null, 'Acme Corporation');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'client_name' => 'Acme Corporation',
+    ]);
+});
+
+test('stores project with null client name', function () {
+    $project = Project::new('My Project');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'client_name' => null,
+    ]);
+});
+
+test('stores project with project date', function () {
+    $project = Project::new('My Project', null, null, null, '2024-06-15');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'project_date' => '2024-06-15',
+    ]);
+});
+
+test('stores project with null project date', function () {
+    $project = Project::new('My Project');
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'project_date' => null,
+    ]);
+});
+
+test('stores project with all optional fields', function () {
+    $project = Project::new(
+        'My Project',
+        'Long description',
+        'Short desc',
+        'Client Inc',
+        '2024-06-15'
+    );
+    $repository = new ProjectDatabaseRepository;
+
+    $repository->store($project);
+
+    $this->assertDatabaseHas('projects', [
+        'title' => 'My Project',
+        'slug' => 'my-project',
+        'description' => 'Long description',
+        'short_description' => 'Short desc',
+        'client_name' => 'Client Inc',
+        'project_date' => '2024-06-15',
+    ]);
+});
