@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Entities;
 
 use App\Domain\Admin\Entities\Enums\ProjectStatus;
+use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 
@@ -14,10 +15,12 @@ final class Project
         private ProjectTitle $title,
         private ProjectSlug $slug,
         private ProjectStatus $status,
+        private ?ProjectDescription $description = null,
     ) {}
 
     public static function new(
         string $title,
+        ?string $description = null,
     ): self {
         $projectTitle = ProjectTitle::fromString($title);
 
@@ -25,6 +28,7 @@ final class Project
             $projectTitle,
             ProjectSlug::fromTitle($projectTitle),
             ProjectStatus::Draft,
+            $description !== null ? ProjectDescription::fromString($description) : null,
         );
     }
 
@@ -43,6 +47,11 @@ final class Project
         return $this->status;
     }
 
+    public function getDescription(): ?ProjectDescription
+    {
+        return $this->description;
+    }
+
     public function publish(): void
     {
         $this->status = ProjectStatus::Published;
@@ -59,7 +68,7 @@ final class Project
     }
 
     /**
-     * @return string[]
+     * @return array<string, string|null>
      */
     public function toArray(): array
     {
@@ -67,6 +76,7 @@ final class Project
             'title' => (string) $this->title,
             'slug' => (string) $this->slug,
             'status' => $this->status->value,
+            'description' => $this->description !== null ? (string) $this->description : null,
         ];
     }
 }

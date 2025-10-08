@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 
@@ -83,4 +84,33 @@ test('published project toArray has published status', function () {
     $array = $project->toArray();
 
     expect($array['status'])->toBe('published');
+});
+
+test('project can have a description', function () {
+    $project = Project::new('My Project', 'This is a **markdown** description');
+
+    expect($project->getDescription())->toBeInstanceOf(ProjectDescription::class)
+        ->and((string) $project->getDescription())->toBe('This is a **markdown** description');
+});
+
+test('project can have null description', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getDescription())->toBeNull();
+});
+
+test('project toArray includes description', function () {
+    $project = Project::new('My Project', 'My description');
+    $array = $project->toArray();
+
+    expect($array)->toHaveKey('description')
+        ->and($array['description'])->toBe('My description');
+});
+
+test('project toArray has null description when not set', function () {
+    $project = Project::new('My Project');
+    $array = $project->toArray();
+
+    expect($array)->toHaveKey('description')
+        ->and($array['description'])->toBeNull();
 });
