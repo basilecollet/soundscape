@@ -16,7 +16,17 @@ class ProjectFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array{title: string, slug: string, description: ?string, created_at: Carbon, updated_at: Carbon}
+     * @return array{
+     *     title: string,
+     *     slug: string,
+     *     status: string,
+     *     description: ?string,
+     *     short_description: ?string,
+     *     client_name: ?string,
+     *     project_date: ?Carbon,
+     *     created_at: Carbon,
+     *     updated_at: Carbon
+     * }
      */
     public function definition(): array
     {
@@ -27,6 +37,9 @@ class ProjectFactory extends Factory
             'slug' => Str::slug($title),
             'status' => ProjectStatus::Draft->value,
             'description' => null,
+            'short_description' => null,
+            'client_name' => null,
+            'project_date' => null,
 
             'created_at' => now(),
             'updated_at' => now(),

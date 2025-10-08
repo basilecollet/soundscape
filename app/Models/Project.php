@@ -16,6 +16,9 @@ class Project extends Model
         'slug',
         'status',
         'description',
+        'short_description',
+        'client_name',
+        'project_date',
     ];
 
     protected $hidden = [
