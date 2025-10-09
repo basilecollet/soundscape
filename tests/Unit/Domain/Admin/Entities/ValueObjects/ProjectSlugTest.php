@@ -33,3 +33,58 @@ test('generate slug with unicode and special characters', function () {
 
     expect((string) $slug)->toBe('cafe-the-2024');
 });
+
+test('can create slug from string', function () {
+    $slug = ProjectSlug::fromString('existing-project-slug');
+
+    expect($slug)->toBeInstanceOf(ProjectSlug::class)
+        ->and((string) $slug)->toBe('existing-project-slug');
+});
+
+test('fromString preserves slug as-is', function () {
+    $slug = ProjectSlug::fromString('my-custom-slug-123');
+
+    expect((string) $slug)->toBe('my-custom-slug-123');
+});
+
+test('fromString accepts valid slug with lowercase letters', function () {
+    $slug = ProjectSlug::fromString('simple-slug');
+
+    expect((string) $slug)->toBe('simple-slug');
+});
+
+test('fromString accepts valid slug with numbers', function () {
+    $slug = ProjectSlug::fromString('project-2024-v2');
+
+    expect((string) $slug)->toBe('project-2024-v2');
+});
+
+test('fromString rejects slug with uppercase letters', function () {
+    expect(fn () => ProjectSlug::fromString('Invalid-Slug'))
+        ->toThrow(\InvalidArgumentException::class);
+});
+
+test('fromString rejects slug with spaces', function () {
+    expect(fn () => ProjectSlug::fromString('invalid slug'))
+        ->toThrow(\InvalidArgumentException::class);
+});
+
+test('fromString rejects slug with special characters', function () {
+    expect(fn () => ProjectSlug::fromString('invalid_slug'))
+        ->toThrow(\InvalidArgumentException::class);
+});
+
+test('fromString rejects slug starting with dash', function () {
+    expect(fn () => ProjectSlug::fromString('-invalid-slug'))
+        ->toThrow(\InvalidArgumentException::class);
+});
+
+test('fromString rejects slug ending with dash', function () {
+    expect(fn () => ProjectSlug::fromString('invalid-slug-'))
+        ->toThrow(\InvalidArgumentException::class);
+});
+
+test('fromString rejects empty string', function () {
+    expect(fn () => ProjectSlug::fromString(''))
+        ->toThrow(\InvalidArgumentException::class);
+});

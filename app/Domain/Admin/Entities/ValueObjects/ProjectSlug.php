@@ -19,6 +19,22 @@ final readonly class ProjectSlug
         return new self($slug);
     }
 
+    public static function fromString(string $slug): self
+    {
+        if (! self::isValidSlug($slug)) {
+            throw new \InvalidArgumentException(
+                "Invalid slug format: '{$slug}'. Slug must contain only lowercase letters, numbers, and hyphens."
+            );
+        }
+
+        return new self($slug);
+    }
+
+    private static function isValidSlug(string $slug): bool
+    {
+        return preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug) === 1;
+    }
+
     public function __toString(): string
     {
         return $this->slug;
