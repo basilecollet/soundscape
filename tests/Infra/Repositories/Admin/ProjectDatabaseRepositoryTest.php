@@ -253,8 +253,8 @@ test('can get all projects from database', function () {
     expect($projects)->toHaveCount(2)
         ->and($firstProject)->toBeInstanceOf(Project::class)
         ->and($firstProject)->not->toBeNull()
-        ->and((string)$firstProject?->getTitle())->toBe('Project One')
-        ->and((string)$lastProject?->getTitle())->toBe('Project Two');
+        ->and((string) $firstProject?->getTitle())->toBe('Project One')
+        ->and((string) $lastProject?->getTitle())->toBe('Project Two');
 
 });
 
