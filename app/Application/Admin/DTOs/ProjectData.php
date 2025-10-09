@@ -31,6 +31,9 @@ final readonly class ProjectData
         );
     }
 
+    /**
+     * @return array<string, string|null>
+     */
     public function toArray(): array
     {
         return [
