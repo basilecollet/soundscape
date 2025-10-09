@@ -230,3 +230,96 @@ test('stores project with all optional fields', function () {
         'project_date' => '2024-06-15',
     ]);
 });
+
+test('can get all projects from database', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Project One',
+        'slug' => 'project-one',
+        'status' => 'draft',
+    ]);
+
+    ProjectDatabase::create([
+        'title' => 'Project Two',
+        'slug' => 'project-two',
+        'status' => 'published',
+    ]);
+
+    $projects = $repository->getAll();
+
+    expect($projects)->toHaveCount(2)
+        ->and($projects->first())->toBeInstanceOf(Project::class)
+        ->and((string) $projects->first()->getTitle())->toBe('Project One')
+        ->and((string) $projects->last()->getTitle())->toBe('Project Two');
+});
+
+test('getAll returns empty collection when no projects', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    $projects = $repository->getAll();
+
+    expect($projects)->toBeEmpty();
+});
+
+test('getAll reconstitutes project with correct status', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Published Project',
+        'slug' => 'published-project',
+        'status' => 'published',
+    ]);
+
+    $projects = $repository->getAll();
+    $project = $projects->first();
+
+    expect($project->getStatus()->isPublished())->toBeTrue();
+});
+
+test('getAll reconstitutes project with all optional fields', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Full Project',
+        'slug' => 'full-project',
+        'status' => 'archived',
+        'description' => 'Long description',
+        'short_description' => 'Short desc',
+        'client_name' => 'acme corporation',
+        'project_date' => '2024-06-15',
+    ]);
+
+    $projects = $repository->getAll();
+    $project = $projects->first();
+
+    expect((string) $project->getTitle())->toBe('Full Project')
+        ->and((string) $project->getSlug())->toBe('full-project')
+        ->and($project->getStatus()->isArchived())->toBeTrue()
+        ->and((string) $project->getDescription())->toBe('Long description')
+        ->and((string) $project->getShortDescription())->toBe('Short desc')
+        ->and((string) $project->getClientName())->toBe('Acme Corporation')
+        ->and($project->getProjectDate()?->format('Y-m-d'))->toBe('2024-06-15');
+});
+
+test('getAll reconstitutes project with null optional fields', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Minimal Project',
+        'slug' => 'minimal-project',
+        'status' => 'draft',
+        'description' => null,
+        'short_description' => null,
+        'client_name' => null,
+        'project_date' => null,
+    ]);
+
+    $projects = $repository->getAll();
+    $project = $projects->first();
+
+    expect($project->getDescription())->toBeNull()
+        ->and($project->getShortDescription())->toBeNull()
+        ->and($project->getClientName())->toBeNull()
+        ->and($project->getProjectDate())->toBeNull();
+});
