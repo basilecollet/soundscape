@@ -25,8 +25,8 @@ test('can get all projects', function () {
     expect($projects)->toBeInstanceOf(Collection::class)
         ->and($projects)->toHaveCount(2)
         ->and($projects->first())->toBeInstanceOf(ProjectData::class)
-        ->and($projects->first()->title)->toBe('Project One')
-        ->and($projects->last()->title)->toBe('Project Two');
+        ->and($projects->first()?->title)->toBe('Project One')
+        ->and($projects->last()?->title)->toBe('Project Two');
 });
 
 test('returns empty collection when no projects', function () {
@@ -65,11 +65,12 @@ test('transforms all project fields correctly', function () {
     $projects = $handler->handle();
 
     $data = $projects->first();
-    expect($data->title)->toBe('My Project')
-        ->and($data->slug)->toBe('my-project')
-        ->and($data->status)->toBe('published')
-        ->and($data->description)->toBe('Description')
-        ->and($data->shortDescription)->toBe('Short desc')
-        ->and($data->clientName)->toBe('Client Name')
-        ->and($data->projectDate)->toBe('2024-06-15');
+
+    expect($data?->title)->toBe('My Project')
+        ->and($data?->slug)->toBe('my-project')
+        ->and($data?->status)->toBe('published')
+        ->and($data?->description)->toBe('Description')
+        ->and($data?->shortDescription)->toBe('Short desc')
+        ->and($data?->clientName)->toBe('Client Name')
+        ->and($data?->projectDate)->toBe('2024-06-15');
 });
