@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Application\Admin\Queries\GetProjects\GetProjectsHandler;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
@@ -9,9 +10,13 @@ use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
+    public function __construct(
+        private readonly GetProjectsHandler $getProjectsHandler,
+    ) {}
+
     public function index(): View
     {
-        $projects = Project::all();
+        $projects = $this->getProjectsHandler->handle();
 
         return view('admin.project.index', compact('projects'));
     }
