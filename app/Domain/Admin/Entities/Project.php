@@ -44,6 +44,26 @@ final class Project
         );
     }
 
+    public static function reconstitute(
+        ProjectTitle $title,
+        ProjectSlug $slug,
+        ProjectStatus $status,
+        ?ProjectDescription $description = null,
+        ?ProjectShortDescription $shortDescription = null,
+        ?ClientName $clientName = null,
+        ?ProjectDate $projectDate = null,
+    ): self {
+        return new self(
+            $title,
+            $slug,
+            $status,
+            $description,
+            $shortDescription,
+            $clientName,
+            $projectDate,
+        );
+    }
+
     public function getTitle(): ProjectTitle
     {
         return $this->title;

@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\ClientName;
+use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
+use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 
@@ -165,4 +169,46 @@ test('project toArray includes all optional fields', function () {
         ->and($array['short_description'])->toBe('Short desc')
         ->and($array['client_name'])->toBe('Client Inc')
         ->and($array['project_date'])->toBe('2024-06-15');
+});
+
+test('can reconstitute project with minimal fields', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Existing Project'),
+        slug: ProjectSlug::fromString('existing-project'),
+        status: ProjectStatus::Draft,
+    );
+
+    expect($project)->toBeInstanceOf(Project::class)
+        ->and((string) $project->getTitle())->toBe('Existing Project')
+        ->and((string) $project->getSlug())->toBe('existing-project')
+        ->and($project->getStatus())->toBe(ProjectStatus::Draft);
+});
+
+test('can reconstitute project with published status', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Published Project'),
+        slug: ProjectSlug::fromString('published-project'),
+        status: ProjectStatus::Published,
+    );
+
+    expect($project->getStatus()->isPublished())->toBeTrue();
+});
+
+test('can reconstitute project with all fields', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Full Project'),
+        slug: ProjectSlug::fromString('full-project'),
+        status: ProjectStatus::Archived,
+        description: ProjectDescription::fromString('Description'),
+        shortDescription: ProjectShortDescription::fromString('Short'),
+        clientName: ClientName::fromString('acme inc'),
+        projectDate: ProjectDate::fromString('2024-06-15'),
+    );
+
+    expect((string) $project->getTitle())->toBe('Full Project')
+        ->and($project->getStatus()->isArchived())->toBeTrue()
+        ->and((string) $project->getDescription())->toBe('Description')
+        ->and((string) $project->getShortDescription())->toBe('Short')
+        ->and((string) $project->getClientName())->toBe('Acme Inc')
+        ->and($project->getProjectDate()?->format('Y-m-d'))->toBe('2024-06-15');
 });
