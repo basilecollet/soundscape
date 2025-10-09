@@ -21,6 +21,9 @@ class ProjectDatabaseRepository implements ProjectRepository
         ProjectDatabase::create($project->toArray());
     }
 
+    /**
+     * @return Collection<int, Project>
+     */
     public function getAll(): Collection
     {
         return ProjectDatabase::all()->map(function (ProjectDatabase $model) {

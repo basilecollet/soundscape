@@ -247,11 +247,15 @@ test('can get all projects from database', function () {
     ]);
 
     $projects = $repository->getAll();
+    $firstProject = $projects->first();
+    $lastProject = $projects->last();
 
     expect($projects)->toHaveCount(2)
-        ->and($projects->first())->toBeInstanceOf(Project::class)
-        ->and((string) $projects->first()->getTitle())->toBe('Project One')
-        ->and((string) $projects->last()->getTitle())->toBe('Project Two');
+        ->and($firstProject)->toBeInstanceOf(Project::class)
+        ->and($firstProject)->not->toBeNull()
+        ->and((string)$firstProject?->getTitle())->toBe('Project One')
+        ->and((string)$lastProject?->getTitle())->toBe('Project Two');
+
 });
 
 test('getAll returns empty collection when no projects', function () {
@@ -274,7 +278,7 @@ test('getAll reconstitutes project with correct status', function () {
     $projects = $repository->getAll();
     $project = $projects->first();
 
-    expect($project->getStatus()->isPublished())->toBeTrue();
+    expect($project?->getStatus()->isPublished())->toBeTrue();
 });
 
 test('getAll reconstitutes project with all optional fields', function () {
@@ -293,13 +297,13 @@ test('getAll reconstitutes project with all optional fields', function () {
     $projects = $repository->getAll();
     $project = $projects->first();
 
-    expect((string) $project->getTitle())->toBe('Full Project')
-        ->and((string) $project->getSlug())->toBe('full-project')
-        ->and($project->getStatus()->isArchived())->toBeTrue()
-        ->and((string) $project->getDescription())->toBe('Long description')
-        ->and((string) $project->getShortDescription())->toBe('Short desc')
-        ->and((string) $project->getClientName())->toBe('Acme Corporation')
-        ->and($project->getProjectDate()?->format('Y-m-d'))->toBe('2024-06-15');
+    expect((string) $project?->getTitle())->toBe('Full Project')
+        ->and((string) $project?->getSlug())->toBe('full-project')
+        ->and($project?->getStatus()->isArchived())->toBeTrue()
+        ->and((string) $project?->getDescription())->toBe('Long description')
+        ->and((string) $project?->getShortDescription())->toBe('Short desc')
+        ->and((string) $project?->getClientName())->toBe('Acme Corporation')
+        ->and($project?->getProjectDate()?->format('Y-m-d'))->toBe('2024-06-15');
 });
 
 test('getAll reconstitutes project with null optional fields', function () {
@@ -318,8 +322,8 @@ test('getAll reconstitutes project with null optional fields', function () {
     $projects = $repository->getAll();
     $project = $projects->first();
 
-    expect($project->getDescription())->toBeNull()
-        ->and($project->getShortDescription())->toBeNull()
-        ->and($project->getClientName())->toBeNull()
-        ->and($project->getProjectDate())->toBeNull();
+    expect($project?->getDescription())->toBeNull()
+        ->and($project?->getShortDescription())->toBeNull()
+        ->and($project?->getClientName())->toBeNull()
+        ->and($project?->getProjectDate())->toBeNull();
 });
