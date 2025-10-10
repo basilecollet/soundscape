@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Application\Admin\Queries\GetProjects;
 
 use App\Application\Admin\DTOs\ProjectData;
-use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
+use App\Domain\Admin\Repositories\ProjectRepository;
 use Illuminate\Support\Collection;
 
 final readonly class GetProjectsHandler
 {
     public function __construct(
-        private ProjectDatabaseRepository $repository,
+        private ProjectRepository $repository,
     ) {}
 
     /**
