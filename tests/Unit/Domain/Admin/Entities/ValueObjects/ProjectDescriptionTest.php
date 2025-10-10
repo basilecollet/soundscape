@@ -16,12 +16,6 @@ test('can convert description to string', function () {
     expect((string) $description)->toBe('This is a **markdown** description');
 });
 
-test('can create empty description', function () {
-    $description = ProjectDescription::fromString('');
-
-    expect((string) $description)->toBe('');
-});
-
 test('description preserves markdown formatting', function () {
     $markdown = "# Title\n\n- Item 1\n- Item 2\n\n**Bold text**";
     $description = ProjectDescription::fromString($markdown);
@@ -47,4 +41,14 @@ test('description trims whitespace', function () {
     $description = ProjectDescription::fromString('  Content with spaces  ');
 
     expect((string) $description)->toBe('Content with spaces');
+});
+
+test('it throws exception when description is empty string', function () {
+    expect(fn () => ProjectDescription::fromString(''))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidProjectDescriptionException::class, 'Project description cannot be empty');
+});
+
+test('it throws exception when description is only whitespace', function () {
+    expect(fn () => ProjectDescription::fromString('   '))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidProjectDescriptionException::class, 'Project description cannot be empty');
 });
