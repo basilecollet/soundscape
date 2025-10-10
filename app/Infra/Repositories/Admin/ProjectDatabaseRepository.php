@@ -33,18 +33,13 @@ class ProjectDatabaseRepository implements ProjectRepository
     public function getAll(): Collection
     {
         return ProjectDatabase::all()->map(function (ProjectDatabase $model) {
-            return Project::reconstitute(
-                title: ProjectTitle::fromString($model->title),
-                slug: ProjectSlug::fromString($model->slug),
-                status: ProjectStatus::from($model->status),
-                description: $model->description !== null ? ProjectDescription::fromString($model->description) : null,
-                shortDescription: $model->short_description !== null ? ProjectShortDescription::fromString($model->short_description) : null,
-                clientName: $model->client_name !== null ? ClientName::fromString($model->client_name) : null,
-                projectDate: $model->project_date !== null ? ProjectDate::fromString($model->project_date) : null,
-            );
+            return $this->reconstituteProject($model);
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     public function findBySlug(ProjectSlug $slug): ?Project
     {
         $model = ProjectDatabase::where('slug', (string) $slug)->first();
@@ -53,17 +48,12 @@ class ProjectDatabaseRepository implements ProjectRepository
             return null;
         }
 
-        return Project::reconstitute(
-            title: ProjectTitle::fromString($model->title),
-            slug: ProjectSlug::fromString($model->slug),
-            status: ProjectStatus::from($model->status),
-            description: $model->description !== null ? ProjectDescription::fromString($model->description) : null,
-            shortDescription: $model->short_description !== null ? ProjectShortDescription::fromString($model->short_description) : null,
-            clientName: $model->client_name !== null ? ClientName::fromString($model->client_name) : null,
-            projectDate: $model->project_date !== null ? ProjectDate::fromString($model->project_date) : null,
-        );
+        return $this->reconstituteProject($model);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getBySlug(ProjectSlug $slug): Project
     {
         $project = $this->findBySlug($slug);
@@ -82,5 +72,18 @@ class ProjectDatabaseRepository implements ProjectRepository
         if ($deleted === 0) {
             throw ProjectNotFoundException::forSlug($slug);
         }
+    }
+
+    private function reconstituteProject(ProjectDatabase $projectDatabase): Project
+    {
+        return Project::reconstitute(
+            title: ProjectTitle::fromString($projectDatabase->title),
+            slug: ProjectSlug::fromString($projectDatabase->slug),
+            status: ProjectStatus::from($projectDatabase->status),
+            description: $projectDatabase->description !== null ? ProjectDescription::fromString($projectDatabase->description) : null,
+            shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
+            clientName: $projectDatabase->client_name !== null ? ClientName::fromString($projectDatabase->client_name) : null,
+            projectDate: $projectDatabase->project_date !== null ? ProjectDate::fromString($projectDatabase->project_date) : null,
+        );
     }
 }

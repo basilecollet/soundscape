@@ -18,9 +18,14 @@ interface ProjectRepository
      */
     public function getAll(): Collection;
 
+    /**
+     * Find a project by slug, returns null if not found
+     */
     public function findBySlug(ProjectSlug $slug): ?Project;
 
     /**
+     * Get a project by slug, throws if not found
+     *
      * @throws ProjectNotFoundException
      */
     public function getBySlug(ProjectSlug $slug): Project;
