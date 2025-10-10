@@ -64,3 +64,27 @@ test('two client names with same content are equal', function () {
 
     expect($name1)->toEqual($name2);
 });
+
+test('it throws exception when client name is empty string', function () {
+    expect(fn () => ClientName::fromString(''))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidClientNameException::class, 'Client name cannot be empty');
+});
+
+test('it throws exception when client name is only whitespace', function () {
+    expect(fn () => ClientName::fromString('   '))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidClientNameException::class, 'Client name cannot be empty');
+});
+
+test('it throws exception when client name exceeds 255 characters', function () {
+    $longName = str_repeat('a', 256);
+
+    expect(fn () => ClientName::fromString($longName))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidClientNameException::class, 'Client name cannot exceed 255 characters');
+});
+
+test('it accepts client name with exactly 255 characters', function () {
+    $name = str_repeat('a', 255);
+    $clientName = ClientName::fromString($name);
+
+    expect(mb_strlen((string) $clientName))->toBe(255);
+});

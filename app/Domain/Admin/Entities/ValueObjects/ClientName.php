@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Entities\ValueObjects;
 
+use App\Domain\Admin\Exceptions\InvalidClientNameException;
+
 final readonly class ClientName
 {
     private function __construct(
@@ -13,6 +15,15 @@ final readonly class ClientName
     public static function fromString(string $name): self
     {
         $normalized = trim($name);
+
+        if (empty($normalized)) {
+            throw InvalidClientNameException::empty();
+        }
+
+        if (mb_strlen($normalized) > 255) {
+            throw InvalidClientNameException::tooLong(mb_strlen($normalized));
+        }
+
         $normalized = (string) preg_replace('/\s+/', ' ', $normalized);
         $normalized = mb_convert_case($normalized, MB_CASE_TITLE, 'UTF-8');
 

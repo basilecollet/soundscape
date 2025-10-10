@@ -25,12 +25,18 @@ final readonly class UpdateProjectHandler
             ProjectSlug::fromString($data->slug)
         );
 
+        // Convert empty strings to null
+        $description = $data->description !== null && trim($data->description) !== '' ? $data->description : null;
+        $shortDescription = $data->shortDescription !== null && trim($data->shortDescription) !== '' ? $data->shortDescription : null;
+        $clientName = $data->clientName !== null && trim($data->clientName) !== '' ? $data->clientName : null;
+        $projectDate = $data->projectDate !== null && trim($data->projectDate) !== '' ? $data->projectDate : null;
+
         $project->update(
             title: ProjectTitle::fromString($data->title),
-            description: $data->description !== null ? ProjectDescription::fromString($data->description) : null,
-            shortDescription: $data->shortDescription !== null ? ProjectShortDescription::fromString($data->shortDescription) : null,
-            clientName: $data->clientName !== null ? ClientName::fromString($data->clientName) : null,
-            projectDate: $data->projectDate !== null ? ProjectDate::fromString($data->projectDate) : null,
+            description: $description !== null ? ProjectDescription::fromString($description) : null,
+            shortDescription: $shortDescription !== null ? ProjectShortDescription::fromString($shortDescription) : null,
+            clientName: $clientName !== null ? ClientName::fromString($clientName) : null,
+            projectDate: $projectDate !== null ? ProjectDate::fromString($projectDate) : null,
         );
 
         $this->repository->store($project);

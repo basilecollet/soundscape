@@ -33,6 +33,12 @@ final class Project
     ): self {
         $projectTitle = ProjectTitle::fromString($title);
 
+        // Convert empty strings to null
+        $description = $description !== null && trim($description) !== '' ? $description : null;
+        $shortDescription = $shortDescription !== null && trim($shortDescription) !== '' ? $shortDescription : null;
+        $clientName = $clientName !== null && trim($clientName) !== '' ? $clientName : null;
+        $projectDate = $projectDate !== null && trim($projectDate) !== '' ? $projectDate : null;
+
         return new self(
             $projectTitle,
             ProjectSlug::fromTitle($projectTitle),
