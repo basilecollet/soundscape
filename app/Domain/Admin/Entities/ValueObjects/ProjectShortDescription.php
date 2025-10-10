@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Entities\ValueObjects;
 
+use App\Domain\Admin\Exceptions\InvalidProjectShortDescriptionException;
+
 final readonly class ProjectShortDescription
 {
     private function __construct(
@@ -12,7 +14,17 @@ final readonly class ProjectShortDescription
 
     public static function fromString(string $shortDescription): self
     {
-        return new self(trim($shortDescription));
+        $shortDescription = trim($shortDescription);
+
+        if (empty($shortDescription)) {
+            throw InvalidProjectShortDescriptionException::empty();
+        }
+
+        if (mb_strlen($shortDescription) > 500) {
+            throw InvalidProjectShortDescriptionException::tooLong(mb_strlen($shortDescription));
+        }
+
+        return new self($shortDescription);
     }
 
     public function __toString(): string

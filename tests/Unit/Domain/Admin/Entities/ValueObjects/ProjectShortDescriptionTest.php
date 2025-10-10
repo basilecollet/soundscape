@@ -28,3 +28,27 @@ test('two short descriptions with same content are equal', function () {
 
     expect($desc1)->toEqual($desc2);
 });
+
+test('it throws exception when short description is empty string', function () {
+    expect(fn () => ProjectShortDescription::fromString(''))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidProjectShortDescriptionException::class, 'Project short description cannot be empty');
+});
+
+test('it throws exception when short description is only whitespace', function () {
+    expect(fn () => ProjectShortDescription::fromString('   '))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidProjectShortDescriptionException::class, 'Project short description cannot be empty');
+});
+
+test('it throws exception when short description exceeds 500 characters', function () {
+    $longDescription = str_repeat('a', 501);
+
+    expect(fn () => ProjectShortDescription::fromString($longDescription))
+        ->toThrow(\App\Domain\Admin\Exceptions\InvalidProjectShortDescriptionException::class, 'Project short description cannot exceed 500 characters');
+});
+
+test('it accepts short description with exactly 500 characters', function () {
+    $description = str_repeat('a', 500);
+    $shortDescription = ProjectShortDescription::fromString($description);
+
+    expect(mb_strlen((string) $shortDescription))->toBe(500);
+});
