@@ -7,6 +7,7 @@ namespace App\Application\Admin\Commands\CreateProject;
 use App\Application\Admin\DTOs\CreateProjectData;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
+use App\Domain\Admin\Exceptions\DuplicateProjectSlugException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 
 final readonly class CreateProjectHandler
@@ -24,6 +25,12 @@ final readonly class CreateProjectHandler
             clientName: $data->clientName,
             projectDate: $data->projectDate,
         );
+
+        $existingProject = $this->repository->findBySlug($project->getSlug());
+
+        if ($existingProject !== null) {
+            throw DuplicateProjectSlugException::forSlug($project->getSlug());
+        }
 
         $this->repository->store($project);
 
