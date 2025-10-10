@@ -6,6 +6,7 @@ namespace App\Domain\Admin\Repositories;
 
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
+use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use Illuminate\Support\Collection;
 
 interface ProjectRepository
@@ -18,4 +19,9 @@ interface ProjectRepository
     public function getAll(): Collection;
 
     public function findBySlug(ProjectSlug $slug): ?Project;
+
+    /**
+     * @throws ProjectNotFoundException
+     */
+    public function getBySlug(ProjectSlug $slug): Project;
 }

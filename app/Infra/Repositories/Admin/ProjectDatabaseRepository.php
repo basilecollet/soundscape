@@ -12,6 +12,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Domain\Admin\Repositories\ProjectRepository;
 use App\Models\Project as ProjectDatabase;
 use Illuminate\Support\Collection;
@@ -58,5 +59,16 @@ class ProjectDatabaseRepository implements ProjectRepository
             clientName: $model->client_name !== null ? ClientName::fromString($model->client_name) : null,
             projectDate: $model->project_date !== null ? ProjectDate::fromString($model->project_date) : null,
         );
+    }
+
+    public function getBySlug(ProjectSlug $slug): Project
+    {
+        $project = $this->findBySlug($slug);
+
+        if ($project === null) {
+            throw ProjectNotFoundException::forSlug($slug);
+        }
+
+        return $project;
     }
 }

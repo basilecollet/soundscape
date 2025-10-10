@@ -1,6 +1,8 @@
 <?php
 
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
+use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 use App\Models\Project as ProjectDatabase;
 use Illuminate\Database\QueryException;
@@ -337,7 +339,7 @@ test('findBySlug returns project when slug exists', function () {
         'status' => 'draft',
     ]);
 
-    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('test-project');
+    $slug = ProjectSlug::fromString('test-project');
     $project = $repository->findBySlug($slug);
 
     expect($project)->toBeInstanceOf(Project::class)
@@ -348,7 +350,7 @@ test('findBySlug returns project when slug exists', function () {
 test('findBySlug returns null when slug does not exist', function () {
     $repository = new ProjectDatabaseRepository;
 
-    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('non-existent');
+    $slug = ProjectSlug::fromString('non-existent');
     $project = $repository->findBySlug($slug);
 
     expect($project)->toBeNull();
@@ -367,7 +369,7 @@ test('findBySlug reconstitutes project with all fields', function () {
         'project_date' => '2024-07-20',
     ]);
 
-    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('complete-project');
+    $slug = ProjectSlug::fromString('complete-project');
     $project = $repository->findBySlug($slug);
 
     expect($project)->toBeInstanceOf(Project::class)
@@ -376,4 +378,30 @@ test('findBySlug reconstitutes project with all fields', function () {
         ->and((string) $project?->getClientName())->toBe('Test Client')
         ->and($project?->getProjectDate()?->format('Y-m-d'))->toBe('2024-07-20')
         ->and($project?->getStatus()->isPublished())->toBeTrue();
+});
+
+test('getBySlug returns project when slug exists', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Found Project',
+        'slug' => 'found-project',
+        'status' => 'draft',
+    ]);
+
+    $slug = ProjectSlug::fromString('found-project');
+    $project = $repository->getBySlug($slug);
+
+    expect($project)->toBeInstanceOf(Project::class)
+        ->and((string) $project->getTitle())->toBe('Found Project')
+        ->and((string) $project->getSlug())->toBe('found-project');
+});
+
+test('getBySlug throws exception when slug does not exist', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    $slug = ProjectSlug::fromString('non-existent-project');
+
+    expect(fn () => $repository->getBySlug($slug))
+        ->toThrow(ProjectNotFoundException::class);
 });
