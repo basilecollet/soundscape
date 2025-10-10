@@ -11,7 +11,7 @@ test('can delete a project if user is connected', function () {
 
     $response = $this
         ->actingAs(User::factory()->create())
-        ->withoutMiddleware()
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
         ->delete(route('admin.project.destroy', ['project' => $project->id]));
 
     $response->assertRedirect(route('admin.project.index'));
@@ -22,7 +22,7 @@ test('delete a project from the database', function () {
 
     $this
         ->actingAs(User::factory()->create())
-        ->withoutMiddleware()
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
         ->delete(route('admin.project.destroy', ['project' => $project->id]));
 
     $this->assertDatabaseMissing('projects', [

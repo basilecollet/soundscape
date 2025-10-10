@@ -33,10 +33,9 @@ class ProjectController extends Controller
         return view('admin.project.edit', compact('project'));
     }
 
-    public function destroy(string $project): RedirectResponse
+    public function destroy(Project $project): RedirectResponse
     {
-        $projectModel = Project::findOrFail($project);
-        $projectModel->delete();
+        $project->delete();
 
         return to_route('admin.project.index');
     }
