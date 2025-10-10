@@ -21,7 +21,10 @@ class ProjectDatabaseRepository implements ProjectRepository
 {
     public function store(Project $project): void
     {
-        ProjectDatabase::create($project->toArray());
+        ProjectDatabase::updateOrCreate(
+            ['slug' => (string) $project->getSlug()],
+            $project->toArray()
+        );
     }
 
     /**

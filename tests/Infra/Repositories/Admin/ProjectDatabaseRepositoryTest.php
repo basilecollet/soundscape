@@ -5,7 +5,6 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 use App\Models\Project as ProjectDatabase;
-use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -33,15 +32,6 @@ test('stores project with timestamps', function () {
 
     expect($storedProject->created_at)->not->toBeNull()
         ->and($storedProject->updated_at)->not->toBeNull();
-});
-
-test('cannot store two projects with the same slug', function () {
-    $repository = new ProjectDatabaseRepository;
-
-    $repository->store(Project::new('My project'));
-
-    expect(fn () => $repository->store(Project::new('My project')))
-        ->toThrow(QueryException::class);
 });
 
 test('stores project with special characters in title', function () {
