@@ -8,10 +8,13 @@ use App\Http\Controllers\Portfolio\HomeController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+/** Public routes */
 Route::get('/', HomeController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
 Route::get('/contact', ContactController::class)->name('contact');
 
+
+/** Admin routes */
 Route::redirect('dashboard', 'admin')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
