@@ -24,4 +24,9 @@ interface ProjectRepository
      * @throws ProjectNotFoundException
      */
     public function getBySlug(ProjectSlug $slug): Project;
+
+    /**
+     * @throws ProjectNotFoundException
+     */
+    public function delete(ProjectSlug $slug): void;
 }

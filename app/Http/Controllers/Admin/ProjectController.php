@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Application\Admin\Commands\DeleteProject\DeleteProjectHandler;
 use App\Application\Admin\Queries\GetProjects\GetProjectsHandler;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
@@ -14,6 +15,7 @@ class ProjectController extends Controller
 {
     public function __construct(
         private readonly GetProjectsHandler $getProjectsHandler,
+        private readonly DeleteProjectHandler $deleteProjectHandler,
     ) {}
 
     public function index(): View
@@ -35,7 +37,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project): RedirectResponse
     {
-        $project->delete();
+        $this->deleteProjectHandler->handle($project->slug);
 
         return to_route('admin.project.index');
     }

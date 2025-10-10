@@ -74,4 +74,13 @@ class ProjectDatabaseRepository implements ProjectRepository
 
         return $project;
     }
+
+    public function delete(ProjectSlug $slug): void
+    {
+        $deleted = ProjectDatabase::where('slug', (string) $slug)->delete();
+
+        if ($deleted === 0) {
+            throw ProjectNotFoundException::forSlug($slug);
+        }
+    }
 }
