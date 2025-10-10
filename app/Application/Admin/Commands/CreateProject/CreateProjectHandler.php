@@ -8,12 +8,12 @@ use App\Application\Admin\DTOs\CreateProjectData;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Exceptions\DuplicateProjectSlugException;
-use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
+use App\Domain\Admin\Repositories\ProjectRepository;
 
 final readonly class CreateProjectHandler
 {
     public function __construct(
-        private ProjectDatabaseRepository $repository,
+        private ProjectRepository $repository,
     ) {}
 
     public function handle(CreateProjectData $data): ProjectSlug
