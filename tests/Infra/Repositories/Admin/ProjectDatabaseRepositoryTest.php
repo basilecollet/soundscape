@@ -327,3 +327,53 @@ test('getAll reconstitutes project with null optional fields', function () {
         ->and($project?->getClientName())->toBeNull()
         ->and($project?->getProjectDate())->toBeNull();
 });
+
+test('findBySlug returns project when slug exists', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Test Project',
+        'slug' => 'test-project',
+        'status' => 'draft',
+    ]);
+
+    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('test-project');
+    $project = $repository->findBySlug($slug);
+
+    expect($project)->toBeInstanceOf(Project::class)
+        ->and((string) $project?->getTitle())->toBe('Test Project')
+        ->and((string) $project?->getSlug())->toBe('test-project');
+});
+
+test('findBySlug returns null when slug does not exist', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('non-existent');
+    $project = $repository->findBySlug($slug);
+
+    expect($project)->toBeNull();
+});
+
+test('findBySlug reconstitutes project with all fields', function () {
+    $repository = new ProjectDatabaseRepository;
+
+    ProjectDatabase::create([
+        'title' => 'Complete Project',
+        'slug' => 'complete-project',
+        'status' => 'published',
+        'description' => 'Full description',
+        'short_description' => 'Brief',
+        'client_name' => 'test client',
+        'project_date' => '2024-07-20',
+    ]);
+
+    $slug = \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('complete-project');
+    $project = $repository->findBySlug($slug);
+
+    expect($project)->toBeInstanceOf(Project::class)
+        ->and((string) $project?->getDescription())->toBe('Full description')
+        ->and((string) $project?->getShortDescription())->toBe('Brief')
+        ->and((string) $project?->getClientName())->toBe('Test Client')
+        ->and($project?->getProjectDate()?->format('Y-m-d'))->toBe('2024-07-20')
+        ->and($project?->getStatus()->isPublished())->toBeTrue();
+});

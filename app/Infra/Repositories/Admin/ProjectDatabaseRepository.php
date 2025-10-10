@@ -40,4 +40,23 @@ class ProjectDatabaseRepository implements ProjectRepository
             );
         });
     }
+
+    public function findBySlug(ProjectSlug $slug): ?Project
+    {
+        $model = ProjectDatabase::where('slug', (string) $slug)->first();
+
+        if ($model === null) {
+            return null;
+        }
+
+        return Project::reconstitute(
+            title: ProjectTitle::fromString($model->title),
+            slug: ProjectSlug::fromString($model->slug),
+            status: ProjectStatus::from($model->status),
+            description: $model->description !== null ? ProjectDescription::fromString($model->description) : null,
+            shortDescription: $model->short_description !== null ? ProjectShortDescription::fromString($model->short_description) : null,
+            clientName: $model->client_name !== null ? ClientName::fromString($model->client_name) : null,
+            projectDate: $model->project_date !== null ? ProjectDate::fromString($model->project_date) : null,
+        );
+    }
 }

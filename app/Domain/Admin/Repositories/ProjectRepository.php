@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Repositories;
 
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use Illuminate\Support\Collection;
 
 interface ProjectRepository
@@ -15,4 +16,6 @@ interface ProjectRepository
      * @return Collection<int, Project>
      */
     public function getAll(): Collection;
+
+    public function findBySlug(ProjectSlug $slug): ?Project;
 }
