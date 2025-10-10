@@ -114,6 +114,20 @@ final class Project
         $this->status = ProjectStatus::Draft;
     }
 
+    public function update(
+        ProjectTitle $title,
+        ?ProjectDescription $description = null,
+        ?ProjectShortDescription $shortDescription = null,
+        ?ClientName $clientName = null,
+        ?ProjectDate $projectDate = null,
+    ): void {
+        $this->title = $title;
+        $this->description = $description;
+        $this->shortDescription = $shortDescription;
+        $this->clientName = $clientName;
+        $this->projectDate = $projectDate;
+    }
+
     /**
      * @return array<string, string|null>
      */

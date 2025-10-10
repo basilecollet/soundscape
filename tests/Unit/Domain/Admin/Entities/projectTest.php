@@ -212,3 +212,70 @@ test('can reconstitute project with all fields', function () {
         ->and((string) $project->getClientName())->toBe('Acme Inc')
         ->and($project->getProjectDate()?->format('Y-m-d'))->toBe('2024-06-15');
 });
+
+test('can update project title', function () {
+    $project = Project::new('Original Title');
+
+    $project->update(
+        title: ProjectTitle::fromString('Updated Title'),
+    );
+
+    expect((string) $project->getTitle())->toBe('Updated Title');
+});
+
+test('updating title does not change slug', function () {
+    $project = Project::new('Original Title');
+    $originalSlug = (string) $project->getSlug();
+
+    $project->update(
+        title: ProjectTitle::fromString('Completely New Title'),
+    );
+
+    expect((string) $project->getSlug())->toBe($originalSlug)
+        ->and((string) $project->getSlug())->toBe('original-title');
+});
+
+test('can update all optional fields', function () {
+    $project = Project::new('My Project');
+
+    $project->update(
+        title: ProjectTitle::fromString('My Project'),
+        description: ProjectDescription::fromString('New description'),
+        shortDescription: ProjectShortDescription::fromString('New short'),
+        clientName: ClientName::fromString('new client'),
+        projectDate: ProjectDate::fromString('2024-12-25'),
+    );
+
+    expect((string) $project->getDescription())->toBe('New description')
+        ->and((string) $project->getShortDescription())->toBe('New short')
+        ->and((string) $project->getClientName())->toBe('New Client')
+        ->and($project->getProjectDate()?->format('Y-m-d'))->toBe('2024-12-25');
+});
+
+test('can reset optional fields to null on update', function () {
+    $project = Project::new('My Project', 'Description', 'Short', 'Client', '2024-06-15');
+
+    $project->update(
+        title: ProjectTitle::fromString('My Project'),
+        description: null,
+        shortDescription: null,
+        clientName: null,
+        projectDate: null,
+    );
+
+    expect($project->getDescription())->toBeNull()
+        ->and($project->getShortDescription())->toBeNull()
+        ->and($project->getClientName())->toBeNull()
+        ->and($project->getProjectDate())->toBeNull();
+});
+
+test('updating project does not change status', function () {
+    $project = Project::new('My Project');
+    $project->publish();
+
+    $project->update(
+        title: ProjectTitle::fromString('Updated Title'),
+    );
+
+    expect($project->getStatus()->isPublished())->toBeTrue();
+});
