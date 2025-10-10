@@ -11,12 +11,12 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
-use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
+use App\Domain\Admin\Repositories\ProjectRepository;
 
 final readonly class UpdateProjectHandler
 {
     public function __construct(
-        private ProjectDatabaseRepository $repository,
+        private ProjectRepository $repository,
     ) {}
 
     public function handle(UpdateProjectData $data): void
