@@ -38,7 +38,7 @@ class ProjectDatabaseRepository implements ProjectRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findBySlug(ProjectSlug $slug): ?Project
     {
@@ -52,7 +52,7 @@ class ProjectDatabaseRepository implements ProjectRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBySlug(ProjectSlug $slug): Project
     {
