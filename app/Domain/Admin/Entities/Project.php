@@ -16,7 +16,7 @@ final class Project
 {
     private function __construct(
         private ProjectTitle $title,
-        private ProjectSlug $slug,
+        private readonly ProjectSlug $slug,
         private ProjectStatus $status,
         private ?ProjectDescription $description = null,
         private ?ProjectShortDescription $shortDescription = null,
