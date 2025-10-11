@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Application\Admin\Commands\ArchiveProject\ArchiveProjectHandler;
 use App\Application\Admin\Commands\DeleteProject\DeleteProjectHandler;
+use App\Application\Admin\Commands\DraftProject\DraftProjectHandler;
 use App\Application\Admin\Commands\PublishProject\PublishProjectHandler;
 use App\Application\Admin\Queries\GetProjects\GetProjectsHandler;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
@@ -22,6 +24,7 @@ class ProjectController extends Controller
         private readonly DeleteProjectHandler $deleteProjectHandler,
         private readonly PublishProjectHandler $publishProjectHandler,
         private readonly ArchiveProjectHandler $archiveProjectHandler,
+        private readonly DraftProjectHandler $draftProjectHandler,
     ) {}
 
     public function index(): View
@@ -69,6 +72,19 @@ class ProjectController extends Controller
             return to_route('admin.project.edit', ['project' => $project->id])
                 ->with('success', 'Project archived successfully.');
         } catch (ProjectCannotBeArchivedException $e) {
+            return to_route('admin.project.edit', ['project' => $project->id])
+                ->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function draft(Project $project): RedirectResponse
+    {
+        try {
+            $this->draftProjectHandler->handle($project->slug);
+
+            return to_route('admin.project.edit', ['project' => $project->id])
+                ->with('success', 'Project set back to draft successfully.');
+        } catch (ProjectCannotBeDraftedException $e) {
             return to_route('admin.project.edit', ['project' => $project->id])
                 ->withErrors(['error' => $e->getMessage()]);
         }

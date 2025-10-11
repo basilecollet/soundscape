@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/project', ProjectController::class)->only('index', 'create', 'edit', 'destroy');
         Route::patch('/project/{project}/publish', [ProjectController::class, 'publish'])->name('project.publish');
         Route::patch('/project/{project}/archive', [ProjectController::class, 'archive'])->name('project.archive');
+        Route::patch('/project/{project}/draft', [ProjectController::class, 'draft'])->name('project.draft');
         Route::get('/content', [AdminController::class, 'content'])->name('content.index');
         Route::get('/content/{id}/edit', [AdminController::class, 'editContent'])->name('content.edit');
         Route::get('/section-settings', [AdminController::class, 'sectionSettings'])->name('section-settings');
