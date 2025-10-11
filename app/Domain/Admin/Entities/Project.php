@@ -11,6 +11,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 
 final class Project
 {
@@ -107,6 +108,10 @@ final class Project
 
     public function publish(): void
     {
+        if ($this->status !== ProjectStatus::Draft) {
+            throw ProjectCannotBePublishedException::invalidStatus($this->status);
+        }
+
         $this->status = ProjectStatus::Published;
     }
 

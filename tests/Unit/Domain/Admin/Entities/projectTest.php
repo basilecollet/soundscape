@@ -279,3 +279,25 @@ test('updating project does not change status', function () {
 
     expect($project->getStatus()->isPublished())->toBeTrue();
 });
+
+test('cannot publish an already published project', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Published Project'),
+        slug: ProjectSlug::fromString('published-project'),
+        status: ProjectStatus::Published,
+    );
+
+    expect(fn () => $project->publish())
+        ->toThrow(\App\Domain\Admin\Exceptions\ProjectCannotBePublishedException::class);
+});
+
+test('cannot publish an archived project', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Archived Project'),
+        slug: ProjectSlug::fromString('archived-project'),
+        status: ProjectStatus::Archived,
+    );
+
+    expect(fn () => $project->publish())
+        ->toThrow(\App\Domain\Admin\Exceptions\ProjectCannotBePublishedException::class);
+});
