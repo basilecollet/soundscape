@@ -106,6 +106,9 @@ final class Project
         return $this->projectDate;
     }
 
+    /**
+     * @throws ProjectCannotBePublishedException
+     */
     public function publish(): void
     {
         if ($this->status !== ProjectStatus::Draft) {
