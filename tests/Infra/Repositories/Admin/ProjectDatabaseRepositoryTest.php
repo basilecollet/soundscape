@@ -1,7 +1,9 @@
 <?php
 
+use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
+use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 use App\Models\Project as ProjectDatabase;
@@ -84,8 +86,12 @@ test('stores project with published status', function () {
 });
 
 test('stores project with archived status', function () {
-    $project = Project::new('My Project');
-    $project->archive();
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Archived,
+    );
+
     $repository = new ProjectDatabaseRepository;
 
     $repository->store($project);
