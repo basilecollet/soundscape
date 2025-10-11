@@ -7,6 +7,7 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 
@@ -58,7 +59,7 @@ test('handler throws exception when project not found', function () {
         ->toThrow(ProjectNotFoundException::class);
 });
 
-test('can publish an archived project', function () {
+test('cannot publish an archived project', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
 
@@ -74,16 +75,13 @@ test('can publish an archived project', function () {
         ->once()
         ->andReturn($project);
 
-    /** @phpstan-ignore method.notFound */
-    $repository->shouldReceive('store')
-        ->once()
-        ->andReturnNull();
+    // store should NOT be called because an exception will be thrown
+    $repository->shouldNotReceive('store');
 
     $handler = new PublishProjectHandler($repository);
 
-    $handler->handle('archived-project');
-
-    expect($project->getStatus())->toBe(ProjectStatus::Published);
+    expect(fn () => $handler->handle('archived-project'))
+        ->toThrow(ProjectCannotBePublishedException::class);
 });
 
 test('handler calls repository methods correctly', function () {
