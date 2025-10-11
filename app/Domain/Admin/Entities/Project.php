@@ -12,6 +12,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 
 final class Project
@@ -131,8 +132,15 @@ final class Project
         $this->status = ProjectStatus::Archived;
     }
 
+    /**
+     * @throws ProjectCannotBeDraftedException
+     */
     public function draft(): void
     {
+        if ($this->status === ProjectStatus::Draft) {
+            throw ProjectCannotBeDraftedException::alreadyDraft();
+        }
+
         $this->status = ProjectStatus::Draft;
     }
 

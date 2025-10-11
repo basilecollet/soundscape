@@ -11,6 +11,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 
 test('create a project with the right data', function () {
@@ -334,4 +335,27 @@ test('cannot archive an already archived project', function () {
 
     expect(fn () => $project->archive())
         ->toThrow(ProjectCannotBeArchivedException::class);
+});
+
+test('archived project can be set back to draft', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Archived Project'),
+        slug: ProjectSlug::fromString('archived-project'),
+        status: ProjectStatus::Archived,
+    );
+
+    $project->draft();
+
+    expect($project->getStatus()->isDraft())->toBeTrue();
+});
+
+test('cannot set draft project to draft', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Draft Project'),
+        slug: ProjectSlug::fromString('draft-project'),
+        status: ProjectStatus::Draft,
+    );
+
+    expect(fn () => $project->draft())
+        ->toThrow(ProjectCannotBeDraftedException::class);
 });
