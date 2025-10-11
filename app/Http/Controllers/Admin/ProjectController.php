@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Application\Admin\Commands\DeleteProject\DeleteProjectHandler;
+use App\Application\Admin\Commands\PublishProject\PublishProjectHandler;
 use App\Application\Admin\Queries\GetProjects\GetProjectsHandler;
+use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +18,7 @@ class ProjectController extends Controller
     public function __construct(
         private readonly GetProjectsHandler $getProjectsHandler,
         private readonly DeleteProjectHandler $deleteProjectHandler,
+        private readonly PublishProjectHandler $publishProjectHandler,
     ) {}
 
     public function index(): View
@@ -40,5 +43,18 @@ class ProjectController extends Controller
         $this->deleteProjectHandler->handle($project->slug);
 
         return to_route('admin.project.index');
+    }
+
+    public function publish(Project $project): RedirectResponse
+    {
+        try {
+            $this->publishProjectHandler->handle($project->slug);
+
+            return to_route('admin.project.edit', ['project' => $project->id])
+                ->with('success', 'Project published successfully.');
+        } catch (ProjectCannotBePublishedException $e) {
+            return to_route('admin.project.edit', ['project' => $project->id])
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
