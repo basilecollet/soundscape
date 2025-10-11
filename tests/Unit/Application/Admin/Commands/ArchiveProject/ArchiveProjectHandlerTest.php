@@ -7,10 +7,11 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectNotFoundException;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 
-test('can archive a draft project', function () {
+test('cannot archive a draft project', function () {
     /** @var ProjectDatabaseRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectDatabaseRepository::class);
 
@@ -26,20 +27,13 @@ test('can archive a draft project', function () {
         ->with(Mockery::on(fn ($arg) => $arg instanceof ProjectSlug && (string) $arg === 'my-project'))
         ->andReturn($project);
 
-    /** @phpstan-ignore method.notFound */
-    $repository->shouldReceive('store')
-        ->once()
-        ->with(Mockery::on(function ($arg) {
-            return $arg instanceof Project
-                && $arg->getStatus() === ProjectStatus::Archived;
-        }))
-        ->andReturnNull();
+    // store should NOT be called because an exception will be thrown
+    $repository->shouldNotReceive('store');
 
     $handler = new ArchiveProjectHandler($repository);
 
-    $handler->handle('my-project');
-
-    expect($project->getStatus())->toBe(ProjectStatus::Archived);
+    expect(fn () => $handler->handle('my-project'))
+        ->toThrow(ProjectCannotBeArchivedException::class);
 });
 
 test('can archive a published project', function () {
@@ -95,7 +89,7 @@ test('handler calls repository methods correctly', function () {
     $project = Project::reconstitute(
         title: ProjectTitle::fromString('Test Project'),
         slug: ProjectSlug::fromString('test-project'),
-        status: ProjectStatus::Draft
+        status: ProjectStatus::Published
     );
 
     /** @phpstan-ignore method.notFound */

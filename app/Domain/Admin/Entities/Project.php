@@ -11,6 +11,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 
 final class Project
@@ -118,8 +119,15 @@ final class Project
         $this->status = ProjectStatus::Published;
     }
 
+    /**
+     * @throws ProjectCannotBeArchivedException
+     */
     public function archive(): void
     {
+        if ($this->status !== ProjectStatus::Published) {
+            throw ProjectCannotBeArchivedException::invalidStatus($this->status);
+        }
+
         $this->status = ProjectStatus::Archived;
     }
 

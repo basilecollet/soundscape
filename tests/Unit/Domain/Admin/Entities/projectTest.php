@@ -10,6 +10,8 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 
 test('create a project with the right data', function () {
     $project = Project::new('My project');
@@ -57,7 +59,11 @@ test('project can be published', function () {
 });
 
 test('project can be archived', function () {
-    $project = Project::new('My Project');
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Published,
+    );
 
     $project->archive();
 
@@ -65,8 +71,11 @@ test('project can be archived', function () {
 });
 
 test('project can be set back to draft', function () {
-    $project = Project::new('My Project');
-    $project->publish();
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Published,
+    );
 
     $project->draft();
 
@@ -82,9 +91,12 @@ test('project toArray includes status', function () {
 });
 
 test('published project toArray has published status', function () {
-    $project = Project::new('My Project');
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Published,
+    );
 
-    $project->publish();
     $array = $project->toArray();
 
     expect($array['status'])->toBe('published');
@@ -288,7 +300,7 @@ test('cannot publish an already published project', function () {
     );
 
     expect(fn () => $project->publish())
-        ->toThrow(\App\Domain\Admin\Exceptions\ProjectCannotBePublishedException::class);
+        ->toThrow(ProjectCannotBePublishedException::class);
 });
 
 test('cannot publish an archived project', function () {
@@ -299,5 +311,27 @@ test('cannot publish an archived project', function () {
     );
 
     expect(fn () => $project->publish())
-        ->toThrow(\App\Domain\Admin\Exceptions\ProjectCannotBePublishedException::class);
+        ->toThrow(ProjectCannotBePublishedException::class);
+});
+
+test('cannot archive a draft project', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Draft Project'),
+        slug: ProjectSlug::fromString('draft-project'),
+        status: ProjectStatus::Draft,
+    );
+
+    expect(fn () => $project->archive())
+        ->toThrow(ProjectCannotBeArchivedException::class);
+});
+
+test('cannot archive an already archived project', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Archived Project'),
+        slug: ProjectSlug::fromString('archived-project'),
+        status: ProjectStatus::Archived,
+    );
+
+    expect(fn () => $project->archive())
+        ->toThrow(ProjectCannotBeArchivedException::class);
 });
