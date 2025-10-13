@@ -56,10 +56,10 @@ class ProjectController extends Controller
         try {
             $this->publishProjectHandler->handle($project->slug);
 
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->with('success', 'Project published successfully.');
         } catch (ProjectCannotBePublishedException $e) {
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -69,10 +69,10 @@ class ProjectController extends Controller
         try {
             $this->archiveProjectHandler->handle($project->slug);
 
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->with('success', 'Project archived successfully.');
         } catch (ProjectCannotBeArchivedException $e) {
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }

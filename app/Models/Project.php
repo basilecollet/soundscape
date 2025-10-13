@@ -38,4 +38,9 @@ class Project extends Model
             'project_date' => 'date:Y-m-d',
         ];
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
