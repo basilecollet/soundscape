@@ -82,10 +82,10 @@ class ProjectController extends Controller
         try {
             $this->draftProjectHandler->handle($project->slug);
 
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->with('success', 'Project set back to draft successfully.');
         } catch (ProjectCannotBeDraftedException $e) {
-            return to_route('admin.project.edit', ['project' => $project->id])
+            return to_route('admin.project.edit', ['project' => $project->slug])
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }

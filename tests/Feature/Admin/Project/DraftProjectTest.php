@@ -15,9 +15,9 @@ test('can set published project back to draft', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.draft', ['project' => $project->id]));
+        ->patch(route('admin.project.draft', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
 });
 
 test('setting published project to draft updates status in database', function () {
@@ -28,7 +28,7 @@ test('setting published project to draft updates status in database', function (
     $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.draft', ['project' => $project->id]));
+        ->patch(route('admin.project.draft', ['project' => $project->slug]));
 
     $this->assertDatabaseHas('projects', [
         'id' => $project->id,
@@ -44,9 +44,9 @@ test('can set archived project back to draft', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.draft', ['project' => $project->id]));
+        ->patch(route('admin.project.draft', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
 });
 
 test('cannot set draft project to draft', function () {
@@ -57,8 +57,8 @@ test('cannot set draft project to draft', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.draft', ['project' => $project->id]));
+        ->patch(route('admin.project.draft', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
     $response->assertSessionHasErrors();
 });
