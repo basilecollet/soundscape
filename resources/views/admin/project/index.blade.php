@@ -12,6 +12,17 @@
                 <div class="mt-4 sm:mt-0 flex space-x-3">
                     <flux:button
                         size="sm"
+                        variant="primary"
+                        href="{{ route('admin.project.create') }}"
+                        class="inline-flex items-center"
+                    >
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Create Project
+                    </flux:button>
+                    <flux:button
+                        size="sm"
                         variant="ghost"
                         href="{{ route('admin.dashboard') }}"
                         class="inline-flex items-center"
@@ -24,5 +35,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Project List Component -->
+        @livewire('admin.project-list')
     </div>
 @endsection
