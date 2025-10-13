@@ -16,6 +16,7 @@
                     <flux:navlist.item icon="squares-2x2" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('admin.content.index')" :current="request()->routeIs('admin.content.*')" wire:navigate>{{ __('Content Management') }}</flux:navlist.item>
                     <flux:navlist.item icon="briefcase" :href="route('admin.project.index')" :current="request()->routeIs('admin.project.*')" wire:navigate>{{ __('Projects') }}</flux:navlist.item>
+                    <flux:navlist.item icon="adjustments-horizontal" :href="route('admin.section-settings')" :current="request()->routeIs('admin.section-settings')" wire:navigate>{{ __('Section Settings') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
