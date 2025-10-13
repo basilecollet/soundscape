@@ -35,7 +35,7 @@ class Project extends Model
     {
         return [
             'status' => ProjectStatus::class,
-            'project_date' => 'date:Y-m-d'
+            'project_date' => 'date:Y-m-d',
         ];
     }
 }
