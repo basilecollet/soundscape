@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
+use App\Domain\Admin\Exceptions\InvalidProjectDateException;
 use Carbon\Carbon;
 
 test('can create project date from Carbon instance', function () {
@@ -38,4 +39,24 @@ test('two project dates with same date are equal', function () {
     $date2 = ProjectDate::fromString('2024-06-15');
 
     expect($date1->toCarbon()->eq($date2->toCarbon()))->toBeTrue();
+});
+
+test('it throws exception when date format is invalid', function () {
+    expect(fn () => ProjectDate::fromString('invalid-date'))
+        ->toThrow(InvalidProjectDateException::class);
+});
+
+test('it throws exception for completely invalid date string', function () {
+    expect(fn () => ProjectDate::fromString('not-a-date-at-all'))
+        ->toThrow(InvalidProjectDateException::class);
+});
+
+test('it throws exception for empty date string', function () {
+    expect(fn () => ProjectDate::fromString(''))
+        ->toThrow(InvalidProjectDateException::class);
+});
+
+test('it throws exception for nonsensical date values', function () {
+    expect(fn () => ProjectDate::fromString('2024-13-45'))
+        ->toThrow(InvalidProjectDateException::class);
 });
