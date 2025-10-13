@@ -24,5 +24,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Project Form Component -->
+        @livewire('admin.project-form')
     </div>
 @endsection
