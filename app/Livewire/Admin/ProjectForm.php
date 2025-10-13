@@ -22,6 +22,9 @@ class ProjectForm extends Component
 
     public string $projectDate = '';
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function rules(): array
     {
         return [

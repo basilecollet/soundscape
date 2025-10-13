@@ -31,9 +31,14 @@ class ProjectFormEdit extends Component
         $this->description = $this->project->description ?? '';
         $this->shortDescription = $this->project->short_description ?? '';
         $this->clientName = $this->project->client_name ?? '';
-        $this->projectDate = $this->project->project_date?->format('Y-m-d') ?? '';
+        $this->projectDate = $this->project->project_date instanceof \Illuminate\Support\Carbon
+            ? $this->project->project_date->format('Y-m-d')
+            : '';
     }
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function rules(): array
     {
         return [

@@ -6,6 +6,7 @@ use App\Livewire\Admin\ProjectForm;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
@@ -52,7 +53,8 @@ test('can create project with all fields', function () {
         ->and($project->description)->toBe('Full description here')
         ->and($project->short_description)->toBe('Short desc')
         ->and($project->client_name)->toBe('Acme Corp')
-        ->and($project->project_date->format('Y-m-d'))->toBe('2024-06-15');
+        ->and($project->project_date)->toBeInstanceOf(Carbon::class)
+        ->and($project->project_date?->format('Y-m-d'))->toBe('2024-06-15');
 });
 
 test('empty optional fields are saved as null', function () {

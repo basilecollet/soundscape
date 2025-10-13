@@ -6,6 +6,7 @@ use App\Livewire\Admin\ProjectFormEdit;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
@@ -46,11 +47,14 @@ test('can update project with all fields', function () {
         ->assertHasNoErrors();
 
     $project->refresh();
-    expect($project->title)->toBe('Updated Title')
-        ->and($project->description)->toBe('Updated description')
-        ->and($project->short_description)->toBe('Updated short')
-        ->and($project->client_name)->toBe('Updated Client')
-        ->and($project->project_date->format('Y-m-d'))->toBe('2024-07-20');
+    expect($project->title)->toBe('Updated Title');
+    expect($project->description)->toBe('Updated description');
+    expect($project->short_description)->toBe('Updated short');
+    expect($project->client_name)->toBe('Updated Client');
+    expect($project->project_date)->toBeInstanceOf(Carbon::class);
+
+    assert($project->project_date instanceof Carbon);
+    expect($project->project_date->format('Y-m-d'))->toBe('2024-07-20');
 });
 
 test('can clear optional fields when editing', function () {

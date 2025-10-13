@@ -6,7 +6,22 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Project
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $status
+ * @property string|null $description
+ * @property string|null $short_description
+ * @property string|null $client_name
+ * @property Carbon|null $project_date
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class Project extends Model
 {
     /** @use HasFactory<ProjectFactory> */
