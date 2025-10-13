@@ -76,14 +76,27 @@ class ProjectDatabaseRepository implements ProjectRepository
 
     private function reconstituteProject(ProjectDatabase $projectDatabase): Project
     {
+        // Handle status: it might already be cast to ProjectStatus enum by Eloquent
+        $status = $projectDatabase->status instanceof ProjectStatus
+            ? $projectDatabase->status
+            : ProjectStatus::from($projectDatabase->status);
+
+        // Handle project_date: it might already be cast to Carbon by Eloquent
+        $projectDate = null;
+        if ($projectDatabase->project_date !== null) {
+            $projectDate = $projectDatabase->project_date instanceof \Carbon\Carbon
+                ? ProjectDate::fromCarbon($projectDatabase->project_date)
+                : ProjectDate::fromString($projectDatabase->project_date);
+        }
+
         return Project::reconstitute(
             title: ProjectTitle::fromString($projectDatabase->title),
             slug: ProjectSlug::fromString($projectDatabase->slug),
-            status: ProjectStatus::from($projectDatabase->status),
+            status: $status,
             description: $projectDatabase->description !== null ? ProjectDescription::fromString($projectDatabase->description) : null,
             shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
             clientName: $projectDatabase->client_name !== null ? ClientName::fromString($projectDatabase->client_name) : null,
-            projectDate: $projectDatabase->project_date !== null ? ProjectDate::fromString($projectDatabase->project_date) : null,
+            projectDate: $projectDate,
         );
     }
 }
