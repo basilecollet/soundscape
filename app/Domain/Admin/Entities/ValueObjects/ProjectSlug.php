@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Admin\Entities\ValueObjects;
 
+use App\Domain\Admin\Exceptions\InvalidProjectSlugException;
 use Illuminate\Support\Str;
 
 final readonly class ProjectSlug
@@ -22,9 +23,7 @@ final readonly class ProjectSlug
     public static function fromString(string $slug): self
     {
         if (! self::isValidSlug($slug)) {
-            throw new \InvalidArgumentException(
-                "Invalid slug format: '{$slug}'. Slug must contain only lowercase letters, numbers, and hyphens."
-            );
+            throw InvalidProjectSlugException::invalidFormat($slug);
         }
 
         return new self($slug);

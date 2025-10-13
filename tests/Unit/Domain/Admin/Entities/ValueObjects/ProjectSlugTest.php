@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
+use App\Domain\Admin\Exceptions\InvalidProjectSlugException;
 
 test('create a slug from a project title', function () {
     $title = ProjectTitle::fromString('My Project');
@@ -61,30 +62,30 @@ test('fromString accepts valid slug with numbers', function () {
 
 test('fromString rejects slug with uppercase letters', function () {
     expect(fn () => ProjectSlug::fromString('Invalid-Slug'))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
 
 test('fromString rejects slug with spaces', function () {
     expect(fn () => ProjectSlug::fromString('invalid slug'))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
 
 test('fromString rejects slug with special characters', function () {
     expect(fn () => ProjectSlug::fromString('invalid_slug'))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
 
 test('fromString rejects slug starting with dash', function () {
     expect(fn () => ProjectSlug::fromString('-invalid-slug'))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
 
 test('fromString rejects slug ending with dash', function () {
     expect(fn () => ProjectSlug::fromString('invalid-slug-'))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
 
 test('fromString rejects empty string', function () {
     expect(fn () => ProjectSlug::fromString(''))
-        ->toThrow(\InvalidArgumentException::class);
+        ->toThrow(InvalidProjectSlugException::class);
 });
