@@ -11,7 +11,7 @@ test('can access a project edit form if user is connected', function () {
 
     $response = $this
         ->actingAs(User::factory()->create())
-        ->get(route('admin.project.edit', ['project' => $project->id]));
+        ->get(route('admin.project.edit', ['project' => $project->slug]));
 
     $response->assertOk()
         ->assertViewIs('admin.project.edit');
