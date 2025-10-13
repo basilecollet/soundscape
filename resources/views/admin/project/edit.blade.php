@@ -24,5 +24,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Project Edit Form Component -->
+        @livewire('admin.project-form-edit', ['project' => $project])
     </div>
 @endsection
