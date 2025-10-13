@@ -12,11 +12,13 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Repositories\ProjectRepository;
+use App\Domain\Admin\Services\StringNormalizationService;
 
 final readonly class UpdateProjectHandler
 {
     public function __construct(
         private ProjectRepository $repository,
+        private StringNormalizationService $normalizer,
     ) {}
 
     public function handle(UpdateProjectData $data): void
@@ -26,10 +28,10 @@ final readonly class UpdateProjectHandler
         );
 
         // Convert empty strings to null
-        $description = $data->description !== null && trim($data->description) !== '' ? $data->description : null;
-        $shortDescription = $data->shortDescription !== null && trim($data->shortDescription) !== '' ? $data->shortDescription : null;
-        $clientName = $data->clientName !== null && trim($data->clientName) !== '' ? $data->clientName : null;
-        $projectDate = $data->projectDate !== null && trim($data->projectDate) !== '' ? $data->projectDate : null;
+        $description = $this->normalizer->normalizeToNullable($data->description);
+        $shortDescription = $this->normalizer->normalizeToNullable($data->shortDescription);
+        $clientName = $this->normalizer->normalizeToNullable($data->clientName);
+        $projectDate = $this->normalizer->normalizeToNullable($data->projectDate);
 
         $project->update(
             title: ProjectTitle::fromString($data->title),

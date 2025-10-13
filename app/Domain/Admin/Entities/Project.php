@@ -14,6 +14,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
+use App\Domain\Admin\Services\StringNormalizationService;
 
 final class Project
 {
@@ -35,12 +36,13 @@ final class Project
         ?string $projectDate = null,
     ): self {
         $projectTitle = ProjectTitle::fromString($title);
+        $normalizer = new StringNormalizationService;
 
         // Convert empty strings to null
-        $description = $description !== null && trim($description) !== '' ? $description : null;
-        $shortDescription = $shortDescription !== null && trim($shortDescription) !== '' ? $shortDescription : null;
-        $clientName = $clientName !== null && trim($clientName) !== '' ? $clientName : null;
-        $projectDate = $projectDate !== null && trim($projectDate) !== '' ? $projectDate : null;
+        $description = $normalizer->normalizeToNullable($description);
+        $shortDescription = $normalizer->normalizeToNullable($shortDescription);
+        $clientName = $normalizer->normalizeToNullable($clientName);
+        $projectDate = $normalizer->normalizeToNullable($projectDate);
 
         return new self(
             $projectTitle,

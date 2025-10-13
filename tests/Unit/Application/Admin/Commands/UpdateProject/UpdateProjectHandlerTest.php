@@ -8,6 +8,7 @@ use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectNotFoundException;
+use App\Domain\Admin\Services\StringNormalizationService;
 use App\Infra\Repositories\Admin\ProjectDatabaseRepository;
 
 test('can update project title', function () {
@@ -27,7 +28,7 @@ test('can update project title', function () {
     /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'original-title',
@@ -53,7 +54,7 @@ test('can update all optional fields', function () {
     /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'my-project',
@@ -83,7 +84,7 @@ test('can reset optional fields to null', function () {
     /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'my-project',
@@ -111,7 +112,7 @@ test('handler calls repository to store updated project', function () {
         ->with(Mockery::on(fn ($project) => $project === $existingProject))
         ->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'original',
@@ -129,7 +130,7 @@ test('handler throws exception when project not found', function () {
         ->once()
         ->andThrow(new ProjectNotFoundException('Project with slug "non-existent" was not found.'));
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'non-existent',
@@ -156,7 +157,7 @@ test('updating project does not change slug', function () {
     /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'original-slug',
@@ -183,7 +184,7 @@ test('updating project does not change status', function () {
     /** @phpstan-ignore method.notFound */
     $repository->shouldReceive('store')->once()->andReturnNull();
 
-    $handler = new UpdateProjectHandler($repository);
+    $handler = new UpdateProjectHandler($repository, new StringNormalizationService);
 
     $data = UpdateProjectData::fromArray([
         'slug' => 'my-project',
