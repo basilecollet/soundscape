@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,4 +30,12 @@ class Project extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => ProjectStatus::class,
+            'project_date' => 'date:Y-m-d'
+        ];
+    }
 }
