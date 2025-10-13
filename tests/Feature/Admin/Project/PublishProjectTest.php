@@ -15,9 +15,9 @@ test('can publish a draft project', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.publish', ['project' => $project->id]));
+        ->patch(route('admin.project.publish', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
 });
 
 test('publishing a draft project updates status in database', function () {
@@ -28,10 +28,11 @@ test('publishing a draft project updates status in database', function () {
     $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.publish', ['project' => $project->id]));
+        ->patch(route('admin.project.publish', ['project' => $project->slug]));
 
     $this->assertDatabaseHas('projects', [
         'id' => $project->id,
+        'slug' => $project->slug,
         'status' => 'published',
     ]);
 });
@@ -44,9 +45,9 @@ test('cannot publish an already published project', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.publish', ['project' => $project->id]));
+        ->patch(route('admin.project.publish', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
     $response->assertSessionHasErrors();
 });
 
@@ -58,8 +59,8 @@ test('cannot publish an archived project', function () {
     $response = $this
         ->actingAs(User::factory()->create())
         ->withoutMiddleware([ValidateCsrfToken::class])
-        ->patch(route('admin.project.publish', ['project' => $project->id]));
+        ->patch(route('admin.project.publish', ['project' => $project->slug]));
 
-    $response->assertRedirect(route('admin.project.edit', ['project' => $project->id]));
+    $response->assertRedirect(route('admin.project.edit', ['project' => $project->slug]));
     $response->assertSessionHasErrors();
 });
