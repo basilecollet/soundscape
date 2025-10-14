@@ -10,12 +10,14 @@ use Laravel\Prompts\Prompt;
 uses()->group('commands');
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    // Enable fallback mode for prompts in non-interactive environments (like CI)
+    Prompt::fallbackWhen(true);
+});
+
 test('creates new admin account with provided credentials', function () {
     // Arrange: Ensure no user exists with this email
     expect(User::where('email', 'admin@example.com')->exists())->toBeFalse();
-
-    // Fake prompts (won't be called because we provide options)
-    Prompt::fake();
 
     // Act: Run the command with options
     $this->artisan('admin:create-or-reset', [
@@ -40,13 +42,11 @@ test('creates new admin account with generated password when no password provide
     // Arrange: Ensure no user exists with this email
     expect(User::where('email', 'newadmin@example.com')->exists())->toBeFalse();
 
-    // Fake prompts (won't be called because we provide options)
-    Prompt::fake();
-
-    // Act: Run the command without password option (triggers generation)
+    // Act: Run the command with empty password (triggers generation)
     $this->artisan('admin:create-or-reset', [
         '--email' => 'newadmin@example.com',
         '--name' => 'New Admin',
+        '--password' => '', // Empty password triggers generation
     ])
         ->expectsOutput('Generated secure password for admin account.')
         ->expectsOutput('✅ Admin account created successfully!')
@@ -71,9 +71,6 @@ test('resets existing admin password', function () {
     ]);
 
     $oldPassword = $existingUser->password;
-
-    // Fake prompts (won't be called because we provide options)
-    Prompt::fake();
 
     // Act: Run the command to reset password
     $this->artisan('admin:create-or-reset', [

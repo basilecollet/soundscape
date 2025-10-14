@@ -28,23 +28,35 @@ class CreateOrResetAdminCommand extends Command
      */
     public function handle(): int
     {
-        $email = $this->option('email') ?: text(
-            label: 'Email',
-            placeholder: 'mygreatemail@greatdomain.com',
-            required: true,
-        );
+        // Get options with null coalescing to differentiate between not provided and empty
+        $email = $this->option('email');
+        if (! $email) {
+            $email = text(
+                label: 'Email',
+                placeholder: 'mygreatemail@greatdomain.com',
+                required: true,
+            );
+        }
 
-        $name = $this->option('name') ?: text(
-            label: 'Name',
-            placeholder: 'John Doe',
-            required: true,
-        );
+        $name = $this->option('name');
+        if (! $name) {
+            $name = text(
+                label: 'Name',
+                placeholder: 'John Doe',
+                required: true,
+            );
+        }
 
-        $password = $this->option('password') ?: password(
-            label: 'Password (leave empty to generate)',
-            placeholder: 'Enter password or press Enter to auto-generate',
-            required: false,
-        );
+        $password = $this->option('password');
+        if ($password === null) {
+            // Option not provided - prompt user
+            $password = password(
+                label: 'Password (leave empty to generate)',
+                placeholder: 'Enter password or press Enter to auto-generate',
+                required: false,
+            );
+        }
+        // If password is empty string (from option or prompt), it will be generated below
 
         // Generate password if none provided
         if (empty($password)) {
