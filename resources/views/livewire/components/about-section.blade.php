@@ -1,6 +1,6 @@
 <section id="about" class="py-16 bg-white">
     <div class="container mx-auto px-6 lg:px-12">
-        <h2 class="text-3xl font-bold mb-12 text-center">About Us</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center">About Us</h2>
 
         <!-- About Section 1 -->
         <div class="flex flex-col md:flex-row items-center mb-16">
