@@ -2,7 +2,7 @@
     <!-- Statistics Cards -->
     <div>
         <h2 class="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h2>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Total Content Card -->
             <a href="{{ route('admin.content.index') }}" wire:navigate class="block group">
@@ -63,11 +63,11 @@
     <div>
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-xl font-semibold text-gray-900">Recent Contact Messages</h2>
-            <flux:button size="sm" variant="ghost" href="#" wire:navigate>
+            <flux:button size="sm" variant="ghost" href="#">
                 View all
             </flux:button>
         </div>
-        
+
         <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
             <div class="divide-y divide-gray-200">
                 @foreach($recentMessages as $message)
@@ -81,7 +81,7 @@
                                 </svg>
                             </div>
                         </div>
-                        
+
                         <!-- Message content -->
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center justify-between">
@@ -92,17 +92,17 @@
                                     {{ $message->created_at->diffForHumans() }}
                                 </time>
                             </div>
-                            
+
                             <p class="text-sm text-gray-600 mt-1">
                                 {{ $message->subject ?? 'No subject' }}
                             </p>
-                            
+
                             @if($message->message)
                             <p class="text-sm text-gray-500 mt-2 line-clamp-2">
                                 {{ Str::limit($message->message, 100) }}
                             </p>
                             @endif
-                            
+
                             <!-- Status indicator -->
                             @if(!$message->read_at)
                             <div class="flex items-center mt-2">
