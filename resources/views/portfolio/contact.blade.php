@@ -51,7 +51,7 @@
                 </div>
 
                 <!-- Contact Form -->
-                <div class="bg-portfolio-secondary p-8 md:p-10 rounded-sm">
+                <div class="bg-portfolio-secondary p-6 md:p-8 lg:p-10 rounded-sm">
                     <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">send a message</h2>
                     <livewire:contact-form />
                 </div>
