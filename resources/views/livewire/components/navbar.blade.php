@@ -2,7 +2,7 @@
      x-data="{ scrolled: false, mobileMenuOpen: false }"
      x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 50 })"
      :class="{ 'bg-transparent': !scrolled, 'bg-white shadow-md': scrolled }">
-    <div class="container mx-auto px-4 py-4">
+    <div class="container mx-auto px-6 lg:px-12 py-4">
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="text-xl font-bold transition-colors" 
