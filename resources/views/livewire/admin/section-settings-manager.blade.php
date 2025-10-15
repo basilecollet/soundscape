@@ -1,11 +1,4 @@
 <div class="space-y-6">
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <h1 class="text-2xl font-semibold leading-6 text-gray-900 dark:text-zinc-100">Section Settings</h1>
-            <p class="mt-2 text-sm text-gray-700 dark:text-zinc-400">Manage which sections are visible on your website pages. Hero sections and contact page sections cannot be disabled.</p>
-        </div>
-    </div>
-
     @if (session()->has('message'))
         <flux:callout variant="success" icon="check-circle">
             {{ session('message') }}
@@ -47,8 +40,8 @@
                                         @endif
                                     </p>
                                 </div>
-                                
-                                <flux:switch 
+
+                                <flux:switch
                                     wire:click="toggleSection('{{ $section['section_key'] }}', '{{ $page }}')"
                                     :checked="$section['is_enabled']"
                                 />
@@ -59,7 +52,7 @@
             </div>
         @endforeach
     </div>
-    
+
     <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <div class="flex">
             <flux:icon.information-circle class="h-5 w-5 text-blue-400" />
