@@ -3,13 +3,13 @@
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Enhanced Header with Navigation -->
-        <div class="mb-8 pb-6 border-b border-gray-200">
+        <div class="mb-8 pb-6 border-b border-gray-200 dark:border-zinc-700">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Project Management</h1>
-                    <p class="mt-2 text-gray-600">Manage your website projects</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-zinc-100">Project Management</h1>
+                    <p class="mt-2 text-gray-600 dark:text-zinc-400">Manage your website projects</p>
                 </div>
-                <div class="mt-4 sm:mt-0 flex space-x-3">
+                <div class="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-3">
                     <flux:button
                         size="sm"
                         variant="primary"

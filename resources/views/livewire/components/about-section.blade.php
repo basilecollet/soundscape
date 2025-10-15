@@ -1,6 +1,6 @@
 <section id="about" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-12 text-center">About Us</h2>
+    <div class="container mx-auto px-6 lg:px-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center">About Us</h2>
 
         <!-- About Section 1 -->
         <div class="flex flex-col md:flex-row items-center mb-16">
@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div class="md:w-1/2">
-                <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                <div class="bg-gray-200 h-48 sm:h-64 rounded-lg flex items-center justify-center">
                     <span class="text-gray-500">Image 1</span>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 </p>
             </div>
             <div class="md:w-1/2">
-                <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                <div class="bg-gray-200 h-48 sm:h-64 rounded-lg flex items-center justify-center">
                     <span class="text-gray-500">Image 2</span>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 </p>
             </div>
             <div class="md:w-1/2">
-                <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                <div class="bg-gray-200 h-48 sm:h-64 rounded-lg flex items-center justify-center">
                     <span class="text-gray-500">Image 3</span>
                 </div>
             </div>

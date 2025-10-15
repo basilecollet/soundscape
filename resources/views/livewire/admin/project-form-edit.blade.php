@@ -1,10 +1,10 @@
 <div class="max-w-4xl mx-auto">
     <form wire:submit="save">
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-700 overflow-hidden">
             <!-- Form Header -->
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900">Project Information</h2>
-                <p class="mt-1 text-sm text-gray-600">Update the project details below.</p>
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">Project Information</h2>
+                <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">Update the project details below.</p>
             </div>
 
             <!-- Form Body -->
@@ -21,7 +21,7 @@
                         class="mt-1"
                     />
                     @error('title')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -38,9 +38,9 @@
                         class="mt-1"
                     />
                     @error('description')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500">You can use Markdown formatting for rich text.</p>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400">You can use Markdown formatting for rich text.</p>
                 </div>
 
                 <!-- Short Description -->
@@ -56,7 +56,7 @@
                         class="mt-1"
                     />
                     @error('shortDescription')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -74,7 +74,7 @@
                             class="mt-1"
                         />
                         @error('clientName')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -90,14 +90,14 @@
                             class="mt-1"
                         />
                         @error('projectDate')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
 
             <!-- Form Footer -->
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
+            <div class="px-6 py-4 bg-gray-50 dark:bg-zinc-800 border-t border-gray-200 dark:border-zinc-700 flex justify-end space-x-3">
                 <flux:button
                     variant="ghost"
                     href="{{ route('admin.project.index') }}"
