@@ -25,7 +25,8 @@ RUN apk add --no-cache \
         gd \
         opcache \
         bcmath \
-        pcntl
+        pcntl \
+        exif
 
 # Stage 2: Development dependencies
 FROM base AS dev-deps
