@@ -9,7 +9,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Project Management</h1>
                     <p class="mt-2 text-gray-600">Manage your website projects</p>
                 </div>
-                <div class="mt-4 sm:mt-0 flex space-x-3">
+                <div class="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-3">
                     <flux:button
                         size="sm"
                         variant="primary"
