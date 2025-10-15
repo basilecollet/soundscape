@@ -2,12 +2,12 @@
     'content' => null
 ])
 
-<div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
     <!-- Header: Key + Page Badge -->
     <div class="flex justify-between items-start mb-2">
         <!-- Key with "new" indicator -->
         <div class="flex items-center gap-2">
-            <code class="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
+            <code class="text-xs font-mono bg-gray-100 dark:bg-zinc-800 px-2 py-1 rounded">
                 {{ $content->key }}
             </code>
             @if($content->updated_at->gt(now()->subDay()))
@@ -21,12 +21,12 @@
         <!-- Page Badge (colored) -->
         @php
             $pageColors = [
-                'home' => 'bg-blue-100 text-blue-800',
-                'about' => 'bg-purple-100 text-purple-800',
-                'contact' => 'bg-green-100 text-green-800',
-                'services' => 'bg-yellow-100 text-yellow-800',
+                'home' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+                'about' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+                'contact' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+                'services' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
             ];
-            $colorClass = $pageColors[$content->page] ?? 'bg-gray-100 text-gray-800';
+            $colorClass = $pageColors[$content->page] ?? 'bg-gray-100 text-gray-800 dark:bg-zinc-800 dark:text-zinc-300';
         @endphp
         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $colorClass }}">
             <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
@@ -39,27 +39,27 @@
     <!-- Title Section -->
     <div class="mb-3">
         @if($content->title)
-            <div class="font-medium text-gray-900 text-sm line-clamp-2">{{ $content->title }}</div>
-            <div class="text-gray-500 text-xs mt-0.5">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
+            <div class="font-medium text-gray-900 dark:text-zinc-100 text-sm line-clamp-2">{{ $content->title }}</div>
+            <div class="text-gray-500 dark:text-zinc-400 text-xs mt-0.5">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
         @else
-            <div class="font-medium text-gray-500 text-sm">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
-            <div class="text-gray-400 text-xs">No title set</div>
+            <div class="font-medium text-gray-500 dark:text-zinc-400 text-sm">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
+            <div class="text-gray-400 dark:text-zinc-500 text-xs">No title set</div>
         @endif
     </div>
 
     <!-- Content Preview Section -->
     @if($content->content)
-        <div class="mb-3 pb-3 border-b border-gray-100">
-            <p class="text-sm text-gray-600 line-clamp-2 mb-1">
+        <div class="mb-3 pb-3 border-b border-gray-100 dark:border-zinc-800">
+            <p class="text-sm text-gray-600 dark:text-zinc-400 line-clamp-2 mb-1">
                 {{ Str::limit($content->content, 80) }}
             </p>
-            <p class="text-xs text-gray-400">
+            <p class="text-xs text-gray-400 dark:text-zinc-500">
                 {{ strlen($content->content) }} characters
             </p>
         </div>
     @else
-        <div class="mb-3 pb-3 border-b border-gray-100">
-            <span class="text-sm italic text-gray-400">Empty content</span>
+        <div class="mb-3 pb-3 border-b border-gray-100 dark:border-zinc-800">
+            <span class="text-sm italic text-gray-400 dark:text-zinc-500">Empty content</span>
         </div>
     @endif
 
