@@ -98,16 +98,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $pageColors = [
-                                        'home' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-                                        'about' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-                                        'contact' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-                                        'services' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-                                    ];
-                                    $colorClass = $pageColors[$content->page] ?? 'bg-gray-100 text-gray-800 dark:bg-zinc-800 dark:text-zinc-400';
-                                @endphp
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $colorClass }}">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ \App\PageBadgeColor::getClasses($content->page) }}">
                                     <svg class="mr-1.5 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3" />
                                     </svg>
