@@ -58,7 +58,8 @@
     </div>
 
     @if($contents->count() > 0)
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+        {{-- Desktop Table - Hidden on mobile --}}
+        <div class="hidden md:block bg-white rounded-lg shadow-sm overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
@@ -125,10 +126,10 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <div class="flex items-center space-x-2">
-                                    <flux:button 
-                                        size="xs" 
-                                        variant="ghost" 
-                                        :href="route('admin.content.edit', $content->id)" 
+                                    <flux:button
+                                        size="xs"
+                                        variant="ghost"
+                                        :href="route('admin.content.edit', $content->id)"
                                         wire:navigate
                                     >
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,10 +137,10 @@
                                         </svg>
                                         Edit
                                     </flux:button>
-                                    
+
                                     @if($content->content)
-                                        <flux:button 
-                                            size="xs" 
+                                        <flux:button
+                                            size="xs"
                                             variant="ghost"
                                             onclick="navigator.clipboard.writeText('{{ addslashes($content->content) }}'); alert('Content copied to clipboard!')"
                                             class="text-gray-500 hover:text-gray-700"
@@ -155,6 +156,13 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        {{-- Mobile Cards - Hidden on desktop --}}
+        <div class="md:hidden space-y-4">
+            @foreach($contents as $content)
+                <x-admin.content-card :content="$content" />
+            @endforeach
         </div>
     @else
         <div class="text-center py-12">
