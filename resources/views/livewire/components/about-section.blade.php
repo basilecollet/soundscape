@@ -1,5 +1,5 @@
 <section id="about" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-6 lg:px-12">
         <h2 class="text-3xl font-bold mb-12 text-center">About Us</h2>
 
         <!-- About Section 1 -->
