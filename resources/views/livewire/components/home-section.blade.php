@@ -1,5 +1,5 @@
 <section id="home" class="min-h-screen flex items-center bg-gradient-to-b from-[#F2EFE6] to-[#A4B465] pt-16">
-    <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
+    <div class="container mx-auto px-6 lg:px-12 py-16 flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 mb-10 md:mb-0">
             <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800">Soundscape Audio</h1>
             <p class="text-lg text-gray-700">
