@@ -86,7 +86,7 @@
                 variant="ghost"
                 x-data="{ copied: false }"
                 @click="
-                    navigator.clipboard.writeText('{{ addslashes($content->content) }}');
+                    navigator.clipboard.writeText(@js($content->content));
                     copied = true;
                     setTimeout(() => copied = false, 2000);
                 "
