@@ -71,7 +71,7 @@
         <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
             <div class="divide-y divide-gray-200">
                 @foreach($recentMessages as $message)
-                <div class="p-6 hover:bg-gray-50 transition-colors">
+                <div class="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
                     <div class="flex items-start space-x-4">
                         <!-- Avatar placeholder -->
                         <div class="flex-shrink-0">
