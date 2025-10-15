@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div class="md:w-1/2">
-                <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                <div class="bg-gray-200 h-48 sm:h-64 rounded-lg flex items-center justify-center">
                     <span class="text-gray-500">Image 1</span>
                 </div>
             </div>
