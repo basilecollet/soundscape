@@ -14,8 +14,8 @@
             </div>
         </div>
     @else
-        {{-- Projects Table --}}
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {{-- Desktop Table - Hidden on mobile --}}
+        <div class="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -89,6 +89,13 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        {{-- Mobile Cards - Hidden on desktop --}}
+        <div class="md:hidden space-y-4">
+            @foreach($projects as $project)
+                <x-admin.project-card :project="$project" />
+            @endforeach
         </div>
     @endif
 </div>
