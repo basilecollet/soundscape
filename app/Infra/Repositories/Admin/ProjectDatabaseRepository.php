@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Repositories\Admin;
 
 use App\Domain\Admin\Entities\Enums\ProjectStatus;
+use App\Domain\Admin\Entities\Image;
 use App\Domain\Admin\Entities\Project;
 use App\Domain\Admin\Entities\ValueObjects\ClientName;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
@@ -89,6 +90,33 @@ class ProjectDatabaseRepository implements ProjectRepository
                 : ProjectDate::fromString($projectDatabase->project_date);
         }
 
+        // Load media relations
+        $projectDatabase->load('media');
+
+        // Transform featured media to Image entity
+        $featuredImage = null;
+        $featuredMedia = $projectDatabase->getFirstMedia('featured');
+        if ($featuredMedia !== null) {
+            $featuredImage = new Image(
+                originalUrl: $featuredMedia->getUrl(),
+                thumbUrl: $featuredMedia->getUrl('thumb'),
+                webUrl: $featuredMedia->getUrl('web'),
+                previewUrl: $featuredMedia->getUrl('preview'),
+                alt: $featuredMedia->getCustomProperty('alt')
+            );
+        }
+
+        // Transform gallery media to array of Image entities
+        $galleryImages = $projectDatabase->getMedia('gallery')->map(function ($media) {
+            return new Image(
+                originalUrl: $media->getUrl(),
+                thumbUrl: $media->getUrl('thumb'),
+                webUrl: $media->getUrl('web'),
+                previewUrl: $media->getUrl('preview'),
+                alt: $media->getCustomProperty('alt')
+            );
+        })->toArray();
+
         return Project::reconstitute(
             title: ProjectTitle::fromString($projectDatabase->title),
             slug: ProjectSlug::fromString($projectDatabase->slug),
@@ -97,6 +125,8 @@ class ProjectDatabaseRepository implements ProjectRepository
             shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
             clientName: $projectDatabase->client_name !== null ? ClientName::fromString($projectDatabase->client_name) : null,
             projectDate: $projectDate,
+            featuredImage: $featuredImage,
+            galleryImages: $galleryImages,
         );
     }
 }
