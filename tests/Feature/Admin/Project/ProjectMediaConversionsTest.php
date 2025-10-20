@@ -86,6 +86,8 @@ test('thumbnail conversion has correct dimensions', function () {
 
     // Vérifier que les dimensions sont réduites
     $imageSize = getimagesize($thumbPath);
+    expect($imageSize)->not->toBeFalse();
+    assert(is_array($imageSize));
     expect($imageSize[0])->toBeLessThanOrEqual(400) // width
         ->and($imageSize[1])->toBeLessThanOrEqual(300); // height
 });
@@ -100,6 +102,8 @@ test('web conversion has correct dimensions', function () {
     expect($webPath)->toBeFile();
 
     $imageSize = getimagesize($webPath);
+    expect($imageSize)->not->toBeFalse();
+    assert(is_array($imageSize));
     expect($imageSize[0])->toBeLessThanOrEqual(1200) // width
         ->and($imageSize[1])->toBeLessThanOrEqual(900); // height
 });
@@ -113,6 +117,13 @@ test('conversions reduce file size compared to original', function () {
     $originalSize = filesize($media->getPath());
     $thumbSize = filesize($media->getPath('thumb'));
     $webSize = filesize($media->getPath('web'));
+
+    expect($originalSize)->not->toBeFalse();
+    expect($thumbSize)->not->toBeFalse();
+    expect($webSize)->not->toBeFalse();
+    assert(is_int($originalSize));
+    assert(is_int($thumbSize));
+    assert(is_int($webSize));
 
     expect($thumbSize)->toBeLessThan($originalSize)
         ->and($webSize)->toBeLessThan($originalSize);
