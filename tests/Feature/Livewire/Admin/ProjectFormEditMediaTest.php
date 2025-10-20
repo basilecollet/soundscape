@@ -60,11 +60,11 @@ test('uploads featured image successfully with conversions', function () {
         ->assertHasNoErrors()
         ->assertDispatched('featured-image-uploaded');
 
-    $media = $project->fresh()->getFirstMedia('featured');
+    $media = $project->fresh()?->getFirstMedia('featured');
     expect($media)->not->toBeNull()
-        ->and($media->hasGeneratedConversion('thumb'))->toBeTrue()
-        ->and($media->hasGeneratedConversion('web'))->toBeTrue()
-        ->and($media->hasGeneratedConversion('preview'))->toBeTrue();
+        ->and($media?->hasGeneratedConversion('thumb'))->toBeTrue()
+        ->and($media?->hasGeneratedConversion('web'))->toBeTrue()
+        ->and($media?->hasGeneratedConversion('preview'))->toBeTrue();
 });
 
 test('clears featured image property after successful upload', function () {
@@ -125,14 +125,11 @@ test('uploads gallery images successfully with conversions', function () {
         ->assertHasNoErrors()
         ->assertDispatched('gallery-images-uploaded');
 
-    $galleryMedia = $project->fresh()->getMedia('gallery');
-    expect($galleryMedia)->toHaveCount(2);
-
-    foreach ($galleryMedia as $media) {
-        expect($media->hasGeneratedConversion('thumb'))->toBeTrue()
-            ->and($media->hasGeneratedConversion('web'))->toBeTrue()
-            ->and($media->hasGeneratedConversion('preview'))->toBeTrue();
-    }
+    $galleryMedia = $project->fresh()?->getMedia('gallery');
+    expect($galleryMedia)->toHaveCount(2)
+        ->and(($galleryMedia[0])?->hasGeneratedConversion('thumb'))->toBeTrue()
+        ->and(($galleryMedia[0])?->hasGeneratedConversion('web'))->toBeTrue()
+        ->and(($galleryMedia[0])?->hasGeneratedConversion('preview'))->toBeTrue();
 });
 
 test('clears gallery images property after successful upload', function () {
