@@ -147,8 +147,12 @@
 
                                 @if ($featuredImage)
                                     <div class="mt-3">
-                                        <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">Preview:</p>
-                                        <img src="{{ $featuredImage->temporaryUrl() }}" class="w-64 h-48 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
+                                        @if(method_exists($featuredImage, 'isPreviewable') && $featuredImage->isPreviewable())
+                                            <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">Preview:</p>
+                                            <img src="{{ $featuredImage->temporaryUrl() }}" class="w-64 h-48 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
+                                        @else
+                                            <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">File selected: {{ $featuredImage->getClientOriginalName() }}</p>
+                                        @endif
                                         <flux:button
                                             type="button"
                                             wire:click="saveFeaturedImage"
@@ -225,7 +229,13 @@
                                     <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">Preview ({{ count($galleryImages) }} image{{ count($galleryImages) > 1 ? 's' : '' }}):</p>
                                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                         @foreach($galleryImages as $image)
-                                            <img src="{{ $image->temporaryUrl() }}" class="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
+                                            @if(method_exists($image, 'isPreviewable') && $image->isPreviewable())
+                                                <img src="{{ $image->temporaryUrl() }}" class="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
+                                            @else
+                                                <div class="w-full h-32 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
+                                                    <p class="text-xs text-gray-500 dark:text-zinc-400 text-center px-2">{{ $image->getClientOriginalName() }}</p>
+                                                </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                     <flux:button
