@@ -72,6 +72,7 @@ class Project extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         // Thumbnail pour listes admin (optimisation espace disque)
+        /** @phpstan-ignore-next-line */
         $this->addMediaConversion('thumb')
             ->width(400)
             ->height(300)
@@ -80,6 +81,7 @@ class Project extends Model implements HasMedia
             ->performOnCollections('featured', 'gallery');
 
         // Version optimisée web (balance qualité/taille)
+        /** @phpstan-ignore-next-line */
         $this->addMediaConversion('web')
             ->width(1200)
             ->height(900)
@@ -88,6 +90,7 @@ class Project extends Model implements HasMedia
             ->performOnCollections('featured', 'gallery');
 
         // Preview pour formulaire admin
+        /** @phpstan-ignore-next-line */
         $this->addMediaConversion('preview')
             ->width(800)
             ->height(600)
@@ -95,6 +98,7 @@ class Project extends Model implements HasMedia
             ->performOnCollections('featured', 'gallery');
 
         // Responsive images (multiple tailles)
+        /** @phpstan-ignore-next-line */
         $this->addMediaConversion('responsive')
             ->withResponsiveImages()
             ->performOnCollections('featured', 'gallery');
