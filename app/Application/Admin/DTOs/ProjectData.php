@@ -8,6 +8,9 @@ use App\Domain\Admin\Entities\Project;
 
 final readonly class ProjectData
 {
+    /**
+     * @param  array<ImageData>  $galleryImages
+     */
     public function __construct(
         public string $title,
         public string $slug,
@@ -16,10 +19,24 @@ final readonly class ProjectData
         public ?string $shortDescription,
         public ?string $clientName,
         public ?string $projectDate,
+        public ?ImageData $featuredImage = null,
+        public array $galleryImages = [],
     ) {}
 
     public static function fromEntity(Project $project): self
     {
+        // Transform featured image
+        $featuredImage = null;
+        if ($project->getFeaturedImage() !== null) {
+            $featuredImage = ImageData::fromEntity($project->getFeaturedImage());
+        }
+
+        // Transform gallery images
+        $galleryImages = array_map(
+            fn ($image) => ImageData::fromEntity($image),
+            $project->getGalleryImages()
+        );
+
         return new self(
             title: (string) $project->getTitle(),
             slug: (string) $project->getSlug(),
@@ -28,6 +45,8 @@ final readonly class ProjectData
             shortDescription: $project->getShortDescription() !== null ? (string) $project->getShortDescription() : null,
             clientName: $project->getClientName() !== null ? (string) $project->getClientName() : null,
             projectDate: $project->getProjectDate()?->format('Y-m-d'),
+            featuredImage: $featuredImage,
+            galleryImages: $galleryImages,
         );
     }
 

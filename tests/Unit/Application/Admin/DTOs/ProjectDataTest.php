@@ -86,3 +86,75 @@ test('toArray includes null values for optional fields', function () {
         ->and($array['client_name'])->toBeNull()
         ->and($array['project_date'])->toBeNull();
 });
+
+// ========== Image Tests ==========
+
+test('ProjectData has null featured image by default', function () {
+    $project = Project::new('My Project');
+
+    $data = ProjectData::fromEntity($project);
+
+    expect($data->featuredImage)->toBeNull();
+});
+
+test('ProjectData has empty gallery images by default', function () {
+    $project = Project::new('My Project');
+
+    $data = ProjectData::fromEntity($project);
+
+    expect($data->galleryImages)->toBeArray()
+        ->and($data->galleryImages)->toBeEmpty();
+});
+
+test('ProjectData can have featured image', function () {
+    $featuredImage = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/featured.jpg',
+        thumbUrl: 'https://example.com/featured-thumb.jpg',
+        webUrl: 'https://example.com/featured-web.jpg',
+        previewUrl: 'https://example.com/featured-preview.jpg',
+        alt: 'Featured'
+    );
+
+    $project = \App\Domain\Admin\Entities\Project::reconstitute(
+        title: \App\Domain\Admin\Entities\ValueObjects\ProjectTitle::fromString('My Project'),
+        slug: \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('my-project'),
+        status: \App\Domain\Admin\Entities\Enums\ProjectStatus::Draft,
+        featuredImage: $featuredImage
+    );
+
+    $data = ProjectData::fromEntity($project);
+
+    expect($data->featuredImage)->not->toBeNull()
+        ->and($data->featuredImage)->toBeInstanceOf(\App\Application\Admin\DTOs\ImageData::class)
+        ->and($data->featuredImage->thumbUrl)->toBe('https://example.com/featured-thumb.jpg');
+});
+
+test('ProjectData can have gallery images', function () {
+    $image1 = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/gallery1.jpg',
+        thumbUrl: 'https://example.com/gallery1-thumb.jpg',
+        webUrl: 'https://example.com/gallery1-web.jpg',
+        previewUrl: 'https://example.com/gallery1-preview.jpg'
+    );
+
+    $image2 = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/gallery2.jpg',
+        thumbUrl: 'https://example.com/gallery2-thumb.jpg',
+        webUrl: 'https://example.com/gallery2-web.jpg',
+        previewUrl: 'https://example.com/gallery2-preview.jpg'
+    );
+
+    $project = \App\Domain\Admin\Entities\Project::reconstitute(
+        title: \App\Domain\Admin\Entities\ValueObjects\ProjectTitle::fromString('My Project'),
+        slug: \App\Domain\Admin\Entities\ValueObjects\ProjectSlug::fromString('my-project'),
+        status: \App\Domain\Admin\Entities\Enums\ProjectStatus::Draft,
+        galleryImages: [$image1, $image2]
+    );
+
+    $data = ProjectData::fromEntity($project);
+
+    expect($data->galleryImages)->toHaveCount(2)
+        ->and($data->galleryImages[0])->toBeInstanceOf(\App\Application\Admin\DTOs\ImageData::class)
+        ->and($data->galleryImages[0]->thumbUrl)->toBe('https://example.com/gallery1-thumb.jpg')
+        ->and($data->galleryImages[1]->thumbUrl)->toBe('https://example.com/gallery2-thumb.jpg');
+});
