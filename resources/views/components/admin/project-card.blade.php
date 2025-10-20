@@ -3,12 +3,24 @@
     'project' => null
 ])
 
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
-    <!-- Header: Title + Status Badge -->
-    <div class="flex justify-between items-start mb-2">
-        <h3 class="font-semibold text-gray-900 dark:text-zinc-100 text-sm flex-1 pr-2 line-clamp-2">
-            {{ $project->title }}
-        </h3>
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+    <!-- Featured Image Thumbnail -->
+    @if($project->featuredImage)
+        <div class="aspect-[4/3] bg-gray-100 dark:bg-zinc-800">
+            <img
+                src="{{ $project->featuredImage->thumbUrl }}"
+                alt="{{ $project->featuredImage->alt ?? $project->title }}"
+                class="w-full h-full object-cover"
+            >
+        </div>
+    @endif
+
+    <div class="p-4">
+        <!-- Header: Title + Status Badge -->
+        <div class="flex justify-between items-start mb-2">
+            <h3 class="font-semibold text-gray-900 dark:text-zinc-100 text-sm flex-1 pr-2 line-clamp-2">
+                {{ $project->title }}
+            </h3>
 
         <!-- Status Badge -->
         @if($project->status === 'draft')
@@ -72,5 +84,6 @@
             </svg>
             Edit
         </flux:button>
+    </div>
     </div>
 </div>
