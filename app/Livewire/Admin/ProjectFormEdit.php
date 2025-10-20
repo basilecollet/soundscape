@@ -11,7 +11,9 @@ use App\Models\Project;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -83,6 +85,26 @@ class ProjectFormEdit extends Component
             'galleryImages' => $mediaRequest->rules()['galleryImages'],
             'galleryImages.*' => $mediaRequest->rules()['galleryImages.*'],
         ]);
+    }
+
+    public function getFeaturedImagePreviewUrl(): ?string
+    {
+        if (! $this->featuredImage) {
+            return null;
+        }
+
+        // Récupérer le chemin du fichier temporaire et construire l'URL publique
+        return Storage::disk('public')->url(sprintf('livewire-tmp/%s', $this->featuredImage->getFilename()));
+    }
+
+    public function getGalleryImagePreviewUrl(?TemporaryUploadedFile $image): ?string
+    {
+        if (! $image) {
+            return null;
+        }
+
+        // Récupérer le chemin du fichier temporaire et construire l'URL publique
+        return Storage::disk('public')->url(sprintf('livewire-tmp/%s', $image->getFilename()));
     }
 
     public function saveFeaturedImage(): void
