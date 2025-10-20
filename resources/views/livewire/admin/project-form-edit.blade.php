@@ -102,7 +102,10 @@
                     <!-- Featured Image -->
                     <div class="mb-6">
                         <flux:label>Featured Image</flux:label>
-                        <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">The main image that will be displayed for this project (max 10MB)</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">
+                            The main image that will be displayed for this project<br>
+                            <span class="font-medium">Requirements:</span> Min. 800x600px, max 10MB, formats: JPEG, PNG, GIF, WebP
+                        </p>
 
                         @if($project->getFirstMedia('featured'))
                             <!-- Display Current Featured Image -->
@@ -175,7 +178,10 @@
                     <!-- Gallery Images -->
                     <div>
                         <flux:label>Gallery Images</flux:label>
-                        <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">Additional images for this project gallery (max 10MB each)</p>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">
+                            Additional images for this project gallery (max 10 images)<br>
+                            <span class="font-medium">Requirements:</span> Min. 800x600px, max 10MB each, formats: JPEG, PNG, GIF, WebP
+                        </p>
 
                         <!-- Display Current Gallery Images -->
                         @if($project->getMedia('gallery')->count() > 0)
