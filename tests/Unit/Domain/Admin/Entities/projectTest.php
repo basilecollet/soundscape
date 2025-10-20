@@ -392,8 +392,11 @@ test('can reconstitute project with featured image', function () {
     );
 
     expect($project->getFeaturedImage())->not->toBeNull()
-        ->and($project->getFeaturedImage())->toBe($featuredImage)
-        ->and($project->getFeaturedImage()->alt)->toBe('Featured image');
+        ->and($project->getFeaturedImage())->toBe($featuredImage);
+
+    $image = $project->getFeaturedImage();
+    assert($image !== null); // Type narrowing for PHPStan
+    expect($image->alt)->toBe('Featured image');
 });
 
 test('can reconstitute project with gallery images', function () {
