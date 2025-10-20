@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 
 uses(RefreshDatabase::class);
 
@@ -22,7 +23,7 @@ test('can add featured image to project', function () {
 
     expect($media)->not->toBeNull()
         ->and($project->getFirstMedia('featured'))->not->toBeNull()
-        ->and($project->getFirstMedia('featured')->file_name)->toBe('featured.jpg');
+        ->and($project->getFirstMedia('featured')?->file_name)->toBe('featured.jpg');
 });
 
 test('replacing featured image removes previous one', function () {
@@ -35,7 +36,7 @@ test('replacing featured image removes previous one', function () {
     $project->addMedia($secondImage)->toMediaCollection('featured');
 
     expect($project->getMedia('featured')->count())->toBe(1)
-        ->and($project->getFirstMedia('featured')->file_name)->toBe('second.jpg');
+        ->and($project->getFirstMedia('featured')?->file_name)->toBe('second.jpg');
 });
 
 test('can add multiple images to gallery', function () {
@@ -66,7 +67,7 @@ test('featured and gallery collections are independent', function () {
     $project->addMedia($galleryImage2)->toMediaCollection('gallery');
 
     expect($project->getFirstMedia('featured'))->not->toBeNull()
-        ->and($project->getFirstMedia('featured')->file_name)->toBe('featured.jpg')
+        ->and($project->getFirstMedia('featured')?->file_name)->toBe('featured.jpg')
         ->and($project->getMedia('gallery')->count())->toBe(2);
 });
 
@@ -99,7 +100,7 @@ test('can delete featured image', function () {
 
     $media->delete();
 
-    expect($project->fresh()->getFirstMedia('featured'))->toBeNull();
+    expect($project->fresh()?->getFirstMedia('featured'))->toBeNull();
 });
 
 test('can delete specific gallery image', function () {
@@ -117,8 +118,8 @@ test('can delete specific gallery image', function () {
 
     $media2->delete();
 
-    expect($project->fresh()->getMedia('gallery')->count())->toBe(2)
-        ->and($project->fresh()->getMedia('gallery')->pluck('file_name')->toArray())
+    expect($project->fresh()?->getMedia('gallery')->count())->toBe(2)
+        ->and($project->fresh()?->getMedia('gallery')->pluck('file_name')->toArray())
         ->toEqual(['gallery1.jpg', 'gallery3.jpg']);
 });
 
@@ -127,11 +128,11 @@ test('only accepts image mime types for featured collection', function () {
     $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
 
     $project->addMedia($file)->toMediaCollection('featured');
-})->throws(\Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded::class);
+})->throws(FileCannotBeAdded::class);
 
 test('only accepts image mime types for gallery collection', function () {
     $project = Project::factory()->create();
     $file = UploadedFile::fake()->create('document.txt', 100, 'text/plain');
 
     $project->addMedia($file)->toMediaCollection('gallery');
-})->throws(\Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded::class);
+})->throws(FileCannotBeAdded::class);
