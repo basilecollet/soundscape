@@ -127,12 +127,14 @@ test('only accepts image mime types for featured collection', function () {
     $project = Project::factory()->create();
     $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
 
-    $project->addMedia($file)->toMediaCollection('featured');
-})->throws(FileCannotBeAdded::class);
+    expect(fn () => $project->addMedia($file)->toMediaCollection('featured'))
+        ->toThrow(FileCannotBeAdded::class);
+});
 
 test('only accepts image mime types for gallery collection', function () {
     $project = Project::factory()->create();
     $file = UploadedFile::fake()->create('document.txt', 100, 'text/plain');
 
-    $project->addMedia($file)->toMediaCollection('gallery');
-})->throws(FileCannotBeAdded::class);
+    expect(fn () => $project->addMedia($file)->toMediaCollection('gallery'))
+        ->toThrow(FileCannotBeAdded::class);
+});
