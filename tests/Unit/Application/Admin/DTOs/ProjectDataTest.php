@@ -125,8 +125,10 @@ test('ProjectData can have featured image', function () {
     $data = ProjectData::fromEntity($project);
 
     expect($data->featuredImage)->not->toBeNull()
-        ->and($data->featuredImage)->toBeInstanceOf(\App\Application\Admin\DTOs\ImageData::class)
-        ->and($data->featuredImage->thumbUrl)->toBe('https://example.com/featured-thumb.jpg');
+        ->and($data->featuredImage)->toBeInstanceOf(\App\Application\Admin\DTOs\ImageData::class);
+
+    assert($data->featuredImage !== null); // Type narrowing for PHPStan
+    expect($data->featuredImage->thumbUrl)->toBe('https://example.com/featured-thumb.jpg');
 });
 
 test('ProjectData can have gallery images', function () {
