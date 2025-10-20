@@ -33,40 +33,40 @@ test('create an image with alt text', function () {
 });
 
 test('image original URL cannot be empty', function () {
-    new Image(
+    expect(fn () => new Image(
         originalUrl: '',
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: 'https://example.com/image-preview.jpg'
-    );
-})->throws(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+});
 
 test('thumb URL cannot be empty', function () {
-    new Image(
+    expect(fn () => new Image(
         originalUrl: 'https://example.com/image.jpg',
         thumbUrl: '',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: 'https://example.com/image-preview.jpg'
-    );
-})->throws(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+});
 
 test('web URL cannot be empty', function () {
-    new Image(
+    expect(fn () => new Image(
         originalUrl: 'https://example.com/image.jpg',
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: '',
         previewUrl: 'https://example.com/image-preview.jpg'
-    );
-})->throws(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+});
 
 test('preview URL cannot be empty', function () {
-    new Image(
+    expect(fn () => new Image(
         originalUrl: 'https://example.com/image.jpg',
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: ''
-    );
-})->throws(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+});
 
 test('alt text can be null', function () {
     $image = new Image(
