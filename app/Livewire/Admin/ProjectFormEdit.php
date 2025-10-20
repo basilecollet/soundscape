@@ -9,6 +9,7 @@ use App\Application\Admin\DTOs\UpdateProjectData;
 use App\Http\Requests\Admin\UpdateProjectMediaRequest;
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -32,8 +33,10 @@ class ProjectFormEdit extends Component
 
     public string $projectDate = '';
 
+    /** @var UploadedFile|null */
     public $featuredImage = null;
 
+    /** @var array<int, UploadedFile> */
     public $galleryImages = [];
 
     public function mount(Project $project): void
