@@ -48,7 +48,7 @@
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
                 </a>
-                <a href="{{ route('about') }}" 
+                <a href="{{ route('about') }}"
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
@@ -56,6 +56,17 @@
                    }">
                     about
                     @if(request()->routeIs('about'))
+                        <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
+                    @endif
+                </a>
+                <a href="{{ route('projects') }}"
+                   class="relative transition-colors duration-200 text-sm py-1"
+                   :class="{
+                       'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
+                       'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
+                   }">
+                    projects
+                    @if(request()->routeIs('projects'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
                 </a>
@@ -116,7 +127,7 @@
                     @endif
                     home
                 </a>
-                <a href="{{ route('about') }}" 
+                <a href="{{ route('about') }}"
                    @click="open = false"
                    class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
                     @if(request()->routeIs('about'))
@@ -125,6 +136,16 @@
                         <span class="w-2 h-2"></span>
                     @endif
                     about
+                </a>
+                <a href="{{ route('projects') }}"
+                   @click="open = false"
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                    @if(request()->routeIs('projects'))
+                        <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
+                    @else
+                        <span class="w-2 h-2"></span>
+                    @endif
+                    projects
                 </a>
                 <a href="{{ route('contact') }}" 
                    @click="open = false"
