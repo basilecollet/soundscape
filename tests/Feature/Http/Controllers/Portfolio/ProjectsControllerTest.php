@@ -88,6 +88,9 @@ test('projects page displays projects ordered by date descending', function () {
     $middlePos = strpos($content, 'Middle Project');
     $oldPos = strpos($content, 'Old Project');
 
+    assert($recentPos !== false); // Type narrowing for PHPStan
+    assert($middlePos !== false);
+    assert($oldPos !== false);
     expect($recentPos)->toBeLessThan($middlePos)
         ->and($middlePos)->toBeLessThan($oldPos);
 });
