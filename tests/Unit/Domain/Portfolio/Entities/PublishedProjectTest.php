@@ -42,8 +42,11 @@ test('can create a published project with all data', function () {
 
     expect($project->getShortDescription())->toBeInstanceOf(ProjectShortDescription::class)
         ->and((string) $project->getShortDescription())->toBe('A short description')
-        ->and($project->getProjectDate())->toBeInstanceOf(ProjectDate::class)
-        ->and($project->getProjectDate()->format('Y-m-d'))->toBe('2024-06-15')
+        ->and($project->getProjectDate())->toBeInstanceOf(ProjectDate::class);
+
+    $projectDate = $project->getProjectDate();
+    assert($projectDate !== null); // Type narrowing for PHPStan
+    expect($projectDate->format('Y-m-d'))->toBe('2024-06-15')
         ->and($project->getFeaturedImage())->toBe($featuredImage);
 });
 
