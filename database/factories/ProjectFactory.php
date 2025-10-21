@@ -61,4 +61,39 @@ class ProjectFactory extends Factory
             'description' => $string,
         ]);
     }
+
+    public function draft(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => ProjectStatus::Draft->value,
+        ]);
+    }
+
+    public function withAProjectDate(Carbon $parse): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'project_date' => $parse,
+        ]);
+    }
+
+    public function published(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => ProjectStatus::Published->value,
+        ]);
+    }
+
+    public function archived(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => ProjectStatus::Archived->value,
+        ]);
+    }
+
+    public function withAShortDescription(string $string): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'short_description' => $string,
+        ]);
+    }
 }
