@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Domain\Portfolio\Entities\PublishedProject;
 use App\Infra\Repositories\Portfolio\ProjectDatabaseRepository;
 use App\Models\Project as ProjectDatabase;
