@@ -22,7 +22,7 @@ test('can get all published projects', function () {
 
     /** @var ProjectRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectRepository::class);
-    /** @phpstan-ignore method.notFound */
+    /** @phpstan-ignore method.notFound, method.nonObject */
     $repository->shouldReceive('getAll')
         ->once()
         ->andReturn(collect([$project1, $project2]));
@@ -42,7 +42,7 @@ test('returns empty collection when no published projects', function () {
     // Arrange
     /** @var ProjectRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectRepository::class);
-    /** @phpstan-ignore method.notFound */
+    /** @phpstan-ignore method.notFound, method.nonObject */
     $repository->shouldReceive('getAll')
         ->once()
         ->andReturn(collect([]));
@@ -65,7 +65,7 @@ test('transforms all project fields correctly', function () {
 
     /** @var ProjectRepository&\Mockery\MockInterface $repository */
     $repository = Mockery::mock(ProjectRepository::class);
-    /** @phpstan-ignore method.notFound */
+    /** @phpstan-ignore method.notFound, method.nonObject */
     $repository->shouldReceive('getAll')
         ->once()
         ->andReturn(collect([$project]));
