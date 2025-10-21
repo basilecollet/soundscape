@@ -18,6 +18,9 @@ use App\Domain\Admin\Services\StringNormalizationService;
 
 final class Project
 {
+    /**
+     * @param  array<Image>  $galleryImages
+     */
     private function __construct(
         private ProjectTitle $title,
         private readonly ProjectSlug $slug,
@@ -26,6 +29,8 @@ final class Project
         private ?ProjectShortDescription $shortDescription = null,
         private ?ClientName $clientName = null,
         private ?ProjectDate $projectDate = null,
+        private ?Image $featuredImage = null,
+        private array $galleryImages = [],
     ) {}
 
     public static function new(
@@ -55,6 +60,9 @@ final class Project
         );
     }
 
+    /**
+     * @param  array<Image>  $galleryImages
+     */
     public static function reconstitute(
         ProjectTitle $title,
         ProjectSlug $slug,
@@ -63,6 +71,8 @@ final class Project
         ?ProjectShortDescription $shortDescription = null,
         ?ClientName $clientName = null,
         ?ProjectDate $projectDate = null,
+        ?Image $featuredImage = null,
+        array $galleryImages = [],
     ): self {
         return new self(
             $title,
@@ -72,6 +82,8 @@ final class Project
             $shortDescription,
             $clientName,
             $projectDate,
+            $featuredImage,
+            $galleryImages,
         );
     }
 
@@ -108,6 +120,19 @@ final class Project
     public function getProjectDate(): ?ProjectDate
     {
         return $this->projectDate;
+    }
+
+    public function getFeaturedImage(): ?Image
+    {
+        return $this->featuredImage;
+    }
+
+    /**
+     * @return array<Image>
+     */
+    public function getGalleryImages(): array
+    {
+        return $this->galleryImages;
     }
 
     /**

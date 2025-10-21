@@ -359,3 +359,96 @@ test('cannot set draft project to draft', function () {
     expect(fn () => $project->draft())
         ->toThrow(ProjectCannotBeDraftedException::class);
 });
+
+// ========== Image Management Tests ==========
+
+test('new project has no featured image by default', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getFeaturedImage())->toBeNull();
+});
+
+test('new project has no gallery images by default', function () {
+    $project = Project::new('My Project');
+
+    expect($project->getGalleryImages())->toBeArray()
+        ->and($project->getGalleryImages())->toBeEmpty();
+});
+
+test('can reconstitute project with featured image', function () {
+    $featuredImage = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/featured.jpg',
+        thumbUrl: 'https://example.com/featured-thumb.jpg',
+        webUrl: 'https://example.com/featured-web.jpg',
+        previewUrl: 'https://example.com/featured-preview.jpg',
+        alt: 'Featured image'
+    );
+
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Draft,
+        featuredImage: $featuredImage
+    );
+
+    expect($project->getFeaturedImage())->not->toBeNull()
+        ->and($project->getFeaturedImage())->toBe($featuredImage);
+
+    $image = $project->getFeaturedImage();
+    assert($image !== null); // Type narrowing for PHPStan
+    expect($image->alt)->toBe('Featured image');
+});
+
+test('can reconstitute project with gallery images', function () {
+    $image1 = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/gallery1.jpg',
+        thumbUrl: 'https://example.com/gallery1-thumb.jpg',
+        webUrl: 'https://example.com/gallery1-web.jpg',
+        previewUrl: 'https://example.com/gallery1-preview.jpg'
+    );
+
+    $image2 = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/gallery2.jpg',
+        thumbUrl: 'https://example.com/gallery2-thumb.jpg',
+        webUrl: 'https://example.com/gallery2-web.jpg',
+        previewUrl: 'https://example.com/gallery2-preview.jpg'
+    );
+
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Draft,
+        galleryImages: [$image1, $image2]
+    );
+
+    expect($project->getGalleryImages())->toHaveCount(2)
+        ->and($project->getGalleryImages()[0])->toBe($image1)
+        ->and($project->getGalleryImages()[1])->toBe($image2);
+});
+
+test('can reconstitute project with both featured and gallery images', function () {
+    $featuredImage = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/featured.jpg',
+        thumbUrl: 'https://example.com/featured-thumb.jpg',
+        webUrl: 'https://example.com/featured-web.jpg',
+        previewUrl: 'https://example.com/featured-preview.jpg'
+    );
+
+    $galleryImage = new \App\Domain\Admin\Entities\Image(
+        originalUrl: 'https://example.com/gallery.jpg',
+        thumbUrl: 'https://example.com/gallery-thumb.jpg',
+        webUrl: 'https://example.com/gallery-web.jpg',
+        previewUrl: 'https://example.com/gallery-preview.jpg'
+    );
+
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('My Project'),
+        slug: ProjectSlug::fromString('my-project'),
+        status: ProjectStatus::Draft,
+        featuredImage: $featuredImage,
+        galleryImages: [$galleryImage]
+    );
+
+    expect($project->getFeaturedImage())->not->toBeNull()
+        ->and($project->getGalleryImages())->toHaveCount(1);
+});
