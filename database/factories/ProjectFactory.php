@@ -30,7 +30,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $words = $this->faker->unique()->words(3, true);
+        $words = fake()->unique()->words(3, true);
         $title = is_string($words) ? $words : implode(' ', $words);
 
         return [
