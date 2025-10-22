@@ -22,6 +22,7 @@ class ProjectDatabaseRepository implements ProjectRepository
     public function getAll(): Collection
     {
         return ProjectDatabase::where('status', 'published')
+            ->with('media')
             ->orderBy('project_date', 'desc')
             ->orderBy('created_at', 'desc')
             ->get()
@@ -39,9 +40,6 @@ class ProjectDatabaseRepository implements ProjectRepository
                 ? ProjectDate::fromCarbon($projectDatabase->project_date)
                 : ProjectDate::fromString($projectDatabase->project_date);
         }
-
-        // Load media relations
-        $projectDatabase->load('media');
 
         // Transform featured media to Image entity
         $featuredImage = null;

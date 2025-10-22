@@ -33,7 +33,7 @@ class ProjectDatabaseRepository implements ProjectRepository
      */
     public function getAll(): Collection
     {
-        return ProjectDatabase::all()->map(function (ProjectDatabase $model) {
+        return ProjectDatabase::with('media')->get()->map(function (ProjectDatabase $model) {
             return $this->reconstituteProject($model);
         });
     }
@@ -43,7 +43,7 @@ class ProjectDatabaseRepository implements ProjectRepository
      */
     public function findBySlug(ProjectSlug $slug): ?Project
     {
-        $model = ProjectDatabase::where('slug', (string) $slug)->first();
+        $model = ProjectDatabase::with('media')->where('slug', (string) $slug)->first();
 
         if ($model === null) {
             return null;
@@ -89,9 +89,6 @@ class ProjectDatabaseRepository implements ProjectRepository
                 ? ProjectDate::fromCarbon($projectDatabase->project_date)
                 : ProjectDate::fromString($projectDatabase->project_date);
         }
-
-        // Load media relations
-        $projectDatabase->load('media');
 
         // Transform featured media to Image entity
         $featuredImage = null;
