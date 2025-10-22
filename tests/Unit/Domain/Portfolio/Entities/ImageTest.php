@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Portfolio\Entities\Image;
+use App\Domain\Portfolio\Exceptions\InvalidImageException;
 
 test('can create an image with required URLs', function () {
     $image = new Image(
@@ -30,14 +31,28 @@ test('web URL cannot be empty', function () {
     expect(fn () => new Image(
         webUrl: '',
         thumbUrl: 'https://example.com/image-thumb.jpg'
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image web URL cannot be empty');
 });
 
 test('thumb URL cannot be empty', function () {
     expect(fn () => new Image(
         webUrl: 'https://example.com/image-web.jpg',
         thumbUrl: ''
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image thumbnail URL cannot be empty');
+});
+
+test('web URL must be valid format', function () {
+    expect(fn () => new Image(
+        webUrl: 'not-a-valid-url',
+        thumbUrl: 'https://example.com/image-thumb.jpg'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
+});
+
+test('thumb URL must be valid format', function () {
+    expect(fn () => new Image(
+        webUrl: 'https://example.com/image-web.jpg',
+        thumbUrl: 'invalid-url'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
 });
 
 test('alt text can be null', function () {

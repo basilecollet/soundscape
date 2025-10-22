@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Portfolio\Entities;
 
+use App\Domain\Portfolio\Exceptions\InvalidImageException;
+
 final readonly class Image
 {
     public function __construct(
@@ -16,12 +18,18 @@ final readonly class Image
 
     private function validateUrls(): void
     {
-        if (trim($this->webUrl) === '') {
-            throw new \InvalidArgumentException('Image URLs cannot be empty');
+        $this->validateUrl($this->webUrl, 'web');
+        $this->validateUrl($this->thumbUrl, 'thumbnail');
+    }
+
+    private function validateUrl(string $url, string $urlType): void
+    {
+        if (trim($url) === '') {
+            throw InvalidImageException::emptyUrl($urlType);
         }
 
-        if (trim($this->thumbUrl) === '') {
-            throw new \InvalidArgumentException('Image URLs cannot be empty');
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            throw InvalidImageException::invalidUrlFormat($url);
         }
     }
 }

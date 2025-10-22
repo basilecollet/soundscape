@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Admin\Entities\Image;
+use App\Domain\Admin\Exceptions\InvalidImageException;
 
 test('create an image with all URLs', function () {
     $image = new Image(
@@ -38,7 +39,7 @@ test('image original URL cannot be empty', function () {
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: 'https://example.com/image-preview.jpg'
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image original URL cannot be empty');
 });
 
 test('thumb URL cannot be empty', function () {
@@ -47,7 +48,7 @@ test('thumb URL cannot be empty', function () {
         thumbUrl: '',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: 'https://example.com/image-preview.jpg'
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image thumbnail URL cannot be empty');
 });
 
 test('web URL cannot be empty', function () {
@@ -56,7 +57,7 @@ test('web URL cannot be empty', function () {
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: '',
         previewUrl: 'https://example.com/image-preview.jpg'
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image web URL cannot be empty');
 });
 
 test('preview URL cannot be empty', function () {
@@ -65,7 +66,43 @@ test('preview URL cannot be empty', function () {
         thumbUrl: 'https://example.com/image-thumb.jpg',
         webUrl: 'https://example.com/image-web.jpg',
         previewUrl: ''
-    ))->toThrow(\InvalidArgumentException::class, 'Image URLs cannot be empty');
+    ))->toThrow(InvalidImageException::class, 'Image preview URL cannot be empty');
+});
+
+test('original URL must be valid format', function () {
+    expect(fn () => new Image(
+        originalUrl: 'not-a-valid-url',
+        thumbUrl: 'https://example.com/image-thumb.jpg',
+        webUrl: 'https://example.com/image-web.jpg',
+        previewUrl: 'https://example.com/image-preview.jpg'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
+});
+
+test('thumb URL must be valid format', function () {
+    expect(fn () => new Image(
+        originalUrl: 'https://example.com/image.jpg',
+        thumbUrl: 'invalid-url',
+        webUrl: 'https://example.com/image-web.jpg',
+        previewUrl: 'https://example.com/image-preview.jpg'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
+});
+
+test('web URL must be valid format', function () {
+    expect(fn () => new Image(
+        originalUrl: 'https://example.com/image.jpg',
+        thumbUrl: 'https://example.com/image-thumb.jpg',
+        webUrl: 'not-valid',
+        previewUrl: 'https://example.com/image-preview.jpg'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
+});
+
+test('preview URL must be valid format', function () {
+    expect(fn () => new Image(
+        originalUrl: 'https://example.com/image.jpg',
+        thumbUrl: 'https://example.com/image-thumb.jpg',
+        webUrl: 'https://example.com/image-web.jpg',
+        previewUrl: 'bad-url'
+    ))->toThrow(InvalidImageException::class, 'Invalid URL format');
 });
 
 test('alt text can be null', function () {
