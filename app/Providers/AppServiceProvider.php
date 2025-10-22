@@ -32,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Admin\Repositories\ProjectRepository::class,
             \App\Infra\Repositories\Admin\ProjectDatabaseRepository::class
         );
+
+        $this->app->bind(
+            \App\Domain\Portfolio\Repositories\ProjectRepository::class,
+            \App\Infra\Repositories\Portfolio\ProjectDatabaseRepository::class
+        );
     }
 
     /**

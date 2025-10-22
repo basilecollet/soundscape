@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Portfolio\AboutController;
 use App\Http\Controllers\Portfolio\ContactController;
 use App\Http\Controllers\Portfolio\HomeController;
+use App\Http\Controllers\Portfolio\ProjectsController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -12,6 +13,7 @@ use Livewire\Volt\Volt;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
 Route::get('/contact', ContactController::class)->name('contact');
+Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
 
 /** Admin routes */
 Route::redirect('dashboard', 'admin')

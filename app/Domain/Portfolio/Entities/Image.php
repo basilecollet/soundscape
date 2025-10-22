@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Admin\Entities;
+namespace App\Domain\Portfolio\Entities;
 
-use App\Domain\Admin\Exceptions\InvalidImageException;
+use App\Domain\Portfolio\Exceptions\InvalidImageException;
 
 final readonly class Image
 {
     public function __construct(
-        public string $originalUrl,
-        public string $thumbUrl,
         public string $webUrl,
-        public string $previewUrl,
+        public string $thumbUrl,
         public ?string $alt = null,
     ) {
         $this->validateUrls();
@@ -20,10 +18,8 @@ final readonly class Image
 
     private function validateUrls(): void
     {
-        $this->validateUrl($this->originalUrl, 'original');
-        $this->validateUrl($this->thumbUrl, 'thumbnail');
         $this->validateUrl($this->webUrl, 'web');
-        $this->validateUrl($this->previewUrl, 'preview');
+        $this->validateUrl($this->thumbUrl, 'thumbnail');
     }
 
     private function validateUrl(string $url, string $urlType): void
