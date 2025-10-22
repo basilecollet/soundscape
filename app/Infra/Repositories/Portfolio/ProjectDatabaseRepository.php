@@ -38,7 +38,7 @@ class ProjectDatabaseRepository implements ProjectRepository
         if ($projectDatabase->project_date !== null) {
             $projectDate = $projectDatabase->project_date instanceof \Carbon\Carbon
                 ? ProjectDate::fromCarbon($projectDatabase->project_date)
-                : ProjectDate::fromString((string )$projectDatabase->project_date);
+                : ProjectDate::fromString((string) $projectDatabase->project_date);
         }
 
         // Transform featured media to Image entity
