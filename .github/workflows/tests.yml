@@ -50,7 +50,31 @@ jobs:
           php artisan key:generate
 
       - name: Run tests with coverage
-        run: php artisan test --coverage --min=80
+        run: |
+          php artisan test --coverage --min=80 | tee test-output.txt
+
+      - name: Extract coverage percentage
+        id: coverage
+        run: |
+          # Extract the total coverage percentage from test output
+          COVERAGE=$(grep -oP 'Total Coverage:\s+\K[\d.]+' test-output.txt || echo "80")
+
+          # Round to integer
+          COVERAGE=$(printf "%.0f" "$COVERAGE")
+
+          echo "percentage=$COVERAGE" >> $GITHUB_OUTPUT
+          echo "Coverage: $COVERAGE%"
+
+      - name: Create coverage badge
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: ${{ secrets.GIST_ID }}
+          filename: soundscape-coverage.json
+          label: coverage
+          message: ${{ steps.coverage.outputs.percentage }}%
+          color: ${{ steps.coverage.outputs.percentage >= 80 && 'brightgreen' || steps.coverage.outputs.percentage >= 60 && 'yellow' || 'red' }}
 
       - name: Upload coverage reports
         if: always()
