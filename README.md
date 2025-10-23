@@ -7,19 +7,20 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 ![Livewire](https://img.shields.io/badge/Livewire-3.0-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
+![Tests](https://github.com/basilecollet/soundscape/actions/workflows/tests.yml/badge.svg?branch=main)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/basilecollet/22a59cbdd34a9eea83a5da6e27cd8026/raw/soundscape-coverage.json)
+
 ## 📋 Table of Contents
 
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
-- [Quick Start](#-quick-start)
 - [Development](#-development)
 - [Project Structure](#-project-structure)
-- [Available Commands](#-available-commands)
+- [Development](#-development)
 - [Testing](#-testing)
 - [Deployment](#-deployment)
-- [Contributing](#-contributing)
 - [License](#-license)
 
 ## ✨ Features

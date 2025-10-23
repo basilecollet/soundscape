@@ -41,7 +41,7 @@ RUN apk add --no-cache linux-headers \
     && docker-php-ext-enable xdebug \
     && apk del .build-deps
 
-# Configure Xdebug
+# Configure Xdebug (mode can be overridden via XDEBUG_MODE env var)
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \

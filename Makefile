@@ -74,7 +74,11 @@ test: ## Run all tests
 	$(APP) php artisan test
 
 test-coverage: ## Run tests with coverage
-	$(APP) php artisan test --coverage
+	$(DC) exec -e XDEBUG_MODE=coverage app php artisan test --parallel --coverage
+
+test-coverage-html: ## Run tests with HTML coverage report
+	$(DC) exec -e XDEBUG_MODE=coverage app php artisan test --parallel --coverage
+	@echo "$(GREEN)📊 Coverage report: coverage/html/index.html$(NC)"
 
 test-unit: ## Run unit tests only
 	$(APP) php artisan test --testsuite=Unit
