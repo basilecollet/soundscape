@@ -3,7 +3,7 @@
 A modern portfolio and e-commerce platform for a sound engineer, built with Laravel 12. Features a comprehensive portfolio showcase, audio sample sales platform with guest checkout, admin dashboard, and content management system. Built with Domain-Driven Design architecture and extensive testing coverage.
 
 ![Laravel](https://img.shields.io/badge/Laravel-v12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![Livewire](https://img.shields.io/badge/Livewire-3.0-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
@@ -28,7 +28,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - 📈 **Admin Dashboard** - Comprehensive admin interface with statistics and content management
 - 📝 **Content Management System** - Dynamic page content with real-time editing
 - 📬 **Contact System** - Contact form with GDPR compliance and message management
-- 🏠 **Portfolio Website** - Modern portfolio with Home, About, and Contact pages
+- 🏠 **Portfolio Website** - Modern portfolio with Home, About, Project and Contact pages
 - 🔐 **Authentication System** - Complete auth with registration, login, password reset
 - 👤 **User Settings** - Profile management, password change, appearance settings
 - 🎨 **Modern UI** - Flux UI components with Tailwind CSS 4
@@ -37,29 +37,17 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - 🏢 **DDD Architecture** - Domain-Driven Design with Application/Domain/Infrastructure layers
 - 🐳 **Docker Development** - Optimized multi-stage containerized environment
 
-### Planned Features (In Development)
-- 🛒 **E-commerce Platform** - Audio sample sales with guest checkout
-- 🎵 **Sample Catalog** - Browse and purchase audio samples and loops
-- 💳 **Payment Integration** - Stripe/PayPal integration for secure payments
-- 📥 **Digital Downloads** - Secure temporary download links for purchased samples
-- 🔒 **GDPR Compliance** - Full European data protection compliance
-- 📊 **Sales Analytics** - Track sales, downloads, and customer behavior
-- 🏷️ **License Management** - Different license types for audio samples
-- 📧 **Email Notifications** - Purchase confirmations and download instructions
-
 ### Application Areas
 - **Sound Engineer Portfolio** - Showcase of audio projects, skills, and experience
-- **Sample Marketplace** - Commercial platform for selling audio samples and loops
 - **Admin Dashboard** - Product management, order tracking, and sales analytics
-- **Client Management** - Customers information, order history, and settings
 - **GDPR Tools** - Data export, deletion, and consent management
 
 ## 🛠 Tech Stack
 
 ### Backend
 - **Laravel 12** - Latest PHP framework
-- **PHP 8.3** - With OPcache and Xdebug
-- **Livewire Volt** - Single-file reactive components
+- **PHP 8.4** - With OPcache and Xdebug
+- **Livewire** - Single-file reactive components
 - **PostgreSQL 15** - Primary database (Docker)
 - **Domain-Driven Design** - Clean architecture with Application/Domain/Infra layers
 - **Repository Pattern** - Database abstraction with interfaces
@@ -88,10 +76,10 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - 10GB free disk space
 
 ### For Local Development (Alternative)
-- PHP 8.3+
+- PHP 8.4+
 - Composer 2.0+
 - Node.js 20+ and NPM/Yarn
-- PostgreSQL 15+ or SQLite
+- PostgreSQL 15+ / SQLite
 
 ## 🚀 Installation
 
@@ -381,16 +369,6 @@ make init         # Start fresh
 ```
 
 For more troubleshooting, see [docker.md](docker.md).
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ### Development Guidelines
 
