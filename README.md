@@ -8,7 +8,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 ![Tests](https://github.com/basilecollet/soundscape/actions/workflows/tests.yml/badge.svg?branch=main)
-![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/basilecollet/GIST_ID/raw/soundscape-coverage.json)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/basilecollet/22a59cbdd34a9eea83a5da6e27cd8026/raw/soundscape-coverage.json)
 
 ## 📋 Table of Contents
 
