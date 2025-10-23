@@ -58,7 +58,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 
 ### Backend
 - **Laravel 12** - Latest PHP framework
-- **PHP 8.3** - With OPcache and Xdebug
+- **PHP 8.4** - With OPcache and Xdebug
 - **Livewire Volt** - Single-file reactive components
 - **PostgreSQL 15** - Primary database (Docker)
 - **Domain-Driven Design** - Clean architecture with Application/Domain/Infra layers
@@ -88,7 +88,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - 10GB free disk space
 
 ### For Local Development (Alternative)
-- PHP 8.3+
+- PHP 8.4+
 - Composer 2.0+
 - Node.js 20+ and NPM/Yarn
 - PostgreSQL 15+ or SQLite
