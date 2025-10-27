@@ -1,0 +1,12 @@
+/**
+ * Admin Interface Styles
+ *
+ * This file includes all styles needed for the admin/backoffice interface.
+ * It combines the base app styles with admin-specific enhancements.
+ */
+
+/* Import base application styles (typography, colors, Tailwind) */
+@import './app.css';
+
+/* Import admin-specific enhancements (animations, utilities, interactions) */
+@import './admin-enhancements.css';

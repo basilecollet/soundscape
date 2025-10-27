@@ -9,28 +9,21 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+    /* Typography - Kode Mono for technical/audio aesthetic */
     --font-sans: 'Kode Mono', ui-monospace, 'SF Mono', 'Monaco', 'Courier New', monospace;
     --font-mono: 'Kode Mono', ui-monospace, 'SF Mono', 'Monaco', 'Courier New', monospace;
 
-    /* Custom color palette - Minimaliste */
-    --color-primary: #E6B886;     /* Orange doux/beige */
-    --color-secondary: #F5F1E8;   /* Beige très clair */
-    --color-accent-green: #8BA888;      /* Vert olive clair */
-    --color-accent-green-dark: #5D6B5D; /* Vert olive foncé */
-    --color-dark: #3A3A3A;        /* Gris anthracite */
-    --color-light: #F8F6F3;       /* Blanc cassé */
-    --color-text: #2D2D2D;        /* Gris foncé pour texte */
-    
-    /* Mapping pour les classes Tailwind personnalisées */
-    --color-portfolio-primary: #E6B886;
-    --color-portfolio-secondary: #F5F1E8;
-    --color-portfolio-accent: #8BA888;
-    --color-portfolio-accent-dark: #5D6B5D;
-    --color-portfolio-dark: #3A3A3A;
-    --color-portfolio-light: #F8F6F3;
-    --color-portfolio-text: #2D2D2D;
+    /* Portfolio color palette - Warm minimalist theme */
+    --color-portfolio-primary: #E6B886;        /* Orange doux/beige */
+    --color-portfolio-secondary: #F5F1E8;      /* Beige très clair */
+    --color-portfolio-accent: #8BA888;         /* Vert olive clair */
+    --color-portfolio-accent-dark: #5D6B5D;    /* Vert olive foncé */
+    --color-portfolio-dark: #3A3A3A;           /* Gris anthracite */
+    --color-portfolio-light: #F8F6F3;          /* Blanc cassé */
+    --color-portfolio-text: #2D2D2D;           /* Gris foncé pour texte */
+    --color-portfolio-error: #C55951;          /* Rouge terracotta pour erreurs */
 
-    /* Garder les couleurs zinc existantes pour la compatibilité */
+    /* Admin color palette - Neutral zinc colors */
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
     --color-zinc-200: #e5e5e5;
@@ -43,17 +36,9 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-portfolio-accent);
-    --color-accent-content: var(--color-portfolio-accent);
-    --color-accent-foreground: var(--color-white);
-}
-
-@layer theme {
-    .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
-    }
+    /* Flux UI accent colors (admin interface) */
+    --color-accent: #3b82f6;           /* Blue-500 for Flux UI focus states */
+    --color-accent-foreground: white;  /* Text color on accent background */
 }
 
 @layer base {
@@ -84,6 +69,3 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
-
-/* Admin Interface Enhancements */
-@import './admin-enhancements.css';
