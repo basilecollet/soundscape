@@ -33,7 +33,7 @@
                 >
                 @error('name')
                     <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
-                        <span>⚠</span>
+                        <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
                 @enderror
@@ -52,7 +52,7 @@
                 >
                 @error('email')
                     <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
-                        <span>⚠</span>
+                        <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
                 @enderror
@@ -71,7 +71,7 @@
                 >
                 @error('subject')
                     <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
-                        <span>⚠</span>
+                        <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
                 @enderror
@@ -90,7 +90,7 @@
                 ></textarea>
                 @error('message')
                     <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
-                        <span>⚠</span>
+                        <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
                 @enderror
@@ -109,7 +109,7 @@
             </div>
             @error('gdpr_consent')
                 <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
-                    <span>⚠</span>
+                    <span aria-hidden="true">⚠</span>
                     <span>{{ $message }}</span>
                 </p>
             @enderror
