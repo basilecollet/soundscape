@@ -4,7 +4,6 @@
 
 **Soundscape** - Plateforme pour ingénieur son (développement solo)
 - **Portfolio/Vitrine** : SEO-optimisé avec Controllers Laravel
-- **E-commerce** : Vente de sons avec guest checkout (Livewire)
 - **Administration** : Gestion complète (Livewire)
 
 ## ✅ État actuel du projet
@@ -37,9 +36,7 @@
 ### Données traitées
 ```markdown
 - Portfolio : Analytics (IP, navigation)
-- E-commerce : Email, nom, IP, historique commandes
 - Admin : Données utilisateur complètes
-- Marketing : Email newsletters (optionnel)
 ```
 
 ## 🏗️ Phase 0 : Refactoring Architecture + RGPD Foundation (4-5 jours)
@@ -121,60 +118,16 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
   - [ ] RSS feed pour SEO
 ```
 
-## 🛒 Phase 2 : E-commerce avec Guest Checkout (2-3 semaines)
+## 🔧 Phase 2 : Administration (1-2 semaines)
 
-### 2.1 Infrastructure Shop (3-4 jours)
-```markdown
-- [ ] Modèles (étendre depuis l'existant)
-  - [ ] Product (réutiliser structure PageContent)
-  - [ ] Order (sans user_id, guest_email, ip_address pour RGPD)
-  - [ ] License (types de licences)
-  
-- [ ] Services
-  - [ ] CartService (session-based)
-  - [ ] GuestOrderService (avec logging RGPD)
-  - [ ] DownloadService avec tokens temporaires
-  
-- [ ] RGPD E-commerce
-  - [ ] Consentement obligatoire au checkout
-  - [ ] Politique de retour/remboursement
-  - [ ] Conservation limitée des données (30 jours pour guests)
-  - [ ] Droit à l'effacement automatique
-```
-
-### 2.2 Composants Livewire Shop (4-5 jours)
-```markdown
-- [ ] Adapter les composants existants
-  - [ ] Transformer HomeSection en ProductCatalog
-  - [ ] Créer ProductCard (style similaire aux cards existantes)
-  - [ ] Cart component (sidebar comme dashboard existant)
-  
-- [ ] Guest Checkout
-  - [ ] GuestCheckoutForm avec checkbox RGPD obligatoire
-  - [ ] PaymentIntegration (Stripe/PayPal)
-  - [ ] OrderConfirmation avec liens de téléchargement
-  - [ ] Email de confirmation avec mentions RGPD
-```
-
-### 2.3 Système de téléchargement (2 jours)
-```markdown
-- [ ] DownloadController
-  - [ ] Liens signés temporaires (24h max)
-  - [ ] Streaming sécurisé des fichiers audio
-  - [ ] Page de téléchargement pour les invités
-  - [ ] Logging des téléchargements pour audit RGPD
-```
-
-## 🔧 Phase 3 : Administration (1-2 semaines)
-
-### 3.1 Étendre l'auth existante (1 jour)
+### 2.1 Étendre l'auth existante (1 jour)
 ```markdown
 - [ ] Ajouter is_admin au User model existant
 - [ ] AdminMiddleware simple
 - [ ] Adapter le dashboard existant pour l'admin
 ```
 
-### 3.2 CRUD avec Livewire (4-5 jours)
+### 2.2 CRUD avec Livewire (4-5 jours)
 ```markdown
 - [ ] Products Management
   - [ ] Réutiliser les patterns des Settings pages
@@ -192,7 +145,7 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
   - [ ] Réutiliser les forms existants
 ```
 
-### 3.3 Dashboard Analytics (2 jours)
+### 2.3 Dashboard Analytics (2 jours)
 ```markdown
 - [ ] Adapter le dashboard existant
   - [ ] Stats cards (ventes, produits, visiteurs)
@@ -269,11 +222,6 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 - Portfolio avec SEO
 - Blog simple
 
-### Semaine 3-5 : E-commerce
-- Catalogue produits
-- Guest checkout
-- Système de paiement
-
 ### Semaine 6-7 : Administration
 - Dashboard admin
 - CRUD produits/commandes
@@ -298,7 +246,6 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 ### Workflow Git simplifié
 ```bash
 main
-├── develop
 └── feature/current-work  # Une seule feature branch active
 ```
 
@@ -341,9 +288,8 @@ main
 
 **Priorités** :
 1. Portfolio SEO → Visibilité
-2. Shop basique → Revenus
-3. Admin minimal → Gestion
-4. Améliorations → Itératif
+2. Admin minimal → Gestion
+3. Améliorations → Itératif
 
 ## 📈 Métriques de succès
 
@@ -356,9 +302,7 @@ main
 
 ### KPIs Business  
 - [ ] Temps de mise en ligne < 2 mois
-- [ ] Premier produit vendu < 1 semaine après launch
 - [ ] 10 projets portfolio publiés
-- [ ] 20 produits audio en catalogue
 
 ## 🔄 Évolutions futures (Post-MVP)
 
