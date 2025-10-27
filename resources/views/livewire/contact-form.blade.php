@@ -29,10 +29,10 @@
                     type="text"
                     wire:model="name"
                     id="name"
-                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-accent-dark ring-1 ring-portfolio-accent-dark/20 @enderror"
+                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('name')
-                    <p class="mt-2 text-sm text-portfolio-accent-dark flex items-start gap-1">
+                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span>⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -48,10 +48,10 @@
                     type="email"
                     wire:model="email"
                     id="email"
-                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-accent-dark ring-1 ring-portfolio-accent-dark/20 @enderror"
+                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('email')
-                    <p class="mt-2 text-sm text-portfolio-accent-dark flex items-start gap-1">
+                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span>⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -67,10 +67,10 @@
                     type="text"
                     wire:model="subject"
                     id="subject"
-                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('subject') border-portfolio-accent-dark ring-1 ring-portfolio-accent-dark/20 @enderror"
+                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('subject') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('subject')
-                    <p class="mt-2 text-sm text-portfolio-accent-dark flex items-start gap-1">
+                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span>⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -86,10 +86,10 @@
                     wire:model="message"
                     id="message"
                     rows="5"
-                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-accent-dark ring-1 ring-portfolio-accent-dark/20 @enderror"
+                    class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 ></textarea>
                 @error('message')
-                    <p class="mt-2 text-sm text-portfolio-accent-dark flex items-start gap-1">
+                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span>⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -101,14 +101,14 @@
                     type="checkbox"
                     wire:model="gdpr_consent"
                     id="gdpr_consent"
-                    class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-accent-dark ring-1 ring-portfolio-accent-dark/20 @enderror"
+                    class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 <label for="gdpr_consent" class="ml-3 text-sm text-portfolio-text/80">
                     I consent to the processing of my personal data in accordance with the privacy policy. *
                 </label>
             </div>
             @error('gdpr_consent')
-                <p class="mt-2 text-sm text-portfolio-accent-dark flex items-start gap-1">
+                <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                     <span>⚠</span>
                     <span>{{ $message }}</span>
                 </p>

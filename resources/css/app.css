@@ -29,6 +29,7 @@
     --color-portfolio-dark: #3A3A3A;
     --color-portfolio-light: #F8F6F3;
     --color-portfolio-text: #2D2D2D;
+    --color-portfolio-error: #C55951;      /* Rouge terracotta pour erreurs */
 
     /* Garder les couleurs zinc existantes pour la compatibilité */
     --color-zinc-50: #fafafa;
