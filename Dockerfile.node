@@ -18,6 +18,9 @@ WORKDIR /var/www/html
 # Stage for development
 FROM base AS development
 
+# Install su-exec for secure user switching
+RUN apk add --no-cache su-exec
+
 # Copy entrypoint script
 COPY docker/node/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -35,11 +38,10 @@ ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=true
 ENV WATCHPACK_POLLING=true
 
-# Switch to non-root user
-USER nodeapp
-
 # Expose Vite port
 EXPOSE 5173
+
+# Note: Container starts as root, entrypoint will switch to nodeapp after fixing permissions
 
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
