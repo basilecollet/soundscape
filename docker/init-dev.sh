@@ -65,7 +65,7 @@ docker-compose exec app php artisan migrate
 echo -e "${YELLOW}🌱 Seeding database...${NC}"
 docker-compose exec app php artisan db:seed
 
-# Install Node dependencies
+# Install Node dependencies (entrypoint handles permissions automatically)
 echo -e "${YELLOW}📦 Installing Node.js dependencies...${NC}"
 docker-compose exec node yarn install
 
