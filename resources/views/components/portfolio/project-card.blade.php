@@ -6,7 +6,7 @@
     'featuredImage' => null,
 ])
 
-<div class="group bg-portfolio-light rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-portfolio-accent/10">
+<a href="{{ route('projects.show', ['slug' => $slug]) }}" class="block group bg-portfolio-light rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-portfolio-accent/10">
     <!-- Image -->
     @if($featuredImage)
         <div class="aspect-video overflow-hidden bg-portfolio-secondary">
@@ -64,4 +64,4 @@
             </div>
         </div>
     </div>
-</div>
+</a>
