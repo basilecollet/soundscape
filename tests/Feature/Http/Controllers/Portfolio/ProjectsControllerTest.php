@@ -109,3 +109,104 @@ test('projects page shows empty state when no published projects', function () {
     $response->assertStatus(200)
         ->assertDontSee('Draft Project');
 });
+
+test('project details page can be accessed with valid slug', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('My Awesome Project')
+        ->withDescription('This is a **complete** description with markdown')
+        ->withAShortDescription('Short description')
+        ->withAProjectDate(Carbon::parse('2024-06-15'))
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['slug' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(200)
+        ->assertViewIs('portfolio.project-show');
+});
+
+test('project details page returns 404 for non-existent slug', function () {
+    // Act
+    $response = $this->get('/projects/non-existent-slug');
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page returns 404 for draft project', function () {
+    // Arrange: Create a draft project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Draft Project')
+        ->draft()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['slug' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page returns 404 for archived project', function () {
+    // Arrange: Create an archived project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Archived Project')
+        ->withDescription('This project is archived')
+        ->archived()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['slug' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page displays correct project information', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Complete Project')
+        ->withDescription('This is the **full description** of the project')
+        ->withAShortDescription('Short desc')
+        ->withAProjectDate(Carbon::parse('2024-06-15'))
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['slug' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(200)
+        ->assertSee('Complete Project')
+        ->assertSee('This is the **full description** of the project')
+        ->assertSee('Short desc')
+        ->assertSee('2024-06-15');
+});
+
+test('project details page has proper SEO meta tags', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('SEO Test Project')
+        ->withDescription('Project description for SEO')
+        ->withAShortDescription('Short SEO description')
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['slug' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(200)
+        ->assertSee('<meta name="description"', false)
+        ->assertSee('<meta property="og:title"', false)
+        ->assertSee('<meta property="og:description"', false)
+        ->assertSee('SEO Test Project', false);
+});

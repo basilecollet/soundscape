@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Portfolio;
 
-use App\Application\Portfolio\Queries\GetPublishedProjectBySlug\GetPublishedProjectBySlugHandler;
 use App\Application\Portfolio\Queries\GetPublishedProjects\GetPublishedProjectsHandler;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
@@ -12,8 +11,7 @@ use Illuminate\View\View;
 class ProjectsController extends Controller
 {
     public function __construct(
-        private readonly GetPublishedProjectsHandler $getPublishedProjectsHandler,
-        private readonly GetPublishedProjectBySlugHandler $getPublishedProjectBySlugHandler
+        private readonly GetPublishedProjectsHandler $getPublishedProjectsHandler
     ) {}
 
     public function index(): View
@@ -26,20 +24,6 @@ class ProjectsController extends Controller
                 'title' => 'Projects - Soundscape Audio',
                 'description' => 'Explore our portfolio of professional audio engineering projects including mixing, mastering, and sound design work.',
                 'keywords' => 'audio projects, portfolio, mixing projects, mastering projects, sound design work',
-            ],
-        ]);
-    }
-
-    public function show(string $slug): View
-    {
-        $project = $this->getPublishedProjectBySlugHandler->handle($slug);
-
-        return view('portfolio.project-show', [
-            'project' => $project,
-            'seo' => [
-                'title' => $project->title.' - Soundscape Audio',
-                'description' => $project->shortDescription ?? substr($project->description, 0, 160),
-                'keywords' => 'audio project, '.$project->title.', mixing, mastering, sound design',
             ],
         ]);
     }
