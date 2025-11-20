@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Application\Admin\Commands\PublishProject\PublishProjectHandler;
 use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Admin\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
@@ -19,7 +20,8 @@ test('can publish a draft project', function () {
     $project = Project::reconstitute(
         title: ProjectTitle::fromString('My Project'),
         slug: ProjectSlug::fromString('my-project'),
-        status: ProjectStatus::Draft
+        status: ProjectStatus::Draft,
+        description: ProjectDescription::fromString('Project description')
     );
 
     /** @phpstan-ignore method.notFound */
@@ -91,7 +93,8 @@ test('handler calls repository methods correctly', function () {
     $project = Project::reconstitute(
         title: ProjectTitle::fromString('Test Project'),
         slug: ProjectSlug::fromString('test-project'),
-        status: ProjectStatus::Draft
+        status: ProjectStatus::Draft,
+        description: ProjectDescription::fromString('Project description')
     );
 
     /** @phpstan-ignore method.notFound */
