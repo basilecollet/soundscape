@@ -67,7 +67,7 @@
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="max-w-4xl mx-auto">
-                <div class="prose prose-lg max-w-none text-portfolio-text/90">
+                <div class="prose prose-lg max-w-none text-justify text-portfolio-text/90">
                     {!! Str::markdown($project->description) !!}
                 </div>
             </div>
