@@ -1,77 +1,67 @@
+@php use Illuminate\Support\Carbon; @endphp
 @extends('layouts.portfolio')
 
 @section('content')
-    <!-- Breadcrumb Navigation -->
-    <section class="py-6 bg-white border-b border-portfolio-accent/10">
+    <!-- Hero Section: Project Info + Featured Image -->
+    <section
+            class="min-h-screen flex items-center pt-20 pb-12 bg-gradient-to-b from-portfolio-secondary via-portfolio-light to-portfolio-accent/10">
         <div class="container mx-auto px-6 lg:px-12">
-            <nav class="flex items-center gap-2 text-sm text-portfolio-text/60">
-                <a href="{{ route('home') }}" class="hover:text-portfolio-accent transition-colors duration-200">
-                    home
-                </a>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-                <a href="{{ route('projects') }}" class="hover:text-portfolio-accent transition-colors duration-200">
-                    projects
-                </a>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-                <span class="text-portfolio-accent font-medium">{{ $project->title }}</span>
-            </nav>
-        </div>
-    </section>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Content: Title, Date, Short Description -->
+                <div class="space-y-8">
+                    <!-- Title -->
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-portfolio-dark leading-tight">
+                        {{ $project->title }}
+                    </h1>
 
-    <!-- Project Header -->
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-6 lg:px-12">
-            <div class="max-w-4xl mx-auto space-y-6">
-                <!-- Title -->
-                <h1 class="text-4xl md:text-5xl font-bold text-portfolio-dark">
-                    {{ $project->title }}
-                </h1>
-
-                <!-- Meta information -->
-                <div class="flex flex-wrap items-center gap-4 text-sm text-portfolio-text/70">
+                    <!-- Date -->
                     @if($project->projectDate)
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 text-portfolio-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        <div class="flex items-center gap-2 text-portfolio-accent font-medium">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
                             <time datetime="{{ $project->projectDate }}">
-                                {{ \Carbon\Carbon::parse($project->projectDate)->format('F Y') }}
+                                {{ Carbon::parse($project->projectDate)->format('F Y') }}
                             </time>
                         </div>
                     @endif
+
+                    <!-- Short Description -->
+                    @if($project->shortDescription)
+                        <p class="text-base md:text-lg text-portfolio-text/70 leading-relaxed max-w-xl">
+                            {{ $project->shortDescription }}
+                        </p>
+                    @endif
                 </div>
 
-                <!-- Short Description -->
-                @if($project->shortDescription)
-                    <p class="text-xl text-portfolio-text/80 leading-relaxed">
-                        {{ $project->shortDescription }}
-                    </p>
-                @endif
+                <!-- Featured Image -->
+                <div class="flex justify-center lg:justify-end">
+                    @if($project->featuredImage)
+                        <div class="relative w-full">
+                            <div class="rounded-xl overflow-hidden shadow-2xl">
+                                <img
+                                        src="{{ $project->featuredImage->webUrl }}"
+                                        alt="{{ $project->featuredImage->alt ?? $project->title }}"
+                                        class="w-full h-auto"
+                                        loading="eager"
+                                >
+                            </div>
+                        </div>
+                    @else
+                        <!-- Placeholder when no featured image -->
+                        <div class="w-full aspect-video bg-gradient-to-br from-portfolio-accent/20 to-portfolio-accent/5 rounded-xl flex items-center justify-center">
+                            <svg class="w-24 h-24 text-portfolio-accent/30" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Featured Image -->
-    @if($project->featuredImage)
-        <section class="py-8 bg-portfolio-secondary">
-            <div class="container mx-auto px-6 lg:px-12">
-                <div class="max-w-5xl mx-auto">
-                    <div class="rounded-xl overflow-hidden shadow-2xl">
-                        <img
-                            src="{{ $project->featuredImage->webUrl }}"
-                            alt="{{ $project->featuredImage->alt ?? $project->title }}"
-                            class="w-full h-auto"
-                            loading="eager"
-                        >
-                    </div>
-                </div>
-            </div>
-        </section>
-    @endif
 
     <!-- Project Description -->
     <section class="py-16 bg-white">
@@ -103,10 +93,10 @@
                             <div class="group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                                 <div class="aspect-video overflow-hidden bg-portfolio-secondary">
                                     <img
-                                        src="{{ $image->thumbUrl }}"
-                                        alt="{{ $image->alt ?? $project->title }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        loading="lazy"
+                                            src="{{ $image->thumbUrl }}"
+                                            alt="{{ $image->alt ?? $project->title }}"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            loading="lazy"
                                     >
                                 </div>
                             </div>
