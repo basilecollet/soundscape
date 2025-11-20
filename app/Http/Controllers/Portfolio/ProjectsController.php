@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Portfolio;
 use App\Application\Portfolio\Queries\GetPublishedProjectBySlug\GetPublishedProjectBySlugHandler;
 use App\Application\Portfolio\Queries\GetPublishedProjects\GetPublishedProjectsHandler;
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use Illuminate\View\View;
 
 class ProjectsController extends Controller
@@ -30,16 +31,16 @@ class ProjectsController extends Controller
         ]);
     }
 
-    public function show(string $slug): View
+    public function show(Project $project): View
     {
-        $project = $this->getPublishedProjectBySlugHandler->handle($slug);
+        $projectData = $this->getPublishedProjectBySlugHandler->handle($project->slug);
 
         return view('portfolio.project-show', [
-            'project' => $project,
+            'project' => $projectData,
             'seo' => [
-                'title' => $project->title.' - Soundscape Audio',
-                'description' => $project->shortDescription ?? substr($project->description, 0, 160),
-                'keywords' => 'audio project, '.$project->title.', mixing, mastering, sound design',
+                'title' => $projectData->title.' - Soundscape Audio',
+                'description' => $projectData->shortDescription ?? substr($projectData->description, 0, 160),
+                'keywords' => 'audio project, '.$projectData->title.', mixing, mastering, sound design',
             ],
         ]);
     }

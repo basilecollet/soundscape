@@ -14,7 +14,7 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
 Route::get('/contact', ContactController::class)->name('contact');
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
-Route::get('/projects/{slug}', [ProjectsController::class, 'show'])->name('projects.show');
+Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
 
 /** Admin routes */
 Route::redirect('dashboard', 'admin')

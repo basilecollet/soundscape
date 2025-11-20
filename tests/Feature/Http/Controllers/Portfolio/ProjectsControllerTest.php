@@ -122,7 +122,7 @@ test('project details page can be accessed with valid slug', function () {
 
     // Act
     $response = $this
-        ->get(route('projects.show', ['slug' => $project->slug]));
+        ->get(route('projects.show', ['project' => $project->slug]));
 
     // Assert
     $response->assertStatus(200)
@@ -146,7 +146,7 @@ test('project details page returns 404 for draft project', function () {
 
     // Act
     $response = $this
-        ->get(route('projects.show', ['slug' => $project->slug]));
+        ->get(route('projects.show', ['project' => $project->slug]));
 
     // Assert
     $response->assertStatus(404);
@@ -162,7 +162,7 @@ test('project details page returns 404 for archived project', function () {
 
     // Act
     $response = $this
-        ->get(route('projects.show', ['slug' => $project->slug]));
+        ->get(route('projects.show', ['project' => $project->slug]));
 
     // Assert
     $response->assertStatus(404);
@@ -180,7 +180,7 @@ test('project details page displays correct project information', function () {
 
     // Act
     $response = $this
-        ->get(route('projects.show', ['slug' => $project->slug]));
+        ->get(route('projects.show', ['project' => $project->slug]));
 
     // Assert: Markdown **text** is converted to <strong>text</strong>
     $response->assertStatus(200)
@@ -203,7 +203,7 @@ test('project details page has proper SEO meta tags', function () {
 
     // Act
     $response = $this
-        ->get(route('projects.show', ['slug' => $project->slug]));
+        ->get(route('projects.show', ['project' => $project->slug]));
 
     // Assert
     $response->assertStatus(200)
