@@ -144,6 +144,10 @@ final class Project
             throw ProjectCannotBePublishedException::invalidStatus($this->status);
         }
 
+        if ($this->description === null) {
+            throw ProjectCannotBePublishedException::missingDescription();
+        }
+
         $this->status = ProjectStatus::Published;
     }
 

@@ -52,7 +52,7 @@ test('new project has draft status by default', function () {
 });
 
 test('project can be published', function () {
-    $project = Project::new('My Project');
+    $project = Project::new('My Project', 'Project description');
 
     $project->publish();
 
@@ -283,7 +283,7 @@ test('can reset optional fields to null on update', function () {
 });
 
 test('updating project does not change status', function () {
-    $project = Project::new('My Project');
+    $project = Project::new('My Project', 'Project description');
     $project->publish();
 
     $project->update(
@@ -313,6 +313,18 @@ test('cannot publish an archived project', function () {
 
     expect(fn () => $project->publish())
         ->toThrow(ProjectCannotBePublishedException::class);
+});
+
+test('cannot publish a project without description', function () {
+    $project = Project::reconstitute(
+        title: ProjectTitle::fromString('Draft Project'),
+        slug: ProjectSlug::fromString('draft-project'),
+        status: ProjectStatus::Draft,
+        description: null, // No description
+    );
+
+    expect(fn () => $project->publish())
+        ->toThrow(ProjectCannotBePublishedException::class, 'Cannot publish project without description');
 });
 
 test('cannot archive a draft project', function () {

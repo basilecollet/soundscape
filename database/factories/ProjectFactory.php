@@ -80,6 +80,8 @@ class ProjectFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => ProjectStatus::Published->value,
+            // Published projects require a description
+            'description' => $attributes['description'] ?? fake()->paragraphs(3, true),
         ]);
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Application\Portfolio\DTOs\PublishedProjectData;
 use App\Application\Portfolio\Queries\GetPublishedProjects\GetPublishedProjectsHandler;
 use App\Domain\Portfolio\Entities\PublishedProject;
+use App\Domain\Portfolio\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Portfolio\Repositories\ProjectRepository;
@@ -13,11 +14,13 @@ test('can get all published projects', function () {
     // Arrange
     $project1 = PublishedProject::reconstitute(
         title: ProjectTitle::fromString('Project 1'),
-        slug: ProjectSlug::fromString('project-1')
+        slug: ProjectSlug::fromString('project-1'),
+        description: ProjectDescription::fromString('Project 1 description')
     );
     $project2 = PublishedProject::reconstitute(
         title: ProjectTitle::fromString('Project 2'),
-        slug: ProjectSlug::fromString('project-2')
+        slug: ProjectSlug::fromString('project-2'),
+        description: ProjectDescription::fromString('Project 2 description')
     );
 
     /** @var ProjectRepository&\Mockery\MockInterface $repository */
@@ -60,7 +63,8 @@ test('transforms all project fields correctly', function () {
     // Arrange
     $project = PublishedProject::reconstitute(
         title: ProjectTitle::fromString('Complete Project'),
-        slug: ProjectSlug::fromString('complete-project')
+        slug: ProjectSlug::fromString('complete-project'),
+        description: ProjectDescription::fromString('Project description')
     );
 
     /** @var ProjectRepository&\Mockery\MockInterface $repository */

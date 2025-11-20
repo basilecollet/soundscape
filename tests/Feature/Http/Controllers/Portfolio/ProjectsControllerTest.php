@@ -109,3 +109,127 @@ test('projects page shows empty state when no published projects', function () {
     $response->assertStatus(200)
         ->assertDontSee('Draft Project');
 });
+
+test('project details page can be accessed with valid slug', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('My Awesome Project')
+        ->withDescription('This is a **complete** description with markdown')
+        ->withAShortDescription('Short description')
+        ->withAProjectDate(Carbon::parse('2024-06-15'))
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(200)
+        ->assertViewIs('portfolio.project-show');
+});
+
+test('project details page returns 404 for non-existent slug', function () {
+    // Act
+    $response = $this->get('/projects/non-existent-slug');
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page returns 404 for draft project', function () {
+    // Arrange: Create a draft project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Draft Project')
+        ->draft()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page returns 404 for archived project', function () {
+    // Arrange: Create an archived project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Archived Project')
+        ->withDescription('This project is archived')
+        ->archived()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(404);
+});
+
+test('project details page displays correct project information', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Complete Project')
+        ->withDescription('This is the **full description** of the project')
+        ->withAShortDescription('Short desc')
+        ->withAProjectDate(Carbon::parse('2024-06-15'))
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert: Markdown **text** is converted to <strong>text</strong>
+    $response->assertStatus(200)
+        ->assertSee('Complete Project')
+        ->assertSee('This is the', false) // Check for text content
+        ->assertSee('full description', false) // Markdown bold is now <strong>
+        ->assertSee('of the project')
+        ->assertSee('Short desc')
+        ->assertSee('2024-06-15');
+});
+
+test('project details page has proper SEO meta tags', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('SEO Test Project')
+        ->withDescription('Project description for SEO')
+        ->withAShortDescription('Short SEO description')
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert
+    $response->assertStatus(200)
+        ->assertSee('<meta name="description"', false)
+        ->assertSee('<meta property="og:title"', false)
+        ->assertSee('<meta property="og:description"', false)
+        ->assertSee('SEO Test Project', false);
+});
+
+test('project details page escapes HTML in markdown description', function () {
+    // Arrange: Create project with potentially malicious HTML in description
+    $project = ProjectDatabase::factory()
+        ->withATitle('XSS Test Project')
+        ->withDescription('**Bold text** and <script>alert("xss")</script> and <img src=x onerror=alert(1)>')
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert: HTML should be escaped, not executed
+    $response->assertStatus(200)
+        ->assertDontSee('<script>alert("xss")</script>', false) // Raw script should not appear
+        ->assertDontSee('<img src=x onerror=alert(1)>', false) // Raw img tag should not appear
+        ->assertSee('&lt;script&gt;', false) // Should be escaped
+        ->assertSee('Bold text') // Markdown should still work
+        ->assertSee('<strong>Bold text</strong>', false); // Markdown rendered correctly
+});

@@ -8,9 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('can publish a draft project', function () {
-    $project = Project::factory()->create([
-        'status' => 'draft',
-    ]);
+    $project = Project::factory()
+        ->withDescription('Project description')
+        ->create([
+            'status' => 'draft',
+        ]);
 
     $response = $this
         ->actingAs(User::factory()->create())
@@ -21,9 +23,11 @@ test('can publish a draft project', function () {
 });
 
 test('publishing a draft project updates status in database', function () {
-    $project = Project::factory()->create([
-        'status' => 'draft',
-    ]);
+    $project = Project::factory()
+        ->withDescription('Project description')
+        ->create([
+            'status' => 'draft',
+        ]);
 
     $this
         ->actingAs(User::factory()->create())

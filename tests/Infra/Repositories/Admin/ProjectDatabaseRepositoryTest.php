@@ -72,7 +72,7 @@ test('stores project with draft status by default', function () {
 });
 
 test('stores project with published status', function () {
-    $project = Project::new('My Project');
+    $project = Project::new('My Project', 'Project description');
     $project->publish();
     $repository = new ProjectDatabaseRepository;
 
