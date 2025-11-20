@@ -68,7 +68,10 @@
         <div class="container mx-auto px-6 lg:px-12">
             <div class="max-w-4xl mx-auto">
                 <div class="prose prose-lg max-w-none text-justify text-portfolio-text/90">
-                    {!! Str::markdown($project->description) !!}
+                    {!! Str::markdown($project->description, [
+                        'html_input' => 'escape',
+                        'allow_unsafe_links' => false,
+                    ]) !!}
                 </div>
             </div>
         </div>

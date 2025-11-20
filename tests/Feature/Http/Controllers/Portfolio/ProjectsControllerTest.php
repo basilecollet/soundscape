@@ -212,3 +212,24 @@ test('project details page has proper SEO meta tags', function () {
         ->assertSee('<meta property="og:description"', false)
         ->assertSee('SEO Test Project', false);
 });
+
+test('project details page escapes HTML in markdown description', function () {
+    // Arrange: Create project with potentially malicious HTML in description
+    $project = ProjectDatabase::factory()
+        ->withATitle('XSS Test Project')
+        ->withDescription('**Bold text** and <script>alert("xss")</script> and <img src=x onerror=alert(1)>')
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this
+        ->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert: HTML should be escaped, not executed
+    $response->assertStatus(200)
+        ->assertDontSee('<script>alert("xss")</script>', false) // Raw script should not appear
+        ->assertDontSee('<img src=x onerror=alert(1)>', false) // Raw img tag should not appear
+        ->assertSee('&lt;script&gt;', false) // Should be escaped
+        ->assertSee('Bold text') // Markdown should still work
+        ->assertSee('<strong>Bold text</strong>', false); // Markdown rendered correctly
+});
