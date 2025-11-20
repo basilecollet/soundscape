@@ -7,6 +7,7 @@ namespace App\Infra\Repositories\Portfolio;
 use App\Domain\Portfolio\Entities\Image;
 use App\Domain\Portfolio\Entities\PublishedProject;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectDate;
+use App\Domain\Portfolio\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectShortDescription;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectSlug;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectTitle;
@@ -31,6 +32,16 @@ class ProjectDatabaseRepository implements ProjectRepository
             });
     }
 
+    public function getBySlug(string $slug): PublishedProject
+    {
+        $projectDatabase = ProjectDatabase::where('slug', $slug)
+            ->where('status', 'published')
+            ->with('media')
+            ->firstOrFail();
+
+        return $this->reconstitutePublishedProject($projectDatabase);
+    }
+
     private function reconstitutePublishedProject(ProjectDatabase $projectDatabase): PublishedProject
     {
         // Handle project_date
@@ -52,12 +63,28 @@ class ProjectDatabaseRepository implements ProjectRepository
             );
         }
 
+        // Transform gallery media to Image entities
+        $galleryImages = [];
+        $galleryMedia = $projectDatabase->getMedia('gallery');
+        foreach ($galleryMedia as $media) {
+            $galleryImages[] = new Image(
+                webUrl: $media->getUrl('web'),
+                thumbUrl: $media->getUrl('thumb'),
+                alt: $media->getCustomProperty('alt')
+            );
+        }
+
+        // Description is required for PublishedProject
+        $description = ProjectDescription::fromString($projectDatabase->description ?? '');
+
         return PublishedProject::reconstitute(
             title: ProjectTitle::fromString($projectDatabase->title),
             slug: ProjectSlug::fromString($projectDatabase->slug),
+            description: $description,
             shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
             projectDate: $projectDate,
             featuredImage: $featuredImage,
+            galleryImages: $galleryImages,
         );
     }
 }

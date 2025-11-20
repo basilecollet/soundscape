@@ -15,4 +15,9 @@ interface ProjectRepository
      * @return Collection<int, PublishedProject>
      */
     public function getAll(): Collection;
+
+    /**
+     * Get a published project by its slug
+     */
+    public function getBySlug(string $slug): PublishedProject;
 }

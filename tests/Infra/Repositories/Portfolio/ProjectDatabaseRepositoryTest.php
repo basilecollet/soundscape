@@ -125,3 +125,64 @@ test('transforms database model to PublishedProject entity correctly', function 
     assert($projectDate !== null); // Type narrowing for PHPStan
     expect($projectDate->format('Y-m-d'))->toBe('2024-06-15');
 });
+
+test('can get a published project by slug', function () {
+    // Arrange
+    $project = ProjectDatabase::factory()
+        ->withATitle('My Awesome Project')
+        ->withDescription('This is a **complete** description')
+        ->withAProjectDate(Carbon::parse('2024-06-15'))
+        ->published()
+        ->create();
+
+    // Act
+    $repository = new ProjectDatabaseRepository;
+    $result = $repository->getBySlug('my-awesome-project');
+
+    // Assert
+    expect($result)->toBeInstanceOf(PublishedProject::class)
+        ->and((string) $result->getTitle())->toBe('My Awesome Project')
+        ->and((string) $result->getSlug())->toBe('my-awesome-project')
+        ->and((string) $result->getDescription())->toBe('This is a **complete** description');
+});
+
+test('getBySlug includes description correctly', function () {
+    // Arrange
+    $project = ProjectDatabase::factory()
+        ->withATitle('Complete Project')
+        ->withDescription('Full project description')
+        ->withAShortDescription('Short desc')
+        ->published()
+        ->create();
+
+    // Act
+    $repository = new ProjectDatabaseRepository;
+    $result = $repository->getBySlug('complete-project');
+
+    // Assert
+    expect($result->getGalleryImages())->toBeEmpty()
+        ->and((string) $result->getDescription())->toBe('Full project description')
+        ->and((string) $result->getShortDescription())->toBe('Short desc');
+});
+
+test('getBySlug throws exception when project not found', function () {
+    // Act & Assert
+    $repository = new ProjectDatabaseRepository;
+
+    expect(fn () => $repository->getBySlug('non-existent-slug'))
+        ->toThrow(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+});
+
+test('getBySlug throws exception when project is not published', function () {
+    // Arrange: Create a draft project
+    ProjectDatabase::factory()
+        ->withATitle('Draft Project')
+        ->draft()
+        ->create();
+
+    // Act & Assert
+    $repository = new ProjectDatabaseRepository;
+
+    expect(fn () => $repository->getBySlug('draft-project'))
+        ->toThrow(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+});
