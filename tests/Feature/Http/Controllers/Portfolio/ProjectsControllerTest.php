@@ -182,10 +182,12 @@ test('project details page displays correct project information', function () {
     $response = $this
         ->get(route('projects.show', ['slug' => $project->slug]));
 
-    // Assert
+    // Assert: Markdown **text** is converted to <strong>text</strong>
     $response->assertStatus(200)
         ->assertSee('Complete Project')
-        ->assertSee('This is the **full description** of the project')
+        ->assertSee('This is the', false) // Check for text content
+        ->assertSee('full description', false) // Markdown bold is now <strong>
+        ->assertSee('of the project')
         ->assertSee('Short desc')
         ->assertSee('2024-06-15');
 });

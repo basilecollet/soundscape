@@ -67,10 +67,8 @@
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="max-w-4xl mx-auto">
-                <div class="prose prose-lg prose-portfolio max-w-none">
-                    <div class="text-portfolio-text/90 leading-relaxed space-y-4">
-                        {!! nl2br(e($project->description)) !!}
-                    </div>
+                <div class="prose prose-lg max-w-none text-portfolio-text/90">
+                    {!! Str::markdown($project->description) !!}
                 </div>
             </div>
         </div>
