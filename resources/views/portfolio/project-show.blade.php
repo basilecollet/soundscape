@@ -4,7 +4,7 @@
 @section('content')
     <!-- Hero Section: Project Info + Featured Image -->
     <section
-            class="min-h-screen flex items-center pt-20 pb-12 bg-gradient-to-b from-portfolio-secondary via-portfolio-light to-portfolio-accent/10">
+        class="min-h-screen flex items-center pt-20 pb-12 bg-gradient-to-b from-portfolio-secondary via-portfolio-light to-portfolio-accent/10">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Content: Title, Date, Short Description -->
@@ -41,16 +41,17 @@
                         <div class="relative w-full">
                             <div class="rounded-xl overflow-hidden shadow-2xl">
                                 <img
-                                        src="{{ $project->featuredImage->webUrl }}"
-                                        alt="{{ $project->featuredImage->alt ?? $project->title }}"
-                                        class="w-full h-auto"
-                                        loading="eager"
+                                    src="{{ $project->featuredImage->webUrl }}"
+                                    alt="{{ $project->featuredImage->alt ?? $project->title }}"
+                                    class="w-full h-auto"
+                                    loading="eager"
                                 >
                             </div>
                         </div>
                     @else
                         <!-- Placeholder when no featured image -->
-                        <div class="w-full aspect-video bg-gradient-to-br from-portfolio-accent/20 to-portfolio-accent/5 rounded-xl flex items-center justify-center">
+                        <div
+                            class="w-full aspect-video bg-gradient-to-br from-portfolio-accent/20 to-portfolio-accent/5 rounded-xl flex items-center justify-center">
                             <svg class="w-24 h-24 text-portfolio-accent/30" fill="none" stroke="currentColor"
                                  viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -74,8 +75,30 @@
                     ]) !!}
                 </div>
             </div>
-        </div>
+    </div>
     </section>
+
+    <!-- Project Audio - Bandcamp Player -->
+    @if($project->bandcampPlayer)
+        <section class="py-16 bg-portfolio-secondary">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Section Title -->
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-portfolio-dark">
+                            Listen
+                        </h2>
+                        <div class="w-16 h-1 bg-portfolio-accent mx-auto mt-4"></div>
+                    </div>
+
+                    <!-- Bandcamp Player -->
+                    <div class="flex justify-center">
+                        {!! $project->bandcampPlayer !!}
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 
     <!-- Gallery -->
     @if(count($project->galleryImages) > 0)
@@ -91,13 +114,14 @@
                     <!-- Gallery Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($project->galleryImages as $image)
-                            <div class="group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                            <div
+                                class="group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                                 <div class="aspect-video overflow-hidden bg-portfolio-secondary">
                                     <img
-                                            src="{{ $image->thumbUrl }}"
-                                            alt="{{ $image->alt ?? $project->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                            loading="lazy"
+                                        src="{{ $image->thumbUrl }}"
+                                        alt="{{ $image->alt ?? $project->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
                                     >
                                 </div>
                             </div>

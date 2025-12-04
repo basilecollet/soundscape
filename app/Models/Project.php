@@ -22,6 +22,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $short_description
  * @property string|null $client_name
  * @property Carbon|null $project_date
+ * @property string|null $bandcamp_player
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -44,6 +45,7 @@ class Project extends Model implements HasMedia
         'short_description',
         'client_name',
         'project_date',
+        'bandcamp_player',
     ];
 
     protected $hidden = [

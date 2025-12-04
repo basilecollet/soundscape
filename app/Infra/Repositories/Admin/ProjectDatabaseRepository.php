@@ -7,6 +7,7 @@ namespace App\Infra\Repositories\Admin;
 use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Entities\Image;
 use App\Domain\Admin\Entities\Project;
+use App\Domain\Admin\Entities\ValueObjects\BandcampPlayer;
 use App\Domain\Admin\Entities\ValueObjects\ClientName;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
@@ -122,6 +123,7 @@ class ProjectDatabaseRepository implements ProjectRepository
             shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
             clientName: $projectDatabase->client_name !== null ? ClientName::fromString($projectDatabase->client_name) : null,
             projectDate: $projectDate,
+            bandcampPlayer: $projectDatabase->bandcamp_player !== null ? BandcampPlayer::fromString($projectDatabase->bandcamp_player) : null,
             featuredImage: $featuredImage,
             galleryImages: $galleryImages,
         );

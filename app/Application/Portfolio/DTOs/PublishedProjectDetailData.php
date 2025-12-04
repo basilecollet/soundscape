@@ -17,6 +17,7 @@ final readonly class PublishedProjectDetailData
         public string $description,
         public ?string $shortDescription = null,
         public ?string $projectDate = null,
+        public ?string $bandcampPlayer = null,
         public ?ImageData $featuredImage = null,
         public array $galleryImages = [],
     ) {}
@@ -39,6 +40,7 @@ final readonly class PublishedProjectDetailData
             description: (string) $project->getDescription(),
             shortDescription: $project->getShortDescription() !== null ? (string) $project->getShortDescription() : null,
             projectDate: $project->getProjectDate()?->format('Y-m-d'),
+            bandcampPlayer: $project->getBandcampPlayer()?->toString(),
             featuredImage: $featuredImage,
             galleryImages: $galleryImages,
         );
@@ -55,6 +57,7 @@ final readonly class PublishedProjectDetailData
             'description' => $this->description,
             'short_description' => $this->shortDescription,
             'project_date' => $this->projectDate,
+            'bandcamp_player' => $this->bandcampPlayer,
             'featured_image' => $this->featuredImage?->toArray(),
             'gallery_images' => array_map(fn ($image) => $image->toArray(), $this->galleryImages),
         ];

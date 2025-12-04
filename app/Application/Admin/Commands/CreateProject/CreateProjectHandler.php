@@ -24,6 +24,7 @@ final readonly class CreateProjectHandler
             shortDescription: $data->shortDescription,
             clientName: $data->clientName,
             projectDate: $data->projectDate,
+            bandcampPlayer: $data->bandcampPlayer,
         );
 
         $existingProject = $this->repository->findBySlug($project->getSlug());

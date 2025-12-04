@@ -6,6 +6,7 @@ namespace App\Infra\Repositories\Portfolio;
 
 use App\Domain\Portfolio\Entities\Image;
 use App\Domain\Portfolio\Entities\PublishedProject;
+use App\Domain\Portfolio\Entities\ValueObjects\BandcampPlayer;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectDate;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectShortDescription;
@@ -83,6 +84,7 @@ class ProjectDatabaseRepository implements ProjectRepository
             description: $description,
             shortDescription: $projectDatabase->short_description !== null ? ProjectShortDescription::fromString($projectDatabase->short_description) : null,
             projectDate: $projectDate,
+            bandcampPlayer: $projectDatabase->bandcamp_player !== null ? BandcampPlayer::fromString($projectDatabase->bandcamp_player) : null,
             featuredImage: $featuredImage,
             galleryImages: $galleryImages,
         );

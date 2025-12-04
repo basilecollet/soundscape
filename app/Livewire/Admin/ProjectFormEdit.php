@@ -35,6 +35,8 @@ class ProjectFormEdit extends Component
 
     public string $projectDate = '';
 
+    public string $bandcampPlayer = '';
+
     /** @var UploadedFile|null */
     public $featuredImage = null;
 
@@ -51,6 +53,7 @@ class ProjectFormEdit extends Component
         $this->projectDate = $this->project->project_date instanceof Carbon
             ? $this->project->project_date->format('Y-m-d')
             : '';
+        $this->bandcampPlayer = $this->project->bandcamp_player ?? '';
     }
 
     /**
@@ -66,6 +69,7 @@ class ProjectFormEdit extends Component
             'shortDescription' => ['nullable', 'string', 'max:500'],
             'clientName' => ['nullable', 'string', 'max:255'],
             'projectDate' => ['nullable', 'date'],
+            'bandcampPlayer' => ['nullable', 'string', 'max:10000'],
             ...$mediaRequest->rules(),
         ];
     }
@@ -195,6 +199,7 @@ class ProjectFormEdit extends Component
             shortDescription: $this->shortDescription !== '' ? $this->shortDescription : null,
             clientName: $this->clientName !== '' ? $this->clientName : null,
             projectDate: $this->projectDate !== '' ? $this->projectDate : null,
+            bandcampPlayer: $this->bandcampPlayer !== '' ? $this->bandcampPlayer : null,
         );
 
         $handler->handle($data);
