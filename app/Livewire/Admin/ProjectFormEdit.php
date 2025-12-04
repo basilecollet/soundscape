@@ -8,6 +8,7 @@ use App\Application\Admin\Commands\UpdateProject\UpdateProjectHandler;
 use App\Application\Admin\DTOs\UpdateProjectData;
 use App\Http\Requests\Admin\UpdateProjectMediaRequest;
 use App\Models\Project;
+use App\Rules\ValidBandcampEmbed;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -57,7 +58,7 @@ class ProjectFormEdit extends Component
     }
 
     /**
-     * @return array<string, array<int, string>>
+     * @return array<string, array<int, string|ValidBandcampEmbed>>
      */
     public function rules(): array
     {
@@ -69,7 +70,7 @@ class ProjectFormEdit extends Component
             'shortDescription' => ['nullable', 'string', 'max:500'],
             'clientName' => ['nullable', 'string', 'max:255'],
             'projectDate' => ['nullable', 'date'],
-            'bandcampPlayer' => ['nullable', 'string', 'max:10000'],
+            'bandcampPlayer' => ['nullable', 'string', 'max:10000', new ValidBandcampEmbed],
             ...$mediaRequest->rules(),
         ];
     }
