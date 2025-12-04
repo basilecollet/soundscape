@@ -234,6 +234,7 @@ class ProjectFormEdit extends Component
         try {
             $handler->handle($this->project->slug);
             $this->project->refresh();
+            $this->dispatch('close-archive-modal');
             session()->flash('success', 'Project archived successfully.');
         } catch (ProjectCannotBeArchivedException $e) {
             session()->flash('error', $e->getMessage());
@@ -245,6 +246,7 @@ class ProjectFormEdit extends Component
         try {
             $handler->handle($this->project->slug);
             $this->project->refresh();
+            $this->dispatch('close-draft-modal');
             session()->flash('success', 'Project set back to draft successfully.');
         } catch (ProjectCannotBeDraftedException $e) {
             session()->flash('error', $e->getMessage());

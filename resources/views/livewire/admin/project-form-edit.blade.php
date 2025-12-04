@@ -387,33 +387,19 @@
                         @endif
 
                         @if($this->canArchive)
-                            <flux:button
-                                variant="danger"
-                                type="button"
-                                wire:click="archive"
-                                wire:confirm="Are you sure you want to archive this project? It will no longer be visible on your public portfolio."
-                                wire:loading.attr="disabled"
-                                wire:target="archive"
-                                class="w-full sm:w-auto"
-                            >
-                                <span wire:loading.remove wire:target="archive">Archive Project</span>
-                                <span wire:loading wire:target="archive">Archiving...</span>
-                            </flux:button>
+                            <flux:modal.trigger name="confirm-archive">
+                                <flux:button variant="danger" type="button" class="w-full sm:w-auto">
+                                    Archive Project
+                                </flux:button>
+                            </flux:modal.trigger>
                         @endif
 
                         @if($this->canDraft)
-                            <flux:button
-                                variant="ghost"
-                                type="button"
-                                wire:click="draft"
-                                wire:confirm="Set this project back to draft status? It will no longer be publicly visible if currently published."
-                                wire:loading.attr="disabled"
-                                wire:target="draft"
-                                class="w-full sm:w-auto"
-                            >
-                                <span wire:loading.remove wire:target="draft">Set to Draft</span>
-                                <span wire:loading wire:target="draft">Setting to Draft...</span>
-                            </flux:button>
+                            <flux:modal.trigger name="confirm-draft">
+                                <flux:button variant="ghost" type="button" class="w-full sm:w-auto">
+                                    Set to Draft
+                                </flux:button>
+                            </flux:modal.trigger>
                         @endif
                     </div>
                 </div>
@@ -453,4 +439,69 @@
             </div>
         </form>
     </flux:modal>
+
+    <!-- Archive Confirmation Modal -->
+    @if($this->canArchive)
+        <flux:modal name="confirm-archive" class="max-w-lg" x-on:close-archive-modal.window="$dispatch('modal-close', { name: 'confirm-archive' })">
+            <form wire:submit="archive" class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Archive this project?</flux:heading>
+                    <flux:subheading>
+                        This project will no longer be visible on your public portfolio.
+                        You can restore it later by setting it back to draft or published status.
+                    </flux:subheading>
+                </div>
+
+                <div class="flex justify-end space-x-2 rtl:space-x-reverse">
+                    <flux:modal.close>
+                        <flux:button variant="ghost" type="button">Cancel</flux:button>
+                    </flux:modal.close>
+                    <flux:button
+                        variant="danger"
+                        type="submit"
+                        wire:loading.attr="disabled"
+                        wire:target="archive"
+                    >
+                        <span wire:loading.remove wire:target="archive">Archive Project</span>
+                        <span wire:loading wire:target="archive">Archiving...</span>
+                    </flux:button>
+                </div>
+            </form>
+        </flux:modal>
+    @endif
+
+    <!-- Draft Confirmation Modal -->
+    @if($this->canDraft)
+        <flux:modal name="confirm-draft" class="max-w-lg" x-on:close-draft-modal.window="$dispatch('modal-close', { name: 'confirm-draft' })">
+            <form wire:submit="draft" class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Set back to draft?</flux:heading>
+                    <flux:subheading>
+                        This project will be set back to draft status and will no longer be publicly visible
+                        @if($project->status->isPublished())
+                            on your portfolio.
+                        @else
+                            if it was archived.
+                        @endif
+                        You can publish it again at any time.
+                    </flux:subheading>
+                </div>
+
+                <div class="flex justify-end space-x-2 rtl:space-x-reverse">
+                    <flux:modal.close>
+                        <flux:button variant="ghost" type="button">Cancel</flux:button>
+                    </flux:modal.close>
+                    <flux:button
+                        variant="primary"
+                        type="submit"
+                        wire:loading.attr="disabled"
+                        wire:target="draft"
+                    >
+                        <span wire:loading.remove wire:target="draft">Set to Draft</span>
+                        <span wire:loading wire:target="draft">Setting to Draft...</span>
+                    </flux:button>
+                </div>
+            </form>
+        </flux:modal>
+    @endif
 </div>
