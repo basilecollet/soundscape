@@ -422,7 +422,7 @@
     </form>
 
     <!-- Publish Confirmation Modal -->
-    <flux:modal name="confirm-publish" class="max-w-lg">
+    <flux:modal name="confirm-publish" class="max-w-lg" x-on:close-publish-modal.window="$dispatch('modal-close', { name: 'confirm-publish' })">
         <form wire:submit="publish" class="space-y-6">
             <div>
                 <flux:heading size="lg">Publish this project?</flux:heading>

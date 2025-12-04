@@ -222,7 +222,7 @@ class ProjectFormEdit extends Component
         try {
             $handler->handle($this->project->slug);
             $this->project->refresh();
-            $this->js("\$dispatch('modal-close', { name: 'confirm-publish' })");
+            $this->dispatch('close-publish-modal');
             session()->flash('success', 'Project published successfully.');
         } catch (ProjectCannotBePublishedException $e) {
             session()->flash('error', $e->getMessage());
