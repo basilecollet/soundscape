@@ -16,7 +16,8 @@ test('can create UpdateProjectData with slug and title only', function () {
         ->and($data->description)->toBeNull()
         ->and($data->shortDescription)->toBeNull()
         ->and($data->clientName)->toBeNull()
-        ->and($data->projectDate)->toBeNull();
+        ->and($data->projectDate)->toBeNull()
+        ->and($data->bandcampPlayer)->toBeNull();
 });
 
 test('can create UpdateProjectData with all fields', function () {
@@ -27,6 +28,7 @@ test('can create UpdateProjectData with all fields', function () {
         'short_description' => 'New short',
         'client_name' => 'New Client Inc',
         'project_date' => '2024-12-25',
+        'bandcamp_player' => '<iframe src="https://bandcamp.com/test"></iframe>',
     ]);
 
     expect($data)->toBeInstanceOf(UpdateProjectData::class)
@@ -35,7 +37,8 @@ test('can create UpdateProjectData with all fields', function () {
         ->and($data->description)->toBe('New description')
         ->and($data->shortDescription)->toBe('New short')
         ->and($data->clientName)->toBe('New Client Inc')
-        ->and($data->projectDate)->toBe('2024-12-25');
+        ->and($data->projectDate)->toBe('2024-12-25')
+        ->and($data->bandcampPlayer)->toBe('<iframe src="https://bandcamp.com/test"></iframe>');
 });
 
 test('can create UpdateProjectData with partial fields', function () {
@@ -50,7 +53,8 @@ test('can create UpdateProjectData with partial fields', function () {
         ->and($data->description)->toBe('Updated description')
         ->and($data->shortDescription)->toBeNull()
         ->and($data->clientName)->toBeNull()
-        ->and($data->projectDate)->toBeNull();
+        ->and($data->projectDate)->toBeNull()
+        ->and($data->bandcampPlayer)->toBeNull();
 });
 
 test('can convert UpdateProjectData to array', function () {
@@ -61,6 +65,7 @@ test('can convert UpdateProjectData to array', function () {
         'short_description' => 'New short',
         'client_name' => 'New Client',
         'project_date' => '2024-12-25',
+        'bandcamp_player' => '<iframe src="https://bandcamp.com/test"></iframe>',
     ]);
 
     $array = $data->toArray();
@@ -72,6 +77,7 @@ test('can convert UpdateProjectData to array', function () {
         'short_description' => 'New short',
         'client_name' => 'New Client',
         'project_date' => '2024-12-25',
+        'bandcamp_player' => '<iframe src="https://bandcamp.com/test"></iframe>',
     ]);
 });
 
@@ -90,5 +96,6 @@ test('toArray includes null values', function () {
         'short_description' => null,
         'client_name' => null,
         'project_date' => null,
+        'bandcamp_player' => null,
     ]);
 });

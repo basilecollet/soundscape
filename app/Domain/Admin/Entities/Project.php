@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Admin\Entities;
 
 use App\Domain\Admin\Entities\Enums\ProjectStatus;
+use App\Domain\Admin\Entities\ValueObjects\BandcampPlayer;
 use App\Domain\Admin\Entities\ValueObjects\ClientName;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
@@ -29,6 +30,7 @@ final class Project
         private ?ProjectShortDescription $shortDescription = null,
         private ?ClientName $clientName = null,
         private ?ProjectDate $projectDate = null,
+        private ?BandcampPlayer $bandcampPlayer = null,
         private ?Image $featuredImage = null,
         private array $galleryImages = [],
     ) {}
@@ -39,6 +41,7 @@ final class Project
         ?string $shortDescription = null,
         ?string $clientName = null,
         ?string $projectDate = null,
+        ?string $bandcampPlayer = null,
     ): self {
         $projectTitle = ProjectTitle::fromString($title);
         $normalizer = new StringNormalizationService;
@@ -48,6 +51,7 @@ final class Project
         $shortDescription = $normalizer->normalizeToNullable($shortDescription);
         $clientName = $normalizer->normalizeToNullable($clientName);
         $projectDate = $normalizer->normalizeToNullable($projectDate);
+        $bandcampPlayer = $normalizer->normalizeToNullable($bandcampPlayer);
 
         return new self(
             $projectTitle,
@@ -57,6 +61,7 @@ final class Project
             $shortDescription !== null ? ProjectShortDescription::fromString($shortDescription) : null,
             $clientName !== null ? ClientName::fromString($clientName) : null,
             $projectDate !== null ? ProjectDate::fromString($projectDate) : null,
+            $bandcampPlayer !== null ? BandcampPlayer::fromString($bandcampPlayer) : null,
         );
     }
 
@@ -71,6 +76,7 @@ final class Project
         ?ProjectShortDescription $shortDescription = null,
         ?ClientName $clientName = null,
         ?ProjectDate $projectDate = null,
+        ?BandcampPlayer $bandcampPlayer = null,
         ?Image $featuredImage = null,
         array $galleryImages = [],
     ): self {
@@ -82,6 +88,7 @@ final class Project
             $shortDescription,
             $clientName,
             $projectDate,
+            $bandcampPlayer,
             $featuredImage,
             $galleryImages,
         );
@@ -120,6 +127,11 @@ final class Project
     public function getProjectDate(): ?ProjectDate
     {
         return $this->projectDate;
+    }
+
+    public function getBandcampPlayer(): ?BandcampPlayer
+    {
+        return $this->bandcampPlayer;
     }
 
     public function getFeaturedImage(): ?Image
@@ -181,12 +193,14 @@ final class Project
         ?ProjectShortDescription $shortDescription = null,
         ?ClientName $clientName = null,
         ?ProjectDate $projectDate = null,
+        ?BandcampPlayer $bandcampPlayer = null,
     ): void {
         $this->title = $title;
         $this->description = $description;
         $this->shortDescription = $shortDescription;
         $this->clientName = $clientName;
         $this->projectDate = $projectDate;
+        $this->bandcampPlayer = $bandcampPlayer;
     }
 
     /**
@@ -202,6 +216,7 @@ final class Project
             'short_description' => $this->shortDescription !== null ? (string) $this->shortDescription : null,
             'client_name' => $this->clientName !== null ? (string) $this->clientName : null,
             'project_date' => $this->projectDate?->format('Y-m-d'),
+            'bandcamp_player' => $this->bandcampPlayer?->toString(),
         ];
     }
 }

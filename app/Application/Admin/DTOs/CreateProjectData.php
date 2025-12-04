@@ -12,6 +12,7 @@ final readonly class CreateProjectData
         public ?string $shortDescription = null,
         public ?string $clientName = null,
         public ?string $projectDate = null,
+        public ?string $bandcampPlayer = null,
     ) {}
 
     /**
@@ -21,6 +22,7 @@ final readonly class CreateProjectData
      *     short_description?: string,
      *     client_name?: string,
      *     project_date?: string,
+     *     bandcamp_player?: string,
      * } $data
      */
     public static function fromArray(array $data): self
@@ -31,6 +33,7 @@ final readonly class CreateProjectData
             shortDescription: $data['short_description'] ?? null,
             clientName: $data['client_name'] ?? null,
             projectDate: $data['project_date'] ?? null,
+            bandcampPlayer: $data['bandcamp_player'] ?? null,
         );
     }
 
@@ -41,6 +44,7 @@ final readonly class CreateProjectData
      *     short_description?: string|null,
      *     client_name?: string|null,
      *     project_date?: string|null,
+     *     bandcamp_player?: string|null,
      * }
      */
     public function toArray(): array
@@ -51,6 +55,7 @@ final readonly class CreateProjectData
             'short_description' => $this->shortDescription,
             'client_name' => $this->clientName,
             'project_date' => $this->projectDate,
+            'bandcamp_player' => $this->bandcampPlayer,
         ];
     }
 }

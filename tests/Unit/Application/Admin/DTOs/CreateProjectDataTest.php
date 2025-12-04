@@ -65,6 +65,7 @@ test('can convert CreateProjectData to array', function () {
         'short_description' => 'Short desc',
         'client_name' => 'Acme Corporation',
         'project_date' => '2024-06-15',
+        'bandcamp_player' => null,
     ]);
 });
 
@@ -81,5 +82,6 @@ test('toArray includes null values', function () {
         'short_description' => null,
         'client_name' => null,
         'project_date' => null,
+        'bandcamp_player' => null,
     ]);
 });

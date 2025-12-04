@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Admin\Commands\UpdateProject;
 
 use App\Application\Admin\DTOs\UpdateProjectData;
+use App\Domain\Admin\Entities\ValueObjects\BandcampPlayer;
 use App\Domain\Admin\Entities\ValueObjects\ClientName;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDate;
 use App\Domain\Admin\Entities\ValueObjects\ProjectDescription;
@@ -32,6 +33,7 @@ final readonly class UpdateProjectHandler
         $shortDescription = $this->normalizer->normalizeToNullable($data->shortDescription);
         $clientName = $this->normalizer->normalizeToNullable($data->clientName);
         $projectDate = $this->normalizer->normalizeToNullable($data->projectDate);
+        $bandcampPlayer = $this->normalizer->normalizeToNullable($data->bandcampPlayer);
 
         $project->update(
             title: ProjectTitle::fromString($data->title),
@@ -39,6 +41,7 @@ final readonly class UpdateProjectHandler
             shortDescription: $shortDescription !== null ? ProjectShortDescription::fromString($shortDescription) : null,
             clientName: $clientName !== null ? ClientName::fromString($clientName) : null,
             projectDate: $projectDate !== null ? ProjectDate::fromString($projectDate) : null,
+            bandcampPlayer: $bandcampPlayer !== null ? BandcampPlayer::fromString($bandcampPlayer) : null,
         );
 
         $this->repository->store($project);

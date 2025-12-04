@@ -95,6 +95,26 @@
                     </div>
                 </div>
 
+                <!-- Bandcamp Player -->
+                <div>
+                    <flux:label for="bandcampPlayer">
+                        Bandcamp Player
+                    </flux:label>
+                    <flux:textarea
+                        wire:model="bandcampPlayer"
+                        id="bandcampPlayer"
+                        placeholder="Paste your Bandcamp embed iframe code here"
+                        rows="4"
+                        class="mt-1 font-mono text-sm"
+                    />
+                    @error('bandcampPlayer')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                    <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400">
+                        Copy the entire iframe embed code from Bandcamp (starting with &lt;iframe...)
+                    </p>
+                </div>
+
                 <!-- Media Management Section -->
                 <div class="border-t border-gray-200 dark:border-zinc-700 pt-6">
                     <h3 class="text-base font-semibold text-gray-900 dark:text-zinc-100 mb-4">Project Images</h3>

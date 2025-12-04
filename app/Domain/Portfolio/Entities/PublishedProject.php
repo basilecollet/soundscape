@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Portfolio\Entities;
 
+use App\Domain\Portfolio\Entities\ValueObjects\BandcampPlayer;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectDate;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectDescription;
 use App\Domain\Portfolio\Entities\ValueObjects\ProjectShortDescription;
@@ -21,6 +22,7 @@ final readonly class PublishedProject
         private ProjectDescription $description,
         private ?ProjectShortDescription $shortDescription = null,
         private ?ProjectDate $projectDate = null,
+        private ?BandcampPlayer $bandcampPlayer = null,
         private ?Image $featuredImage = null,
         private array $galleryImages = [],
     ) {}
@@ -34,6 +36,7 @@ final readonly class PublishedProject
         ProjectDescription $description,
         ?ProjectShortDescription $shortDescription = null,
         ?ProjectDate $projectDate = null,
+        ?BandcampPlayer $bandcampPlayer = null,
         ?Image $featuredImage = null,
         array $galleryImages = [],
     ): self {
@@ -43,6 +46,7 @@ final readonly class PublishedProject
             description: $description,
             shortDescription: $shortDescription,
             projectDate: $projectDate,
+            bandcampPlayer: $bandcampPlayer,
             featuredImage: $featuredImage,
             galleryImages: $galleryImages,
         );
@@ -73,6 +77,11 @@ final readonly class PublishedProject
         return $this->projectDate;
     }
 
+    public function getBandcampPlayer(): ?BandcampPlayer
+    {
+        return $this->bandcampPlayer;
+    }
+
     public function getFeaturedImage(): ?Image
     {
         return $this->featuredImage;
@@ -97,6 +106,7 @@ final readonly class PublishedProject
             'description' => (string) $this->description,
             'short_description' => $this->shortDescription !== null ? (string) $this->shortDescription : null,
             'project_date' => $this->projectDate?->format('Y-m-d'),
+            'bandcamp_player' => $this->bandcampPlayer?->toString(),
         ];
     }
 }
