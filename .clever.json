@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_6e740d2c-df36-41f4-9ea7-a1c12b33ef4a",
+      "org_id": "orga_d89a7cfd-a27e-4085-bae4-82620f48aaa6",
+      "deploy_url": "https://github.com/basilecollet/soundscape.git",
+      "git_ssh_url": "https://github.com/basilecollet/soundscape.git",
+      "name": "Soundscape",
+      "alias": "Soundscape"
+    }
+  ]
+}
