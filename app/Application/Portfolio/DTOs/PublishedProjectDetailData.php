@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Portfolio\DTOs;
 
 use App\Domain\Portfolio\Entities\PublishedProject;
+use App\Domain\Portfolio\Entities\ValueObjects\BandcampPlayer;
 
 final readonly class PublishedProjectDetailData
 {
@@ -17,7 +18,7 @@ final readonly class PublishedProjectDetailData
         public string $description,
         public ?string $shortDescription = null,
         public ?string $projectDate = null,
-        public ?string $bandcampPlayer = null,
+        public ?BandcampPlayer $bandcampPlayer = null,
         public ?ImageData $featuredImage = null,
         public array $galleryImages = [],
     ) {}
@@ -40,7 +41,7 @@ final readonly class PublishedProjectDetailData
             description: (string) $project->getDescription(),
             shortDescription: $project->getShortDescription() !== null ? (string) $project->getShortDescription() : null,
             projectDate: $project->getProjectDate()?->format('Y-m-d'),
-            bandcampPlayer: $project->getBandcampPlayer()?->toString(),
+            bandcampPlayer: $project->getBandcampPlayer(),
             featuredImage: $featuredImage,
             galleryImages: $galleryImages,
         );
@@ -57,7 +58,7 @@ final readonly class PublishedProjectDetailData
             'description' => $this->description,
             'short_description' => $this->shortDescription,
             'project_date' => $this->projectDate,
-            'bandcamp_player' => $this->bandcampPlayer,
+            'bandcamp_player' => $this->bandcampPlayer?->toString(),
             'featured_image' => $this->featuredImage?->toArray(),
             'gallery_images' => array_map(fn ($image) => $image->toArray(), $this->galleryImages),
         ];

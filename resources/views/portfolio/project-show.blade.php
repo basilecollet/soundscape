@@ -75,7 +75,7 @@
                     ]) !!}
                 </div>
             </div>
-    </div>
+        </div>
     </section>
 
     <!-- Project Audio - Bandcamp Player -->
@@ -97,8 +97,6 @@
                             style="border: 0; width: 350px; height: 654px;"
                             src="{{ $project->bandcampPlayer->getSrc() }}"
                             seamless
-                            allow="autoplay"
-                            loading="lazy"
                         >
                             @if($project->bandcampPlayer->getFallbackUrl() && $project->bandcampPlayer->getFallbackText())
                                 <a href="{{ $project->bandcampPlayer->getFallbackUrl() }}">
