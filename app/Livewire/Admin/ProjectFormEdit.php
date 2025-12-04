@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin;
 
+use App\Application\Admin\Commands\ArchiveProject\ArchiveProjectHandler;
+use App\Application\Admin\Commands\DraftProject\DraftProjectHandler;
+use App\Application\Admin\Commands\PublishProject\PublishProjectHandler;
 use App\Application\Admin\Commands\UpdateProject\UpdateProjectHandler;
 use App\Application\Admin\DTOs\UpdateProjectData;
+use App\Domain\Admin\Entities\Enums\ProjectStatus;
+use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
+use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
 use App\Http\Requests\Admin\UpdateProjectMediaRequest;
 use App\Models\Project;
 use App\Rules\ValidBandcampEmbed;
@@ -208,6 +215,54 @@ class ProjectFormEdit extends Component
         session()->flash('success', 'Project updated successfully.');
 
         $this->redirect(route('admin.project.edit', ['project' => $this->project->slug]), navigate: true);
+    }
+
+    public function publish(PublishProjectHandler $handler): void
+    {
+        try {
+            $handler->handle($this->project->slug);
+            $this->project->refresh();
+            session()->flash('success', 'Project published successfully.');
+        } catch (ProjectCannotBePublishedException $e) {
+            session()->flash('error', $e->getMessage());
+        }
+    }
+
+    public function archive(ArchiveProjectHandler $handler): void
+    {
+        try {
+            $handler->handle($this->project->slug);
+            $this->project->refresh();
+            session()->flash('success', 'Project archived successfully.');
+        } catch (ProjectCannotBeArchivedException $e) {
+            session()->flash('error', $e->getMessage());
+        }
+    }
+
+    public function draft(DraftProjectHandler $handler): void
+    {
+        try {
+            $handler->handle($this->project->slug);
+            $this->project->refresh();
+            session()->flash('success', 'Project set back to draft successfully.');
+        } catch (ProjectCannotBeDraftedException $e) {
+            session()->flash('error', $e->getMessage());
+        }
+    }
+
+    public function getCanPublishProperty(): bool
+    {
+        return $this->project->status === ProjectStatus::Draft;
+    }
+
+    public function getCanArchiveProperty(): bool
+    {
+        return $this->project->status === ProjectStatus::Published;
+    }
+
+    public function getCanDraftProperty(): bool
+    {
+        return $this->project->status !== ProjectStatus::Draft;
     }
 
     public function render(): View

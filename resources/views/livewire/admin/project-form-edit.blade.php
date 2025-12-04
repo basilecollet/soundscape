@@ -1,10 +1,69 @@
 <div class="max-w-4xl mx-auto">
+    <!-- Flash Messages -->
+    @if (session()->has('success'))
+        <div class="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <p class="text-sm font-medium text-green-800 dark:text-green-300">{{ session('success') }}</p>
+            </div>
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 text-red-600 dark:text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <p class="text-sm font-medium text-red-800 dark:text-red-300">{{ session('error') }}</p>
+            </div>
+        </div>
+    @endif
+
     <form wire:submit="save">
         <div class="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-700 overflow-hidden">
             <!-- Form Header -->
-            <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">Project Information</h2>
-                <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">Update the project details below.</p>
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 flex items-start justify-between">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">Project Information</h2>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">Update the project details below.</p>
+                </div>
+
+                <!-- Status Badge - Desktop (top right) -->
+                <div class="ml-4 mt-0.5 hidden md:block flex-shrink-0">
+                    @if($project->status->isDraft())
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                            Draft
+                        </span>
+                    @elseif($project->status->isPublished())
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                            Published
+                        </span>
+                    @elseif($project->status->isArchived())
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+                            Archived
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Status Badge - Mobile (below title) -->
+            <div class="md:hidden px-6 pt-4 pb-2">
+                @if($project->status->isDraft())
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                        Draft
+                    </span>
+                @elseif($project->status->isPublished())
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                        Published
+                    </span>
+                @elseif($project->status->isArchived())
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+                        Archived
+                    </span>
+                @endif
             </div>
 
             <!-- Form Body -->
@@ -278,24 +337,120 @@
             </div>
 
             <!-- Form Footer -->
-            <div class="px-6 py-4 bg-gray-50 dark:bg-zinc-800 border-t border-gray-200 dark:border-zinc-700 flex justify-end space-x-3">
-                <flux:button
-                    variant="ghost"
-                    href="{{ route('admin.project.index') }}"
-                    type="button"
-                >
-                    Cancel
-                </flux:button>
+            <div class="px-6 py-4 bg-gray-50 dark:bg-zinc-800 border-t border-gray-200 dark:border-zinc-700">
+                <!-- Save/Cancel Actions -->
+                <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mb-6 pb-6 border-b border-gray-200 dark:border-zinc-700">
+                    <flux:button
+                        variant="ghost"
+                        href="{{ route('admin.project.index') }}"
+                        type="button"
+                        class="w-full sm:w-auto"
+                    >
+                        Cancel
+                    </flux:button>
 
+                    <flux:button
+                        variant="primary"
+                        type="submit"
+                        wire:loading.attr="disabled"
+                        class="w-full sm:w-auto"
+                    >
+                        <span wire:loading.remove wire:target="save">Update Project</span>
+                        <span wire:loading wire:target="save">Updating...</span>
+                    </flux:button>
+                </div>
+
+                <!-- Status Management Section -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-2">Project Status</h3>
+                    <p class="text-xs text-gray-600 dark:text-zinc-400 mb-4">
+                        Change the publication status of this project.
+                        @if($project->status->isDraft())
+                            Publishing requires a description to be set.
+                        @endif
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+                        @if($this->canPublish)
+                            <flux:modal.trigger name="confirm-publish">
+                                <flux:button
+                                    variant="primary"
+                                    type="button"
+                                    wire:loading.attr="disabled"
+                                    wire:target="publish"
+                                    class="w-full sm:w-auto"
+                                >
+                                    <span wire:loading.remove wire:target="publish">Publish Project</span>
+                                    <span wire:loading wire:target="publish">Publishing...</span>
+                                </flux:button>
+                            </flux:modal.trigger>
+                        @endif
+
+                        @if($this->canArchive)
+                            <flux:button
+                                variant="danger"
+                                type="button"
+                                wire:click="archive"
+                                wire:confirm="Are you sure you want to archive this project? It will no longer be visible on your public portfolio."
+                                wire:loading.attr="disabled"
+                                wire:target="archive"
+                                class="w-full sm:w-auto"
+                            >
+                                <span wire:loading.remove wire:target="archive">Archive Project</span>
+                                <span wire:loading wire:target="archive">Archiving...</span>
+                            </flux:button>
+                        @endif
+
+                        @if($this->canDraft)
+                            <flux:button
+                                variant="ghost"
+                                type="button"
+                                wire:click="draft"
+                                wire:confirm="Set this project back to draft status? It will no longer be publicly visible if currently published."
+                                wire:loading.attr="disabled"
+                                wire:target="draft"
+                                class="w-full sm:w-auto"
+                            >
+                                <span wire:loading.remove wire:target="draft">Set to Draft</span>
+                                <span wire:loading wire:target="draft">Setting to Draft...</span>
+                            </flux:button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Publish Confirmation Modal -->
+    <flux:modal name="confirm-publish" class="max-w-lg">
+        <form wire:submit="publish" class="space-y-6">
+            <div>
+                <flux:heading size="lg">Publish this project?</flux:heading>
+                <flux:subheading>
+                    This project will become visible on your public portfolio.
+                    Make sure all content is finalized and a description is provided.
+                    @if(empty($description))
+                        <strong class="block mt-2 text-red-600 dark:text-red-400">
+                            ⚠️ Warning: No description is currently set. Publishing will fail without a description.
+                        </strong>
+                    @endif
+                </flux:subheading>
+            </div>
+
+            <div class="flex justify-end space-x-2 rtl:space-x-reverse">
+                <flux:modal.close>
+                    <flux:button variant="ghost" type="button">Cancel</flux:button>
+                </flux:modal.close>
                 <flux:button
                     variant="primary"
                     type="submit"
                     wire:loading.attr="disabled"
+                    wire:target="publish"
                 >
-                    <span wire:loading.remove wire:target="save">Update Project</span>
-                    <span wire:loading wire:target="save">Updating...</span>
+                    <span wire:loading.remove wire:target="publish">Publish Project</span>
+                    <span wire:loading wire:target="publish">Publishing...</span>
                 </flux:button>
             </div>
-        </div>
-    </form>
+        </form>
+    </flux:modal>
 </div>
