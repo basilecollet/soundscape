@@ -79,7 +79,7 @@
     </section>
 
     <!-- Project Audio - Bandcamp Player -->
-    @if($project->bandcampPlayer)
+    @if($project->bandcampPlayer && $project->bandcampPlayer->getSrc())
         <section class="py-16 bg-portfolio-secondary">
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="max-w-4xl mx-auto">
@@ -91,9 +91,21 @@
                         <div class="w-16 h-1 bg-portfolio-accent mx-auto mt-4"></div>
                     </div>
 
-                    <!-- Bandcamp Player -->
+                    <!-- Bandcamp Player - Secure rendering -->
                     <div class="flex justify-center">
-                        {!! $project->bandcampPlayer !!}
+                        <iframe
+                            style="border: 0; width: 350px; height: 654px;"
+                            src="{{ $project->bandcampPlayer->getSrc() }}"
+                            seamless
+                            allow="autoplay"
+                            loading="lazy"
+                        >
+                            @if($project->bandcampPlayer->getFallbackUrl() && $project->bandcampPlayer->getFallbackText())
+                                <a href="{{ $project->bandcampPlayer->getFallbackUrl() }}">
+                                    {{ $project->bandcampPlayer->getFallbackText() }}
+                                </a>
+                            @endif
+                        </iframe>
                     </div>
                 </div>
             </div>
