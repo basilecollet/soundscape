@@ -190,21 +190,21 @@ describe('Status Badge Display', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Draft]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Draft');
+            ->assertSee(__('ui.status.draft'));
     });
 
     test('displays published badge for published projects', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Published]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Published');
+            ->assertSee(__('ui.status.published'));
     });
 
     test('displays archived badge for archived projects', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Archived]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Archived');
+            ->assertSee(__('ui.status.archived'));
     });
 });
 
