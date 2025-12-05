@@ -7,6 +7,7 @@ namespace App\Domain\Portfolio\Exceptions;
 final class InvalidProjectShortDescriptionException extends \DomainException
 {
     private ?int $length = null;
+
     private ?int $maxLength = null;
 
     public static function empty(): self

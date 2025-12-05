@@ -7,6 +7,7 @@ namespace App\Domain\Portfolio\Exceptions;
 final class InvalidImageException extends \DomainException
 {
     private ?string $urlType = null;
+
     private ?string $url = null;
 
     public static function emptyUrl(string $urlType): self

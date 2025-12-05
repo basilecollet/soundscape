@@ -7,6 +7,7 @@ namespace App\Domain\Admin\Exceptions;
 final class InvalidBandcampPlayerException extends \DomainException
 {
     private ?int $length = null;
+
     private ?int $maxLength = null;
 
     public static function notIframe(): self
