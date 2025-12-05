@@ -136,6 +136,7 @@ class ProjectFormEdit extends Component
                 ->toMediaCollection('featured');
 
             $this->featuredImage = null;
+            $this->project->refresh();
             $this->dispatch('featured-image-uploaded');
             session()->flash('success', 'Featured image uploaded and optimized successfully.');
         } catch (FileIsTooBig) {
@@ -167,6 +168,7 @@ class ProjectFormEdit extends Component
             }
 
             $this->galleryImages = [];
+            $this->project->refresh();
             $this->dispatch('gallery-images-uploaded');
             session()->flash('success', 'Gallery images uploaded and optimized successfully.');
         } catch (FileIsTooBig) {
@@ -183,6 +185,7 @@ class ProjectFormEdit extends Component
         $media = $this->project->getFirstMedia('featured');
         if ($media) {
             $media->delete();
+            $this->project->refresh();
             session()->flash('success', 'Featured image deleted successfully.');
         }
     }
@@ -192,6 +195,7 @@ class ProjectFormEdit extends Component
         $media = $this->project->getMedia('gallery')->firstWhere('id', $mediaId);
         if ($media) {
             $media->delete();
+            $this->project->refresh();
             session()->flash('success', 'Gallery image deleted successfully.');
         }
     }
