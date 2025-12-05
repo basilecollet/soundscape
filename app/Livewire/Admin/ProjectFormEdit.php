@@ -253,16 +253,31 @@ class ProjectFormEdit extends Component
         }
     }
 
+    /**
+     * Determine if the project can be published.
+     *
+     * Only draft projects can be published.
+     */
     public function getCanPublishProperty(): bool
     {
         return $this->project->status === ProjectStatus::Draft;
     }
 
+    /**
+     * Determine if the project can be archived.
+     *
+     * Only published projects can be archived.
+     */
     public function getCanArchiveProperty(): bool
     {
         return $this->project->status === ProjectStatus::Published;
     }
 
+    /**
+     * Determine if the project can be set back to draft.
+     *
+     * Both published and archived projects can be set back to draft.
+     */
     public function getCanDraftProperty(): bool
     {
         return $this->project->status !== ProjectStatus::Draft;
