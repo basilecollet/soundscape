@@ -7,7 +7,12 @@
     'actionVariant' => 'primary',
 ])
 
-<flux:modal name="{{ $name }}" class="max-w-lg">
+@php
+    $closeEvent = "close-{$action}-modal";
+@endphp
+
+<div x-on:{{ $closeEvent }}.window="$dispatch('modal-close', { name: '{{ $name }}' })">
+    <flux:modal name="{{ $name }}" class="max-w-lg">
     <form wire:submit="{{ $action }}" class="space-y-6">
         <div>
             <flux:heading size="lg">{{ $title }}</flux:heading>
@@ -32,4 +37,5 @@
             </flux:button>
         </div>
     </form>
-</flux:modal>
+    </flux:modal>
+</div>
