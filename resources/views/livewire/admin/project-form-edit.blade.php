@@ -9,8 +9,8 @@
                     </svg>
                     <p class="text-sm font-medium text-green-800 dark:text-green-300">{{ session('success') }}</p>
                 </div>
-                <button @click="show = false" type="button" class="ml-4 text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button @click="show = false" type="button" class="ml-4 text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors" aria-label="Dismiss success message">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -27,8 +27,8 @@
                     </svg>
                     <p class="text-sm font-medium text-red-800 dark:text-red-300">{{ session('error') }}</p>
                 </div>
-                <button @click="show = false" type="button" class="ml-4 text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button @click="show = false" type="button" class="ml-4 text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors" aria-label="Dismiss error message">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -213,8 +213,9 @@
                                     wire:click="deleteFeaturedImage"
                                     wire:confirm="Are you sure you want to delete this image?"
                                     class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-2 transition-colors"
+                                    aria-label="Delete featured image"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
@@ -290,8 +291,9 @@
                                             wire:click="deleteGalleryImage({{ $media->id }})"
                                             wire:confirm="Are you sure you want to delete this image?"
                                             class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            aria-label="Delete gallery image"
                                         >
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
