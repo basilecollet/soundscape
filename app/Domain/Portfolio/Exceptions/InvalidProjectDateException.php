@@ -6,10 +6,20 @@ namespace App\Domain\Portfolio\Exceptions;
 
 final class InvalidProjectDateException extends \DomainException
 {
+    private string $date;
+
     public static function invalidFormat(string $date): self
     {
-        return new self(
-            sprintf('Invalid date format: "%s". Expected a valid date string.', $date)
+        $instance = new self(
+            sprintf('Technical: Invalid date format: "%s". Expected a valid date string.', $date)
         );
+        $instance->date = $date;
+
+        return $instance;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
     }
 }

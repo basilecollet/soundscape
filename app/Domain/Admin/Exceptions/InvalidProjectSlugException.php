@@ -6,13 +6,23 @@ namespace App\Domain\Admin\Exceptions;
 
 final class InvalidProjectSlugException extends \DomainException
 {
+    private string $slug;
+
     public static function invalidFormat(string $slug): self
     {
-        return new self(
+        $instance = new self(
             sprintf(
-                "Invalid slug format: '%s'. Slug must contain only lowercase letters, numbers, and hyphens.",
+                "Technical: Invalid slug format: '%s'. Slug must contain only lowercase letters, numbers, and hyphens.",
                 $slug
             )
         );
+        $instance->slug = $slug;
+
+        return $instance;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 }
