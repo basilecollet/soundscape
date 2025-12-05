@@ -299,7 +299,7 @@
                 <!-- Save/Cancel Actions -->
                 <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mb-6 pb-6 border-b border-gray-200 dark:border-zinc-700">
                     <flux:button
-                        variant="ghost"
+                        variant="filled"
                         href="{{ route('admin.project.index') }}"
                         type="button"
                         class="w-full sm:w-auto"
@@ -354,7 +354,7 @@
 
                         @if($this->canDraft)
                             <flux:modal.trigger name="confirm-draft">
-                                <flux:button variant="ghost" type="button" class="w-full sm:w-auto">
+                                <flux:button variant="filled" type="button" class="w-full sm:w-auto">
                                     Set to Draft
                                 </flux:button>
                             </flux:modal.trigger>
