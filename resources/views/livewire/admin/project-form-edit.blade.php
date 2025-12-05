@@ -1,40 +1,6 @@
 <div class="max-w-4xl mx-auto">
     <!-- Flash Messages -->
-    @if (session()->has('success'))
-        <div x-data="{ show: true }" x-show="show" x-transition class="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p class="text-sm font-medium text-green-800 dark:text-green-300">{{ session('success') }}</p>
-                </div>
-                <button @click="show = false" type="button" class="ml-4 text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors" aria-label="Dismiss success message">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    @endif
-
-    @if (session()->has('error'))
-        <div x-data="{ show: true }" x-show="show" x-transition class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 text-red-600 dark:text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    <p class="text-sm font-medium text-red-800 dark:text-red-300">{{ session('error') }}</p>
-                </div>
-                <button @click="show = false" type="button" class="ml-4 text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors" aria-label="Dismiss error message">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    @endif
+    <x-flash-message />
 
     <form wire:submit="save">
         <div class="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-700 overflow-hidden">
@@ -47,37 +13,13 @@
 
                 <!-- Status Badge - Desktop (top right) -->
                 <div class="ml-4 mt-0.5 hidden md:block flex-shrink-0">
-                    @if($project->status->isDraft())
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                            Draft
-                        </span>
-                    @elseif($project->status->isPublished())
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                            Published
-                        </span>
-                    @elseif($project->status->isArchived())
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
-                            Archived
-                        </span>
-                    @endif
+                    <x-admin.status-badge :status="$project->status" />
                 </div>
             </div>
 
             <!-- Status Badge - Mobile (below title) -->
             <div class="md:hidden px-6 pt-4 pb-2">
-                @if($project->status->isDraft())
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                        Draft
-                    </span>
-                @elseif($project->status->isPublished())
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                        Published
-                    </span>
-                @elseif($project->status->isArchived())
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
-                        Archived
-                    </span>
-                @endif
+                <x-admin.status-badge :status="$project->status" />
             </div>
 
             <!-- Form Body -->
@@ -424,100 +366,49 @@
     </form>
 
     <!-- Publish Confirmation Modal -->
-    <flux:modal name="confirm-publish" class="max-w-lg" x-on:close-publish-modal.window="$dispatch('modal-close', { name: 'confirm-publish' })">
-        <form wire:submit="publish" class="space-y-6">
-            <div>
-                <flux:heading size="lg">Publish this project?</flux:heading>
-                <flux:subheading>
-                    This project will become visible on your public portfolio.
-                    Make sure all content is finalized and a description is provided.
-                    @if(empty($description))
-                        <strong class="block mt-2 text-red-600 dark:text-red-400">
-                            ⚠️ Warning: No description is currently set. Publishing will fail without a description.
-                        </strong>
-                    @endif
-                </flux:subheading>
-            </div>
-
-            <div class="flex justify-end space-x-2 rtl:space-x-reverse">
-                <flux:modal.close>
-                    <flux:button variant="ghost" type="button">Cancel</flux:button>
-                </flux:modal.close>
-                <flux:button
-                    variant="primary"
-                    type="submit"
-                    wire:loading.attr="disabled"
-                    wire:target="publish"
-                >
-                    <span wire:loading.remove wire:target="publish">Publish Project</span>
-                    <span wire:loading wire:target="publish">Publishing...</span>
-                </flux:button>
-            </div>
-        </form>
-    </flux:modal>
+    <x-admin.confirmation-modal
+        name="confirm-publish"
+        title="Publish this project?"
+        message="This project will become visible on your public portfolio. Make sure all content is finalized and a description is provided."
+        action="publish"
+        actionText="Publish Project"
+        actionVariant="primary"
+    >
+        @if(empty($description))
+            <strong class="block mt-2 text-red-600 dark:text-red-400">
+                ⚠️ Warning: No description is currently set. Publishing will fail without a description.
+            </strong>
+        @endif
+    </x-admin.confirmation-modal>
 
     <!-- Archive Confirmation Modal -->
     @if($this->canArchive)
-        <flux:modal name="confirm-archive" class="max-w-lg" x-on:close-archive-modal.window="$dispatch('modal-close', { name: 'confirm-archive' })">
-            <form wire:submit="archive" class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Archive this project?</flux:heading>
-                    <flux:subheading>
-                        This project will no longer be visible on your public portfolio.
-                        You can restore it later by setting it back to draft or published status.
-                    </flux:subheading>
-                </div>
-
-                <div class="flex justify-end space-x-2 rtl:space-x-reverse">
-                    <flux:modal.close>
-                        <flux:button variant="ghost" type="button">Cancel</flux:button>
-                    </flux:modal.close>
-                    <flux:button
-                        variant="danger"
-                        type="submit"
-                        wire:loading.attr="disabled"
-                        wire:target="archive"
-                    >
-                        <span wire:loading.remove wire:target="archive">Archive Project</span>
-                        <span wire:loading wire:target="archive">Archiving...</span>
-                    </flux:button>
-                </div>
-            </form>
-        </flux:modal>
+        <x-admin.confirmation-modal
+            name="confirm-archive"
+            title="Archive this project?"
+            message="This project will no longer be visible on your public portfolio. You can restore it later by setting it back to draft or published status."
+            action="archive"
+            actionText="Archive Project"
+            actionVariant="danger"
+        />
     @endif
 
     <!-- Draft Confirmation Modal -->
     @if($this->canDraft)
-        <flux:modal name="confirm-draft" class="max-w-lg" x-on:close-draft-modal.window="$dispatch('modal-close', { name: 'confirm-draft' })">
-            <form wire:submit="draft" class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Set back to draft?</flux:heading>
-                    <flux:subheading>
-                        This project will be set back to draft status and will no longer be publicly visible
-                        @if($project->status->isPublished())
-                            on your portfolio.
-                        @else
-                            if it was archived.
-                        @endif
-                        You can publish it again at any time.
-                    </flux:subheading>
-                </div>
-
-                <div class="flex justify-end space-x-2 rtl:space-x-reverse">
-                    <flux:modal.close>
-                        <flux:button variant="ghost" type="button">Cancel</flux:button>
-                    </flux:modal.close>
-                    <flux:button
-                        variant="primary"
-                        type="submit"
-                        wire:loading.attr="disabled"
-                        wire:target="draft"
-                    >
-                        <span wire:loading.remove wire:target="draft">Set to Draft</span>
-                        <span wire:loading wire:target="draft">Setting to Draft...</span>
-                    </flux:button>
-                </div>
-            </form>
-        </flux:modal>
+        <x-admin.confirmation-modal
+            name="confirm-draft"
+            title="Set back to draft?"
+            action="draft"
+            actionText="Set to Draft"
+            actionVariant="primary"
+        >
+            This project will be set back to draft status and will no longer be publicly visible
+            @if($project->status->isPublished())
+                on your portfolio.
+            @else
+                if it was archived.
+            @endif
+            You can publish it again at any time.
+        </x-admin.confirmation-modal>
     @endif
 </div>
