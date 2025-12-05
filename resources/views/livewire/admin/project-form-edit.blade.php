@@ -7,8 +7,8 @@
             <!-- Form Header -->
             <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 flex items-start justify-between">
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">Project Information</h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">Update the project details below.</p>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">{{ __('admin.projects.form.edit_title') }}</h2>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">{{ __('admin.projects.form.description') }}</p>
                 </div>
 
                 <!-- Status Badge - Desktop (top right) -->
@@ -304,7 +304,7 @@
                         type="button"
                         class="w-full sm:w-auto"
                     >
-                        Cancel
+                        {{ __('ui.common.cancel') }}
                     </flux:button>
 
                     <flux:button
@@ -313,18 +313,18 @@
                         wire:loading.attr="disabled"
                         class="w-full sm:w-auto"
                     >
-                        <span wire:loading.remove wire:target="save">Update Project</span>
-                        <span wire:loading wire:target="save">Updating...</span>
+                        <span wire:loading.remove wire:target="save">{{ __('ui.common.update') }}</span>
+                        <span wire:loading wire:target="save">{{ __('ui.common.updating') }}</span>
                     </flux:button>
                 </div>
 
                 <!-- Status Management Section -->
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-2">Project Status</h3>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-2">{{ __('admin.projects.form.status.label') }}</h3>
                     <p class="text-xs text-gray-600 dark:text-zinc-400 mb-4">
-                        Change the publication status of this project.
+                        {{ __('admin.projects.form.status.current') }}
                         @if($project->status->isDraft())
-                            Publishing requires a description to be set.
+                            {{ __('domain.project.cannot_publish_missing_description') }}
                         @endif
                     </p>
 

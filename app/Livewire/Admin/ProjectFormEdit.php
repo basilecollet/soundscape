@@ -138,13 +138,13 @@ class ProjectFormEdit extends Component
             $this->featuredImage = null;
             $this->project->refresh();
             $this->dispatch('featured-image-uploaded');
-            session()->flash('success', 'Featured image uploaded and optimized successfully.');
+            session()->flash('success', __('admin.projects.form.featured_image.uploaded_successfully'));
         } catch (FileIsTooBig) {
-            $this->addError('featuredImage', 'The file is too large (max 10MB).');
+            $this->addError('featuredImage', __('admin.projects.errors.file_too_large'));
         } catch (FileDoesNotExist) {
-            $this->addError('featuredImage', 'The file could not be found.');
+            $this->addError('featuredImage', __('admin.projects.errors.file_not_found'));
         } catch (FileCannotBeAdded) {
-            $this->addError('featuredImage', 'Invalid file format. Only JPEG, PNG, GIF, and WebP are allowed.');
+            $this->addError('featuredImage', __('admin.projects.errors.invalid_format'));
         }
     }
 
@@ -170,13 +170,13 @@ class ProjectFormEdit extends Component
             $this->galleryImages = [];
             $this->project->refresh();
             $this->dispatch('gallery-images-uploaded');
-            session()->flash('success', 'Gallery images uploaded and optimized successfully.');
+            session()->flash('success', __('admin.projects.form.gallery_images.uploaded_successfully'));
         } catch (FileIsTooBig) {
-            $this->addError('galleryImages.*', 'One or more files are too large (max 10MB each).');
+            $this->addError('galleryImages.*', __('admin.projects.errors.file_too_large'));
         } catch (FileDoesNotExist) {
-            $this->addError('galleryImages.*', 'One or more files could not be found.');
+            $this->addError('galleryImages.*', __('admin.projects.errors.file_not_found'));
         } catch (FileCannotBeAdded) {
-            $this->addError('galleryImages.*', 'Invalid file format. Only JPEG, PNG, GIF, and WebP are allowed.');
+            $this->addError('galleryImages.*', __('admin.projects.errors.invalid_format'));
         }
     }
 
@@ -186,7 +186,7 @@ class ProjectFormEdit extends Component
         if ($media) {
             $media->delete();
             $this->project->refresh();
-            session()->flash('success', 'Featured image deleted successfully.');
+            session()->flash('success', __('admin.projects.form.featured_image.deleted_successfully'));
         }
     }
 
@@ -196,7 +196,7 @@ class ProjectFormEdit extends Component
         if ($media) {
             $media->delete();
             $this->project->refresh();
-            session()->flash('success', 'Gallery image deleted successfully.');
+            session()->flash('success', __('admin.projects.form.gallery_images.deleted_successfully'));
         }
     }
 
@@ -216,7 +216,7 @@ class ProjectFormEdit extends Component
 
         $handler->handle($data);
 
-        session()->flash('success', 'Project updated successfully.');
+        session()->flash('success', __('admin.projects.updated_successfully'));
 
         $this->redirect(route('admin.project.edit', ['project' => $this->project->slug]), navigate: true);
     }
@@ -227,9 +227,15 @@ class ProjectFormEdit extends Component
             $handler->handle($this->project->slug);
             $this->project->refresh();
             $this->dispatch('close-publish-modal');
-            session()->flash('success', 'Project published successfully.');
+            session()->flash('success', __('admin.projects.published_successfully'));
         } catch (ProjectCannotBePublishedException $e) {
-            session()->flash('error', $e->getMessage());
+            if ($e->hasMissingDescription()) {
+                session()->flash('error', __('domain.project.cannot_publish_missing_description'));
+            } else {
+                session()->flash('error', __('domain.project.cannot_publish_invalid_status', [
+                    'status' => $e->getStatus()?->value ?? 'unknown',
+                ]));
+            }
         }
     }
 
@@ -239,9 +245,11 @@ class ProjectFormEdit extends Component
             $handler->handle($this->project->slug);
             $this->project->refresh();
             $this->dispatch('close-archive-modal');
-            session()->flash('success', 'Project archived successfully.');
+            session()->flash('success', __('admin.projects.archived_successfully'));
         } catch (ProjectCannotBeArchivedException $e) {
-            session()->flash('error', $e->getMessage());
+            session()->flash('error', __('domain.project.cannot_be_archived', [
+                'status' => $e->getStatus()->value,
+            ]));
         }
     }
 
@@ -251,9 +259,9 @@ class ProjectFormEdit extends Component
             $handler->handle($this->project->slug);
             $this->project->refresh();
             $this->dispatch('close-draft-modal');
-            session()->flash('success', 'Project set back to draft successfully.');
+            session()->flash('success', __('admin.projects.drafted_successfully'));
         } catch (ProjectCannotBeDraftedException $e) {
-            session()->flash('error', $e->getMessage());
+            session()->flash('error', __('domain.project.already_draft'));
         }
     }
 

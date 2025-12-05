@@ -115,7 +115,7 @@ test('edit mode shows success message', function () {
         ->set('title', 'Updated Title')
         ->call('save');
 
-    expect(session('success'))->toBe('Project updated successfully.');
+    expect(session('success'))->toBe(__('admin.projects.updated_successfully'));
 });
 
 test('edit mode validates short description max length', function () {

@@ -51,11 +51,11 @@ class ProjectForm extends Component
 
             $slug = $handler->handle($data);
 
-            session()->flash('success', 'Project created successfully.');
+            session()->flash('success', __('admin.projects.created_successfully'));
 
             $this->redirect(route('admin.project.edit', ['project' => (string) $slug]), navigate: true);
         } catch (DuplicateProjectSlugException $e) {
-            $this->addError('title', $e->getMessage());
+            $this->addError('title', __('domain.project.duplicate_slug', ['slug' => (string) $e->getSlug()]));
         }
     }
 
