@@ -76,18 +76,19 @@ return [
         'drafted_successfully' => 'Projet remis en brouillon avec succès.',
 
         'actions' => [
-            'publish' => 'Publier',
-            'archive' => 'Archiver',
-            'draft' => 'Remettre en brouillon',
+            'publish' => 'Publier le projet',
+            'publishing' => 'Publication en cours...',
+            'archive' => 'Archiver le projet',
+            'set_to_draft' => 'Remettre en brouillon',
             'edit' => 'Modifier',
             'delete' => 'Supprimer',
             'view_public' => 'Voir sur le site',
         ],
 
         'form' => [
-            'title' => 'Créer un nouveau projet',
+            'create_title' => 'Créer un nouveau projet',
             'edit_title' => 'Modifier le projet',
-            'description' => 'Remplissez les informations du projet',
+            'form_description' => 'Remplissez les informations du projet',
 
             'section' => [
                 'basic' => 'Informations de base',
@@ -147,9 +148,11 @@ return [
             'featured_image' => [
                 'label' => 'Image principale',
                 'help' => 'Image de couverture du projet (min 800x600px)',
-                'upload' => 'Télécharger une image',
+                'alt' => 'Image principale du projet',
+                'upload' => 'Cliquez pour télécharger l\'image principale',
+                'upload_button' => 'Télécharger l\'image principale',
                 'change' => 'Changer l\'image',
-                'remove' => 'Retirer l\'image',
+                'remove' => 'Retirer l\'image principale',
                 'uploaded_successfully' => 'Image principale téléchargée avec succès.',
                 'deleted_successfully' => 'Image principale supprimée avec succès.',
                 'uploading' => 'Téléchargement en cours...',
@@ -157,8 +160,13 @@ return [
 
             'gallery_images' => [
                 'label' => 'Galerie d\'images',
-                'help' => 'Images additionnelles du projet (max 10 images, min 800x600px chacune)',
-                'upload' => 'Ajouter des images',
+                'help' => 'Images additionnelles pour la galerie du projet (max 10 images). Formats acceptés : JPEG, PNG, GIF, WebP. Taille minimale : 800x600px. Taille maximale : 10MB par image.',
+                'alt' => 'Image de la galerie',
+                'preview_alt' => 'Aperçu de l\'image de galerie',
+                'upload' => 'Cliquez pour télécharger des images de galerie (plusieurs autorisées)',
+                'upload_button' => 'Télécharger les images de galerie',
+                'remove' => 'Retirer l\'image de la galerie',
+                'preview_count' => ':count image|:count images',
                 'uploaded_successfully' => 'Images ajoutées à la galerie avec succès.',
                 'deleted_successfully' => 'Image retirée de la galerie avec succès.',
                 'uploading' => 'Téléchargement en cours...',
@@ -187,6 +195,27 @@ return [
             'publish_message' => 'Le projet sera visible sur le site public.',
             'archive' => 'Voulez-vous archiver ce projet ?',
             'archive_message' => 'Le projet ne sera plus visible sur le site public.',
+        ],
+
+        'modals' => [
+            'publish' => [
+                'title' => 'Publier ce projet ?',
+                'message' => 'Ce projet deviendra visible sur votre portfolio public. Assurez-vous que tout le contenu est finalisé et qu\'une description est fournie.',
+                'warning' => 'Attention : Aucune description n\'est actuellement définie. La publication échouera sans description.',
+            ],
+
+            'archive' => [
+                'title' => 'Archiver ce projet ?',
+                'message' => 'Ce projet ne sera plus visible sur votre portfolio public. Vous pourrez le restaurer plus tard en le remettant en brouillon ou en le publiant à nouveau.',
+            ],
+
+            'draft' => [
+                'title' => 'Remettre en brouillon ?',
+                'message' => 'Ce projet sera remis en brouillon et ne sera plus publiquement visible',
+                'from_published' => 'sur votre portfolio.',
+                'from_archived' => 's\'il était archivé.',
+                'can_publish_again' => 'Vous pourrez le publier à nouveau à tout moment.',
+            ],
         ],
     ],
 
