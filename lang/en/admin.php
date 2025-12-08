@@ -343,6 +343,11 @@ return [
             'duplicate_key' => 'This key already exists for this page.',
             'invalid_key' => 'Invalid key for this page.',
         ],
+
+        'aria' => [
+            'edit_content' => 'Edit :key content',
+            'copy_content' => 'Copy :key content to clipboard',
+        ],
     ],
 
     'settings' => [

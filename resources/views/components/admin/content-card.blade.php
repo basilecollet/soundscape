@@ -34,7 +34,7 @@
             <div class="text-gray-500 dark:text-zinc-400 text-xs mt-0.5">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
         @else
             <div class="font-medium text-gray-500 dark:text-zinc-400 text-sm">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>
-            <div class="text-gray-400 dark:text-zinc-500 text-xs">No title set</div>
+            <div class="text-gray-400 dark:text-zinc-500 text-xs">{{ __('admin.content.no_title') }}</div>
         @endif
     </div>
 
@@ -45,12 +45,12 @@
                 {{ Str::limit($content->content, 80) }}
             </p>
             <p class="text-xs text-gray-400 dark:text-zinc-500">
-                {{ strlen($content->content) }} characters
+                {{ strlen($content->content) }} {{ __('admin.content.form.content.characters') }}
             </p>
         </div>
     @else
         <div class="mb-3 pb-3 border-b border-gray-100 dark:border-zinc-800">
-            <span class="text-sm italic text-gray-400 dark:text-zinc-500">Empty content</span>
+            <span class="text-sm italic text-gray-400 dark:text-zinc-500">{{ __('admin.content.empty_content') }}</span>
         </div>
     @endif
 
@@ -63,12 +63,12 @@
             href="{{ route('admin.content.edit', $content->id) }}"
             wire:navigate
             class="flex-1"
-            aria-label="Edit {{ $content->key }} content"
+            aria-label="{{ __('admin.content.aria.edit_content', ['key' => $content->key]) }}"
         >
             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
-            Edit
+            {{ __('ui.common.edit') }}
         </flux:button>
 
         <!-- Copy Button (only if content exists) -->
@@ -83,7 +83,7 @@
                     setTimeout(() => copied = false, 2000);
                 "
                 class="flex-1"
-                aria-label="Copy {{ $content->key }} content to clipboard"
+                aria-label="{{ __('admin.content.aria.copy_content', ['key' => $content->key]) }}"
             >
                 <svg x-show="!copied" class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -91,7 +91,7 @@
                 <svg x-show="copied" x-cloak class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span x-text="copied ? 'Copied!' : 'Copy'"></span>
+                <span x-text="copied ? @js(__('ui.common.copied')) : @js(__('ui.common.copy'))"></span>
             </flux:button>
         @endif
     </div>

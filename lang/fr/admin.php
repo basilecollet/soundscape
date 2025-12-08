@@ -343,6 +343,11 @@ return [
             'duplicate_key' => 'Cette clé existe déjà pour cette page.',
             'invalid_key' => 'Clé invalide pour cette page.',
         ],
+
+        'aria' => [
+            'edit_content' => 'Modifier le contenu :key',
+            'copy_content' => 'Copier le contenu :key dans le presse-papier',
+        ],
     ],
 
     'settings' => [
