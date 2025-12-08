@@ -17,8 +17,8 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
 - [Development](#-development)
+- [Localization](#-localization)
 - [Project Structure](#-project-structure)
-- [Development](#-development)
 - [Testing](#-testing)
 - [Deployment](#-deployment)
 - [License](#-license)
@@ -32,6 +32,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 - 🏠 **Portfolio Website** - Modern portfolio with Home, About, Project and Contact pages
 - 🔐 **Authentication System** - Complete auth with registration, login, password reset
 - 👤 **User Settings** - Profile management, password change, appearance settings
+- 🌍 **Localization** - Full EN/FR translations with proper fallback support
 - 🎨 **Modern UI** - Flux UI components with Tailwind CSS 4
 - 📊 **Testing Coverage** - Comprehensive Pest PHP tests with high coverage
 - 🔍 **Code Quality** - PHPStan level 9 analysis and Laravel Pint formatting
@@ -239,6 +240,126 @@ make pint
 make pint-test
 ```
 
+## 🌍 Localization
+
+The application supports full localization with English and French translations.
+
+### Available Languages
+- 🇫🇷 **French (FR)** - Default language (primary audience)
+- 🇬🇧 **English (EN)** - Full translations available
+
+### Translation Files Structure
+
+```
+lang/
+├── en/                 # English translations
+│   ├── admin.php      # Admin interface (398 lines)
+│   ├── portfolio.php  # Portfolio interface (85 lines)
+│   ├── ui.php         # Common UI elements (213 lines)
+│   ├── domain.php     # Domain validations (53 lines)
+│   ├── auth.php       # Laravel auth
+│   ├── validation.php # Laravel validation
+│   └── passwords.php  # Password reset
+└── fr/                # French translations (same structure)
+```
+
+### Changing the Application Language
+
+Update your `.env` file:
+
+```env
+# French (default)
+APP_LOCALE=fr
+APP_FALLBACK_LOCALE=en
+
+# English
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=fr
+```
+
+### Translation Key Organization
+
+**Admin Interface** (`lang/*/admin.php`):
+- `admin.navigation.*` - Admin navigation items
+- `admin.dashboard.*` - Dashboard statistics and widgets
+- `admin.projects.*` - Project management interface
+- `admin.content.*` - Content management system
+- `admin.settings.*` - Application settings
+
+**Portfolio Interface** (`lang/*/portfolio.php`):
+- `portfolio.home.*` - Homepage sections
+- `portfolio.about.*` - About page content
+- `portfolio.projects.*` - Projects showcase
+- `portfolio.contact.*` - Contact form
+- `portfolio.navigation.*` - Public navigation
+
+**Common UI** (`lang/*/ui.php`):
+- `ui.common.*` - Common actions (save, cancel, delete, etc.)
+- `ui.status.*` - Status labels (draft, published, archived)
+- `ui.empty_states.*` - Empty state messages
+- `ui.errors.*` - Generic error messages
+- `ui.settings.*` - User settings interface
+
+**Domain Validations** (`lang/*/domain.php`):
+- `domain.project.*` - Project entity validations
+- `domain.project.title.*` - Title validations
+- `domain.project.description.*` - Description validations
+- `domain.project.slug.*` - Slug validations
+
+### Using Translations in Code
+
+```php
+// In Blade templates
+{{ __('admin.projects.create') }}
+{{ __('domain.project.cannot_publish_invalid_status', ['status' => $status]) }}
+
+// In PHP code
+__('ui.messages.saved')
+session()->flash('success', __('admin.projects.created_successfully'));
+
+// In Livewire components
+$this->addError('title', __('domain.project.title.empty'));
+```
+
+### Domain Exception Architecture
+
+The application uses **separated, single-responsibility exceptions** following DDD principles:
+
+```php
+// Publishing a project can throw TWO distinct exceptions:
+
+// 1. Invalid status (not a draft)
+throw ProjectCannotBePublishedException::invalidStatus($status);
+
+// 2. Missing required data (no description)
+throw ProjectMissingRequiredDataException::missingDescription();
+```
+
+**Exception Handling Pattern**:
+```php
+try {
+    $project->publish();
+} catch (ProjectMissingRequiredDataException $e) {
+    // Handle missing description specifically
+    session()->flash('error', __('domain.project.cannot_publish_missing_description'));
+} catch (ProjectCannotBePublishedException $e) {
+    // Handle invalid status
+    session()->flash('error', __('domain.project.cannot_publish_invalid_status', [
+        'status' => $e->getStatus()->value
+    ]));
+}
+```
+
+**Why Separated Exceptions?**
+- ✅ Single Responsibility Principle (SRP)
+- ✅ Type safety - no nullable properties
+- ✅ Clear intent - exception name describes the exact problem
+- ✅ Better error handling - catch specific scenarios
+- ✅ DDD-compliant - each exception represents one domain rule violation
+
+**Technical Exception Messages:**
+All domain exceptions use the `"Technical: "` prefix for internal logging and debugging, while translations provide user-friendly messages.
+
 ## 📁 Project Structure
 
 ### Domain-Driven Design Architecture
@@ -250,7 +371,12 @@ soundscape/
 │   │   ├── Admin/    # Admin services (Content, Dashboard)
 │   │   └── Portfolio/ # Portfolio services (Contact, Content)
 │   ├── Domain/       # Domain logic & contracts
-│   │   └── Admin/    # Admin domain (Enums, Repositories)
+│   │   ├── Admin/    # Admin domain
+│   │   │   ├── Entities/      # Domain entities (Project, Image)
+│   │   │   ├── Exceptions/    # Domain exceptions (single-responsibility)
+│   │   │   ├── ValueObjects/  # Value objects (Title, Slug, Date, etc.)
+│   │   │   └── Services/      # Domain services
+│   │   └── Portfolio/ # Portfolio domain
 │   ├── Infra/        # Infrastructure implementations
 │   │   └── Repositories/ # Database repositories
 │   ├── Http/         # Controllers by domain
@@ -262,6 +388,9 @@ soundscape/
 │   │   ├── Components/ # Reusable components
 │   │   └── Actions/  # Livewire actions
 │   └── Models/       # Eloquent models
+├── lang/             # Localization files
+│   ├── en/          # English translations (4 files)
+│   └── fr/          # French translations (4 files)
 ├── resources/views/
 │   ├── livewire/     # Livewire component views
 │   │   ├── admin/    # Admin dashboard views
@@ -302,10 +431,12 @@ docker-compose exec app php artisan test tests/Feature/DashboardTest.php
 - ✅ **User Management** - Profile management, settings, and password changes
 - ✅ **Livewire Components** - All portfolio components (Home, About, Contact sections)
 - ✅ **Application Services** - Unit tests for all DTOs and application services
+- ✅ **Domain Entities & Value Objects** - Complete domain logic testing
+- ✅ **Domain Exceptions** - Testing separated exception architecture
 - ✅ **Infrastructure** - Repository implementations and database interactions
 - ✅ **Controllers** - HTTP controllers for all domains (Admin, Portfolio, Auth)
 
-The project maintains **high test coverage** across all architecture layers with comprehensive Feature, Unit, and Infrastructure tests.
+The project maintains **high test coverage** (589+ passing tests) across all architecture layers with comprehensive Feature, Unit, and Infrastructure tests.
 
 ## 🚢 Deployment
 
