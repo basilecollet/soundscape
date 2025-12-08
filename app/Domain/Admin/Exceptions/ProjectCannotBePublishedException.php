@@ -8,7 +8,7 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 
 final class ProjectCannotBePublishedException extends \DomainException
 {
-    private ?ProjectStatus $status = null;
+    private ProjectStatus $status;
 
     public static function invalidStatus(ProjectStatus $status): self
     {
@@ -20,18 +20,8 @@ final class ProjectCannotBePublishedException extends \DomainException
         return $instance;
     }
 
-    public static function missingDescription(): self
-    {
-        return new self('Technical: Cannot publish project without description');
-    }
-
-    public function getStatus(): ?ProjectStatus
+    public function getStatus(): ProjectStatus
     {
         return $this->status;
-    }
-
-    public function hasMissingDescription(): bool
-    {
-        return $this->status === null;
     }
 }

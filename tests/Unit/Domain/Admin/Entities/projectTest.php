@@ -13,6 +13,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
+use App\Domain\Admin\Exceptions\ProjectMissingRequiredDataException;
 
 test('create a project with the right data', function () {
     $project = Project::new('My project');
@@ -324,7 +325,7 @@ test('cannot publish a project without description', function () {
     );
 
     expect(fn () => $project->publish())
-        ->toThrow(ProjectCannotBePublishedException::class, 'Cannot publish project without description');
+        ->toThrow(ProjectMissingRequiredDataException::class, 'Cannot publish project without description');
 });
 
 test('cannot archive a draft project', function () {

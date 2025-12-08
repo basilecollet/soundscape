@@ -15,6 +15,7 @@ use App\Domain\Admin\Entities\ValueObjects\ProjectTitle;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
+use App\Domain\Admin\Exceptions\ProjectMissingRequiredDataException;
 use App\Domain\Admin\Services\StringNormalizationService;
 
 final class Project
@@ -149,6 +150,7 @@ final class Project
 
     /**
      * @throws ProjectCannotBePublishedException
+     * @throws ProjectMissingRequiredDataException
      */
     public function publish(): void
     {
@@ -157,7 +159,7 @@ final class Project
         }
 
         if ($this->description === null) {
-            throw ProjectCannotBePublishedException::missingDescription();
+            throw ProjectMissingRequiredDataException::missingDescription();
         }
 
         $this->status = ProjectStatus::Published;

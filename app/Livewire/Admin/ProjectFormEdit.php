@@ -13,6 +13,7 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 use App\Domain\Admin\Exceptions\ProjectCannotBeArchivedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBeDraftedException;
 use App\Domain\Admin\Exceptions\ProjectCannotBePublishedException;
+use App\Domain\Admin\Exceptions\ProjectMissingRequiredDataException;
 use App\Http\Requests\Admin\UpdateProjectMediaRequest;
 use App\Models\Project;
 use App\Rules\ValidBandcampEmbed;
@@ -228,14 +229,12 @@ class ProjectFormEdit extends Component
             $this->project->refresh();
             $this->dispatch('close-publish-modal');
             session()->flash('success', __('admin.projects.published_successfully'));
+        } catch (ProjectMissingRequiredDataException) {
+            session()->flash('error', __('domain.project.cannot_publish_missing_description'));
         } catch (ProjectCannotBePublishedException $e) {
-            if ($e->hasMissingDescription()) {
-                session()->flash('error', __('domain.project.cannot_publish_missing_description'));
-            } else {
-                session()->flash('error', __('domain.project.cannot_publish_invalid_status', [
-                    'status' => $e->getStatus()->value ?? 'unknown',
-                ]));
-            }
+            session()->flash('error', __('domain.project.cannot_publish_invalid_status', [
+                'status' => $e->getStatus()->value,
+            ]));
         }
     }
 
