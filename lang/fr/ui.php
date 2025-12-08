@@ -148,6 +148,11 @@ return [
         'previous' => 'Précédent',
         'first' => 'Premier',
         'last' => 'Dernier',
+        'administration' => 'Administration',
+        'content_management' => 'Gestion du contenu',
+        'projects' => 'Projets',
+        'section_settings' => 'Paramètres des sections',
+        'log_out' => 'Se déconnecter',
     ],
 
     'pagination' => [
@@ -166,5 +171,43 @@ return [
         'drag_drop' => 'Glissez-déposez ou cliquez pour sélectionner',
         'max_file_size' => 'Taille maximale : :size',
         'allowed_types' => 'Types autorisés : :types',
+    ],
+
+    'settings' => [
+        'title' => 'Paramètres',
+        'subtitle' => 'Gérez votre profil et les paramètres de votre compte',
+        'profile' => [
+            'title' => 'Profil',
+            'subtitle' => 'Mettez à jour votre nom et votre adresse e-mail',
+            'name_label' => 'Nom',
+            'email_label' => 'E-mail',
+            'email_unverified' => 'Votre adresse e-mail n\'est pas vérifiée.',
+            'resend_verification' => 'Cliquez ici pour renvoyer l\'e-mail de vérification.',
+            'verification_sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
+            'saved' => 'Enregistré.',
+        ],
+        'password' => [
+            'title' => 'Mettre à jour le mot de passe',
+            'subtitle' => 'Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé',
+            'current_password' => 'Mot de passe actuel',
+            'new_password' => 'Nouveau mot de passe',
+            'confirm_password' => 'Confirmer le mot de passe',
+            'saved' => 'Enregistré.',
+        ],
+        'delete_account' => [
+            'title' => 'Supprimer le compte',
+            'subtitle' => 'Supprimez votre compte et toutes ses ressources',
+            'confirm_title' => 'Êtes-vous sûr de vouloir supprimer votre compte ?',
+            'confirm_message' => 'Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Veuillez saisir votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte.',
+            'password_label' => 'Mot de passe',
+            'button' => 'Supprimer le compte',
+        ],
+        'appearance' => [
+            'title' => 'Apparence',
+            'subtitle' => 'Mettez à jour les paramètres d\'apparence de votre compte',
+            'light' => 'Clair',
+            'dark' => 'Sombre',
+            'system' => 'Système',
+        ],
     ],
 ];
