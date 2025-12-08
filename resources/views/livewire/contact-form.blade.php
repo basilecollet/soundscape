@@ -13,8 +13,8 @@
             <div class="flex items-start gap-3">
                 <span class="text-portfolio-accent text-xl font-bold">✓</span>
                 <div>
-                    <p class="font-semibold text-portfolio-dark">Thank you for your message!</p>
-                    <p class="text-portfolio-text/70 text-sm mt-1">We will get back to you soon.</p>
+                    <p class="font-semibold text-portfolio-dark">{{ __('portfolio.contact.form.success_title') }}</p>
+                    <p class="text-portfolio-text/70 text-sm mt-1">{{ __('portfolio.contact.form.success_description') }}</p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div>
                 <label for="name" class="flex items-center gap-2 text-sm font-medium text-portfolio-dark mb-2">
                     <span class="text-portfolio-accent">></span>
-                    Name *
+                    {{ __('portfolio.contact.form.name_label') }}
                 </label>
                 <input
                     type="text"
@@ -42,7 +42,7 @@
             <div>
                 <label for="email" class="flex items-center gap-2 text-sm font-medium text-portfolio-dark mb-2">
                     <span class="text-portfolio-accent">></span>
-                    Email *
+                    {{ __('portfolio.contact.form.email_label') }}
                 </label>
                 <input
                     type="email"
@@ -61,7 +61,7 @@
             <div>
                 <label for="subject" class="flex items-center gap-2 text-sm font-medium text-portfolio-dark mb-2">
                     <span class="text-portfolio-accent">></span>
-                    Subject
+                    {{ __('portfolio.contact.form.subject_label') }}
                 </label>
                 <input
                     type="text"
@@ -80,7 +80,7 @@
             <div>
                 <label for="message" class="flex items-center gap-2 text-sm font-medium text-portfolio-dark mb-2">
                     <span class="text-portfolio-accent">></span>
-                    Message *
+                    {{ __('portfolio.contact.form.message_label') }}
                 </label>
                 <textarea
                     wire:model="message"
@@ -104,7 +104,7 @@
                     class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 <label for="gdpr_consent" class="ml-3 text-sm text-portfolio-text/80">
-                    I consent to the processing of my personal data in accordance with the privacy policy. *
+                    {{ __('portfolio.contact.form.gdpr_consent') }}
                 </label>
             </div>
             @error('gdpr_consent')
@@ -119,8 +119,8 @@
                 wire:loading.attr="disabled"
                 class="w-full bg-portfolio-accent hover:bg-portfolio-accent-dark disabled:bg-portfolio-accent/50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-sm transition-all duration-200 hover:shadow-md"
             >
-                <span wire:loading.remove>Send Message</span>
-                <span wire:loading>Sending...</span>
+                <span wire:loading.remove>{{ __('portfolio.contact.form.send_button') }}</span>
+                <span wire:loading>{{ __('portfolio.contact.form.sending') }}</span>
             </button>
         </form>
     @endif

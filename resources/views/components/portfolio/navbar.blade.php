@@ -37,13 +37,13 @@
             
             <!-- Navigation Links - Desktop -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('home') }}" 
+                <a href="{{ route('home') }}"
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
-                    home
+                    {{ __('portfolio.navigation.home') }}
                     @if(request()->routeIs('home'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
@@ -54,7 +54,7 @@
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
-                    about
+                    {{ __('portfolio.navigation.about') }}
                     @if(request()->routeIs('about'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
@@ -65,18 +65,18 @@
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
-                    projects
+                    {{ __('portfolio.navigation.projects') }}
                     @if(request()->routeIs('projects'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
                 </a>
-                <a href="{{ route('contact') }}" 
+                <a href="{{ route('contact') }}"
                    class="relative transition-colors duration-200 text-sm py-1"
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
                    }">
-                    contact
+                    {{ __('portfolio.navigation.contact') }}
                     @if(request()->routeIs('contact'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
                     @endif
@@ -117,7 +117,7 @@
             class="md:hidden mt-2 bg-white border-t border-portfolio-dark/10 shadow-lg"
         >
             <div class="container mx-auto px-6 py-6 space-y-4">
-                <a href="{{ route('home') }}" 
+                <a href="{{ route('home') }}"
                    @click="open = false"
                    class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
                     @if(request()->routeIs('home'))
@@ -125,7 +125,7 @@
                     @else
                         <span class="w-2 h-2"></span>
                     @endif
-                    home
+                    {{ __('portfolio.navigation.home') }}
                 </a>
                 <a href="{{ route('about') }}"
                    @click="open = false"
@@ -135,7 +135,7 @@
                     @else
                         <span class="w-2 h-2"></span>
                     @endif
-                    about
+                    {{ __('portfolio.navigation.about') }}
                 </a>
                 <a href="{{ route('projects') }}"
                    @click="open = false"
@@ -145,9 +145,9 @@
                     @else
                         <span class="w-2 h-2"></span>
                     @endif
-                    projects
+                    {{ __('portfolio.navigation.projects') }}
                 </a>
-                <a href="{{ route('contact') }}" 
+                <a href="{{ route('contact') }}"
                    @click="open = false"
                    class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
                     @if(request()->routeIs('contact'))
@@ -155,7 +155,7 @@
                     @else
                         <span class="w-2 h-2"></span>
                     @endif
-                    contact
+                    {{ __('portfolio.navigation.contact') }}
                 </a>
             </div>
         </div>

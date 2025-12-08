@@ -86,7 +86,7 @@
                     <!-- Section Title -->
                     <div class="text-center mb-8">
                         <h2 class="text-2xl md:text-3xl font-bold text-portfolio-dark">
-                            Listen
+                            {{ __('portfolio.projects.listen_title') }}
                         </h2>
                         <div class="w-16 h-1 bg-portfolio-accent mx-auto mt-4"></div>
                     </div>
@@ -117,7 +117,7 @@
                 <div class="max-w-6xl mx-auto space-y-8">
                     <!-- Section Title -->
                     <div class="text-center">
-                        <h2 class="text-2xl md:text-3xl font-bold text-portfolio-dark">project gallery</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-portfolio-dark">{{ __('portfolio.projects.gallery_title') }}</h2>
                         <div class="mt-2 h-1 w-20 bg-portfolio-accent mx-auto rounded-full"></div>
                     </div>
 
@@ -149,11 +149,11 @@
     <section class="py-20 bg-gradient-to-b from-portfolio-light to-portfolio-secondary">
         <div class="container mx-auto px-6 lg:px-12 text-center">
             <div class="max-w-3xl mx-auto space-y-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-portfolio-dark">explore more projects</h2>
-                <p class="text-lg text-portfolio-text/80">discover other audio engineering work from our portfolio.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-portfolio-dark">{{ __('portfolio.projects.explore_more_title') }}</h2>
+                <p class="text-lg text-portfolio-text/80">{{ __('portfolio.projects.explore_more_description') }}</p>
                 <div class="pt-4">
                     <x-portfolio.cta-link href="{{ route('projects') }}" :primary="true">
-                        back to projects
+                        {{ __('portfolio.projects.back_to_projects') }}
                     </x-portfolio.cta-link>
                 </div>
             </div>

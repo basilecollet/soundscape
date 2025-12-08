@@ -17,9 +17,9 @@ test('admin section settings page loads correctly', function () {
     $response = $this->actingAs($user)->get('/admin/section-settings');
 
     $response->assertStatus(200);
-    $response->assertSee('Section Settings');
-    $response->assertSee('home');
-    $response->assertSee('about');
+    $response->assertSee(__('admin.settings.section_visibility'));
+    $response->assertSee(__('admin.settings.sections.home.title'));
+    $response->assertSee(__('admin.settings.sections.about.title'));
 });
 
 test('admin section settings page shows section information', function () {
@@ -29,11 +29,11 @@ test('admin section settings page shows section information', function () {
 
     $response->assertStatus(200);
     // Should show available sections
-    $response->assertSee('Features Section');
-    $response->assertSee('Call to Action Section');
-    $response->assertSee('Experience Stats Section');
-    $response->assertSee('Services Section');
-    $response->assertSee('Philosophy Section');
+    $response->assertSee(__('admin.settings.sections.home.features.title'));
+    $response->assertSee(__('admin.settings.sections.home.cta.title'));
+    $response->assertSee(__('admin.settings.sections.about.experience.title'));
+    $response->assertSee(__('admin.settings.sections.about.services.title'));
+    $response->assertSee(__('admin.settings.sections.about.philosophy.title'));
 });
 
 test('livewire component can toggle section settings', function () {
