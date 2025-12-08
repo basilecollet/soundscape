@@ -27,16 +27,16 @@
 
 ### Obligations légales
 ```markdown
-✅ Site e-commerce européen → Conformité RGPD obligatoire
-✅ Guest checkout → Traitement de données personnelles
+✅ Site web européen → Conformité RGPD obligatoire
+✅ Formulaire contact → Traitement de données personnelles
 ✅ Cookies analytics → Consentement requis
 ✅ Newsletters → Double opt-in
 ```
 
 ### Données traitées
 ```markdown
-- Portfolio : Analytics (IP, navigation)
-- Admin : Données utilisateur complètes
+- Portfolio : Analytics (IP, navigation), Messages de contact
+- Admin : Données utilisateur complètes, Projets, Contenus
 ```
 
 ## 🏗️ Phase 0 : Refactoring Architecture + RGPD Foundation (4-5 jours)
@@ -48,7 +48,6 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 ```markdown
 - [ ] Créer la structure DDD
   - [ ] app/Domain/Portfolio/
-  - [ ] app/Domain/Shop/
   - [ ] app/Domain/Admin/
   - [ ] app/Application/
   - [ ] app/Infrastructure/
@@ -127,30 +126,25 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 - [ ] Adapter le dashboard existant pour l'admin
 ```
 
-### 2.2 CRUD avec Livewire (4-5 jours)
+### 2.2 CRUD avec Livewire (2-3 jours)
 ```markdown
-- [ ] Products Management
-  - [ ] Réutiliser les patterns des Settings pages
-  - [ ] ProductManager (index, create, edit)
-  - [ ] Upload audio avec preview
-  
-- [ ] Orders Management  
-  - [ ] OrdersTable component
-  - [ ] OrderDetails modal
-  - [ ] Export CSV simple
-  
 - [ ] Content Management
   - [ ] Étendre PageContent management
   - [ ] ProjectManager pour portfolio
   - [ ] Réutiliser les forms existants
+
+- [ ] Contact Messages Management
+  - [ ] MessagesTable component
+  - [ ] MessageDetails modal
+  - [ ] Marquer comme lu/non-lu
 ```
 
-### 2.3 Dashboard Analytics (2 jours)
+### 2.3 Dashboard Analytics (1-2 jours)
 ```markdown
 - [ ] Adapter le dashboard existant
-  - [ ] Stats cards (ventes, produits, visiteurs)
+  - [ ] Stats cards (projets, messages, visiteurs)
   - [ ] Graphique simple avec Chart.js
-  - [ ] Recent orders table
+  - [ ] Recent messages table
 
 - [ ] RGPD Admin Tools
   - [ ] Interface de gestion des consentements
@@ -161,30 +155,29 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 
 ## 🧪 Phase 4 : Tests & Optimisation (3-4 jours)
 
-### 4.1 Tests (2 jours)
+### 4.1 Tests (1-2 jours)
 ```markdown
 - [ ] Adapter les tests existants
   - [ ] Tests pour les nouveaux controllers
-  - [ ] Tests pour CartService
-  - [ ] Tests pour GuestCheckout flow
-  
+  - [ ] Tests pour ProjectService
+  - [ ] Tests pour Contact flow
+
 - [ ] Nouveaux tests critiques
-  - [ ] Test complet achat guest
-  - [ ] Test téléchargement sécurisé
-  - [ ] Test admin CRUD
+  - [ ] Test complet workflow contact
+  - [ ] Test admin CRUD projets
   - [ ] Tests RGPD (consentement, export, suppression)
 ```
 
-### 4.2 Performance (1-2 jours)
+### 4.2 Performance (1 jour)
 ```markdown
 - [ ] Cache (utiliser Redis de Docker)
   - [ ] Cache les pages portfolio
-  - [ ] Cache les requêtes products
-  
+  - [ ] Cache les requêtes projects
+
 - [ ] Optimisations
   - [ ] Lazy loading images existantes
   - [ ] Minification assets avec Vite existant
-  - [ ] Compression des audio previews
+  - [ ] Optimisation images (WebP, responsive)
 ```
 
 ## 🚀 Phase 5 : Déploiement Clever Cloud (2-3 jours)
@@ -222,12 +215,12 @@ Restructurer l'existant en architecture DDD/SOLID et poser les bases RGPD
 - Portfolio avec SEO
 - Blog simple
 
-### Semaine 6-7 : Administration
+### Semaine 3-4 : Administration
 - Dashboard admin
-- CRUD produits/commandes
+- CRUD projets/messages
 - Analytics basiques
 
-### Semaine 8 : Finalisation
+### Semaine 5-6 : Finalisation
 - Tests complets
 - Optimisations
 - Déploiement
@@ -265,15 +258,16 @@ main
 2. **Formulaire contact fonctionnel** (0.5 jour)
    - Validation existante
    - Envoi email
+   - Stockage messages admin
 
 3. **Page projets simple** (1 jour)
    - Réutiliser PageContent
    - Liste + détail
 
-4. **Produit MVP** (2 jours)
-   - 5-10 produits tests
-   - Checkout Stripe basique
-   - Email avec lien
+4. **Admin Dashboard fonctionnel** (1-2 jours)
+   - Stats temps réel
+   - Gestion projets
+   - Gestion messages
 
 5. **Conformité RGPD basique** (1 jour)
    - Banner cookies
@@ -283,12 +277,12 @@ main
 
 ## ⏱️ Estimation réaliste
 
-**Durée totale** : 6-8 semaines (à temps plein)
-**Ou** : 3-4 mois (mi-temps, soirs/weekends)
+**Durée totale** : 4-6 semaines (à temps plein)
+**Ou** : 2-3 mois (mi-temps, soirs/weekends)
 
 **Priorités** :
 1. Portfolio SEO → Visibilité
-2. Admin minimal → Gestion
+2. Admin Dashboard → Gestion projets & messages
 3. Améliorations → Itératif
 
 ## 📈 Métriques de succès
@@ -300,9 +294,11 @@ main
 - [ ] Mobile Responsive 100%
 - [ ] Conformité RGPD 100%
 
-### KPIs Business  
+### KPIs Business
 - [ ] Temps de mise en ligne < 2 mois
 - [ ] 10 projets portfolio publiés
+- [ ] Formulaire contact fonctionnel
+- [ ] Dashboard admin opérationnel
 
 ## 🔄 Évolutions futures (Post-MVP)
 
@@ -311,11 +307,11 @@ main
 - [ ] Système de newsletter avec double opt-in
 - [ ] Multi-langue (FR/EN) avec consentement par langue
 - [ ] API pour intégrations tierces (avec authentification)
-- [ ] Abonnements/Subscriptions (données bancaires sécurisées)
-- [ ] Forum communautaire (modération données)
-- [ ] Tutoriels vidéo (cookies analytics avancés)
-- [ ] Pack bundles avec réductions
-- [ ] Programme d'affiliation
+- [ ] Galerie audio interactive avec player
+- [ ] Système de commentaires sur projets (modération)
+- [ ] Tutoriels vidéo/blog technique (cookies analytics avancés)
+- [ ] Espace client privé pour collaborations
+- [ ] Système de devis/booking en ligne
 ```
 
 ### RGPD Avancé
@@ -327,11 +323,3 @@ main
 - [ ] Audit RGPD externe (recommandé après 6 mois)
 - [ ] Désignation DPO si >10k utilisateurs/an
 ```
-
----
-
-**Document créé le** : 2025-08-16  
-**Dernière mise à jour** : 2025-08-23  
-**Version** : 1.1.0
-
-Ce plan **pragmatique** réutilise 70% de l'existant et se concentre sur l'essentiel pour un développeur solo.

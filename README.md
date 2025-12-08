@@ -1,6 +1,6 @@
 # 🎵 Soundscape Audio
 
-A modern portfolio and e-commerce platform for a sound engineer, built with Laravel 12. Features a comprehensive portfolio showcase, audio sample sales platform with guest checkout, admin dashboard, and content management system. Built with Domain-Driven Design architecture and extensive testing coverage.
+A modern portfolio platform for a sound engineer, built with Laravel 12. Features a comprehensive portfolio showcase, admin dashboard, and content management system. Built with Domain-Driven Design architecture and extensive testing coverage.
 
 ![Laravel](https://img.shields.io/badge/Laravel-v12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php&logoColor=white)
@@ -41,7 +41,7 @@ A modern portfolio and e-commerce platform for a sound engineer, built with Lara
 
 ### Application Areas
 - **Sound Engineer Portfolio** - Showcase of audio projects, skills, and experience
-- **Admin Dashboard** - Product management, order tracking, and sales analytics
+- **Admin Dashboard** - Project management, content management, and message tracking
 - **GDPR Tools** - Data export, deletion, and consent management
 
 ## 🛠 Tech Stack
