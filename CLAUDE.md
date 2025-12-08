@@ -36,6 +36,58 @@ This application is a Laravel application and its main Laravel ecosystems packag
 ## Frontend Bundling
 - If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
 
+## Localization & Translations
+- **IMPORTANT**: This application supports full localization with French (FR) and English (EN) translations.
+- When creating or modifying any text displayed to users in the frontend (Blade views, Livewire components, Vue components, etc.), you MUST use translation keys instead of hardcoded strings.
+- Default language is French (FR) - all new translations must include both FR and EN versions.
+
+### Translation Files Structure
+The application has 4 translation files per language (FR/EN):
+- `lang/{locale}/admin.php` - Admin interface translations (dashboard, projects, content management, settings)
+- `lang/{locale}/portfolio.php` - Portfolio public interface (home, about, projects, contact)
+- `lang/{locale}/ui.php` - Common UI elements (buttons, status, messages, navigation)
+- `lang/{locale}/domain.php` - Domain validation messages and errors
+
+### Using Translations
+
+**In Blade templates:**
+```blade
+{{ __('admin.projects.create') }}
+{{ __('domain.project.cannot_publish_invalid_status', ['status' => $status]) }}
+<h1>{{ __('portfolio.home.cta.ready_title') }}</h1>
+```
+
+**In Livewire/PHP:**
+```php
+session()->flash('success', __('admin.projects.created_successfully'));
+$this->addError('title', __('domain.project.title.empty'));
+```
+
+**In Flux UI components:**
+```blade
+<flux:button>{{ __('ui.common.save') }}</flux:button>
+```
+
+### Adding New Translations
+When adding new text:
+1. Choose the appropriate translation file (admin/portfolio/ui/domain)
+2. Add the translation key to BOTH `lang/en/*.php` AND `lang/fr/*.php`
+3. Follow existing key naming conventions (dot notation)
+4. Use descriptive key names (e.g., `projects.form.title.label` not just `title`)
+
+### Never Hardcode Text
+❌ **WRONG:**
+```blade
+<h1>Créer un nouveau projet</h1>
+<button>Save</button>
+```
+
+✅ **CORRECT:**
+```blade
+<h1>{{ __('admin.projects.form.create_title') }}</h1>
+<button>{{ __('ui.common.save') }}</button>
+```
+
 ## Replies
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
 

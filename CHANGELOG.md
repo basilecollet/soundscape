@@ -58,6 +58,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated project structure to show `lang/` directory
 - Updated test coverage documentation (589+ passing tests)
 - Updated Table of Contents with new Localization section
+- **Added Localization guidelines to CLAUDE.md**:
+  - IMPORTANT notice to always use translation keys instead of hardcoded text
+  - Translation files structure documentation
+  - Examples of usage in Blade, Livewire, and Flux UI
+  - Guidelines for adding new translations (both EN and FR required)
+  - Examples of correct vs incorrect usage
 
 ### Why These Changes?
 
@@ -90,6 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `app/Livewire/Admin/ProjectFormEdit.php`
   - `tests/Unit/Domain/Admin/Entities/projectTest.php`
   - `README.md`
+  - `CLAUDE.md` (added Localization & Translations section)
 
 **Test Results:**
 - All 589 tests passing ✅
