@@ -335,12 +335,18 @@ return [
             'content' => 'Content',
             'status' => 'Status',
             'actions' => 'Actions',
+            'aria_label' => 'Content management table',
         ],
 
         'errors' => [
             'not_found' => 'Content not found.',
             'duplicate_key' => 'This key already exists for this page.',
             'invalid_key' => 'Invalid key for this page.',
+        ],
+
+        'aria' => [
+            'edit_content' => 'Edit :key content',
+            'copy_content' => 'Copy :key content to clipboard',
         ],
     ],
 

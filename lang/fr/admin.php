@@ -335,12 +335,18 @@ return [
             'content' => 'Contenu',
             'status' => 'Statut',
             'actions' => 'Actions',
+            'aria_label' => 'Tableau de gestion du contenu',
         ],
 
         'errors' => [
             'not_found' => 'Contenu introuvable.',
             'duplicate_key' => 'Cette clé existe déjà pour cette page.',
             'invalid_key' => 'Clé invalide pour cette page.',
+        ],
+
+        'aria' => [
+            'edit_content' => 'Modifier le contenu :key',
+            'copy_content' => 'Copier le contenu :key dans le presse-papier',
         ],
     ],
 
