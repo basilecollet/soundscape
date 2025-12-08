@@ -8,7 +8,6 @@
 /storage/pail
 /vendor
 .claude
-CLAUDE.md
 
 # Environment configuration
 .env*
