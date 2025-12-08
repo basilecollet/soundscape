@@ -7,7 +7,6 @@
 /storage/*.key
 /storage/pail
 /vendor
-.claude
 
 # Environment configuration
 .env*
