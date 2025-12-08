@@ -90,8 +90,8 @@
                                     @endif
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm">
+                            <td class="px-6 py-4">
+                                <div class="text-sm max-w-xs">
                                     @if($content->title)
                                         <div class="font-medium text-gray-900 dark:text-zinc-100">{{ $content->title }}</div>
                                         <div class="text-gray-500 dark:text-zinc-400 text-xs">{{ ucfirst(str_replace('_', ' ', $content->key)) }}</div>

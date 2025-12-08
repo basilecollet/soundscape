@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Enhanced Header with Navigation -->
         <div class="mb-8 pb-6 border-b border-gray-200 dark:border-zinc-700">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
