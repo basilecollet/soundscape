@@ -308,7 +308,7 @@
                     </flux:button>
 
                     <flux:button
-                        variant="primary"
+                    variant="primary"
                         type="submit"
                         wire:loading.attr="disabled"
                         class="w-full sm:w-auto"

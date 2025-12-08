@@ -24,6 +24,7 @@ return [
 
     'dashboard' => [
         'title' => 'Tableau de bord',
+        'subtitle' => 'Surveillez votre contenu et l\'activité du système',
         'welcome' => 'Bienvenue',
         'overview' => 'Vue d\'ensemble',
 
@@ -31,14 +32,20 @@ return [
             'total_projects' => 'Projets totaux',
             'published_projects' => 'Projets publiés',
             'draft_projects' => 'Projets en brouillon',
-            'total_content' => 'Contenus totaux',
+            'total_content' => 'Contenu total',
+            'content_pieces' => 'Éléments de contenu',
+            'unread_messages' => 'Messages non lus',
             'last_update' => 'Dernière mise à jour',
+            'content_modified' => 'Contenu modifié',
             'never' => 'Jamais',
         ],
 
         'recent_messages' => [
             'title' => 'Messages récents',
             'empty' => 'Aucun message pour le moment',
+            'empty_state' => 'Aucun message récent',
+            'empty_description' => 'Les messages de contact apparaîtront ici lorsqu\'ils seront reçus',
+            'no_subject' => 'Sans objet',
             'view_all' => 'Voir tous les messages',
             'unread' => 'Non lu',
             'read' => 'Lu',
@@ -54,6 +61,8 @@ return [
 
     'projects' => [
         'title' => 'Projets',
+        'management_title' => 'Gestion des projets',
+        'subtitle' => 'Gérez les projets de votre portfolio',
         'list' => 'Liste des projets',
         'create' => 'Créer un projet',
         'edit' => 'Modifier le projet',
@@ -87,7 +96,10 @@ return [
 
         'form' => [
             'create_title' => 'Créer un nouveau projet',
+            'create_subtitle' => 'Créer un nouveau projet pour votre portfolio',
             'edit_title' => 'Modifier le projet',
+            'edit_title_with_name' => 'Modifier le projet :name',
+            'edit_subtitle' => 'Modifiez les informations du projet',
             'form_description' => 'Remplissez les informations du projet',
 
             'section' => [
@@ -221,18 +233,27 @@ return [
 
     'content' => [
         'title' => 'Gestion du contenu',
+        'subtitle' => 'Gérez le contenu et les pages de votre site',
         'list' => 'Liste du contenu',
         'create' => 'Créer un contenu',
         'edit' => 'Modifier le contenu',
         'delete' => 'Supprimer le contenu',
+        'editing' => 'Modification',
+        'on' => 'sur',
+        'page' => 'page',
+        'create_new' => 'Créer un nouveau contenu',
+        'create_description' => 'Ajouter du nouveau contenu à votre site',
 
         'created_successfully' => 'Contenu créé avec succès.',
         'updated_successfully' => 'Contenu mis à jour avec succès.',
         'deleted_successfully' => 'Contenu supprimé avec succès.',
 
+        'no_title' => 'Aucun titre défini',
+        'empty_content' => 'Contenu vide',
+
         'empty_state' => [
-            'title' => 'Aucun contenu',
-            'description' => 'Aucun contenu trouvé pour les filtres sélectionnés',
+            'title' => 'Aucun contenu trouvé',
+            'description' => 'Essayez d\'ajuster vos filtres ou votre recherche',
         ],
 
         'missing_keys' => [
@@ -242,8 +263,24 @@ return [
         ],
 
         'filter' => [
+            'page_label' => 'Filtrer par page',
             'all_pages' => 'Toutes les pages',
+            'search_label' => 'Rechercher du contenu',
             'search_placeholder' => 'Rechercher par clé, titre ou contenu...',
+        ],
+
+        'results' => [
+            'showing' => 'Affichage de',
+            'content' => 'contenu',
+            'contents' => 'contenus',
+            'for' => 'pour',
+            'use_ctrlf' => 'Utilisez Ctrl+F pour rechercher dans les résultats',
+        ],
+
+        'status' => [
+            'has_content' => 'Contenu présent',
+            'empty' => 'Vide',
+            'has_title' => 'Titre présent',
         ],
 
         'form' => [
@@ -252,13 +289,15 @@ return [
 
             'page' => [
                 'label' => 'Page',
+                'placeholder' => 'Sélectionner une page',
                 'help' => 'Page à laquelle appartient ce contenu',
             ],
 
             'key' => [
                 'label' => 'Clé',
-                'placeholder' => 'Ex: hero.title',
+                'placeholder' => 'Sélectionner une clé',
                 'help' => 'Identifiant unique du contenu (utilisé dans le code)',
+                'no_keys' => 'Aucune clé disponible pour cette page',
             ],
 
             'title' => [
@@ -271,7 +310,22 @@ return [
                 'label' => 'Contenu',
                 'placeholder' => 'Contenu du texte (Markdown supporté)',
                 'help' => 'Le contenu qui sera affiché sur le site',
+                'characters' => 'caractères',
+                'long' => 'Contenu long',
+                'good_length' => 'Bonne longueur',
+                'min_read' => 'min de lecture',
             ],
+
+            'preview' => 'Aperçu',
+            'preview_empty' => 'L\'aperçu du contenu apparaîtra ici une fois que vous aurez commencé à écrire',
+
+            'create_button' => 'Créer le contenu',
+            'update_button' => 'Mettre à jour',
+            'copy_content' => 'Copier le contenu',
+            'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer ce contenu ?',
+
+            'press' => 'Appuyez sur',
+            'to_save' => 'pour enregistrer',
         ],
 
         'table' => [
@@ -293,20 +347,22 @@ return [
     'settings' => [
         'title' => 'Paramètres',
         'section_visibility' => 'Visibilité des sections',
+        'section_visibility_description' => 'Gérez les sections visibles sur les pages de votre site. Les sections hero et les sections de la page contact ne peuvent pas être désactivées.',
 
         'sections' => [
             'title' => 'Sections des pages',
             'description' => 'Gérez la visibilité des sections sur les pages publiques',
+            'all_enabled' => 'Toutes les sections de cette page sont toujours activées et ne peuvent pas être désactivées.',
 
             'home' => [
                 'title' => 'Page d\'accueil',
                 'features' => [
                     'title' => 'Section Fonctionnalités',
-                    'description' => 'Afficher la section des fonctionnalités',
+                    'description' => 'Contrôle l\'affichage des fonctionnalités principales sur la page d\'accueil',
                 ],
                 'cta' => [
                     'title' => 'Section Appel à l\'action',
-                    'description' => 'Afficher la section d\'appel à l\'action',
+                    'description' => 'Contrôle l\'affichage de la section d\'appel à l\'action en bas de la page d\'accueil',
                 ],
             ],
 
@@ -314,17 +370,25 @@ return [
                 'title' => 'Page À propos',
                 'experience' => [
                     'title' => 'Section Expérience',
-                    'description' => 'Afficher la section expérience',
+                    'description' => 'Contrôle l\'affichage de la section statistiques montrant les années d\'expérience, projets et clients',
                 ],
                 'services' => [
                     'title' => 'Section Services',
-                    'description' => 'Afficher la section services',
+                    'description' => 'Contrôle l\'affichage de la liste des services',
                 ],
                 'philosophy' => [
                     'title' => 'Section Philosophie',
-                    'description' => 'Afficher la section philosophie',
+                    'description' => 'Contrôle l\'affichage de la section philosophie avec les valeurs de l\'entreprise',
                 ],
             ],
+        ],
+
+        'important_notes' => 'Notes importantes',
+        'notes' => [
+            'hero_always_enabled' => 'Les sections hero sont toujours affichées et ne peuvent pas être désactivées',
+            'contact_always_enabled' => 'Toutes les sections de la page contact sont toujours activées',
+            'immediate_effect' => 'Les modifications prennent effet immédiatement sur le site',
+            'disabled_not_shown' => 'Les sections désactivées n\'apparaîtront pas dans la navigation ou le contenu du site',
         ],
 
         'updated_successfully' => 'Paramètres mis à jour avec succès.',

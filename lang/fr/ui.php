@@ -16,6 +16,8 @@ return [
         'update' => 'Mettre à jour',
         'updating' => 'Mise à jour...',
         'back' => 'Retour',
+        'back_to_dashboard' => 'Retour au tableau de bord',
+        'back_to_projects' => 'Retour à la liste des projets',
         'close' => 'Fermer',
         'confirm' => 'Confirmer',
         'view' => 'Voir',
@@ -45,6 +47,10 @@ return [
         'reset' => 'Réinitialiser',
         'yes' => 'Oui',
         'no' => 'Non',
+        'project' => 'Projet',
+        'status' => 'Statut',
+        'client' => 'Client',
+        'date' => 'Date',
     ],
 
     'status' => [

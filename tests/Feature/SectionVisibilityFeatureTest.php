@@ -100,9 +100,9 @@ test('admin can access section settings page', function () {
     $response = $this->actingAs($user)->get('/admin/section-settings');
 
     $response->assertStatus(200);
-    $response->assertSee('Section Settings');
-    $response->assertSee('home Page');
-    $response->assertSee('about Page');
+    $response->assertSee(__('admin.settings.section_visibility'));
+    $response->assertSee(__('admin.settings.sections.home.title'));
+    $response->assertSee(__('admin.settings.sections.about.title'));
 });
 
 test('section settings manager shows correct sections', function () {
@@ -112,9 +112,9 @@ test('section settings manager shows correct sections', function () {
 
     $response->assertStatus(200);
     // Should show disableable sections
-    $response->assertSee('Features Section');
-    $response->assertSee('Call to Action Section');
-    $response->assertSee('Experience Stats Section');
-    $response->assertSee('Services Section');
-    $response->assertSee('Philosophy Section');
+    $response->assertSee(__('admin.settings.sections.home.features.title'));
+    $response->assertSee(__('admin.settings.sections.home.cta.title'));
+    $response->assertSee(__('admin.settings.sections.about.experience.title'));
+    $response->assertSee(__('admin.settings.sections.about.services.title'));
+    $response->assertSee(__('admin.settings.sections.about.philosophy.title'));
 });
