@@ -46,12 +46,12 @@
             <!-- Illustration -->
             @if($showIllustration)
                 <div class="flex justify-center lg:justify-end">
-                    <div class="relative w-full max-w-md flex items-center justify-center">
-                        <!-- Cercle décoratif en arrière-plan -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-portfolio-accent/20 to-portfolio-primary/10 rounded-full blur-3xl"></div>
-
-                        <!-- Logo animé avec rotation des méridiens -->
-                        <x-app-logo-animated class="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 text-portfolio-dark/80 drop-shadow-lg" />
+                    <div class="relative w-full max-w-md">
+                        <img
+                            src="{{ asset('images/icons/globe.svg') }}"
+                            alt="Globe wireframe"
+                            class="w-full h-auto"
+                        >
                     </div>
                 </div>
             @endif
