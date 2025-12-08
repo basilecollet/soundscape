@@ -233,7 +233,7 @@ class ProjectFormEdit extends Component
                 session()->flash('error', __('domain.project.cannot_publish_missing_description'));
             } else {
                 session()->flash('error', __('domain.project.cannot_publish_invalid_status', [
-                    'status' => $e->getStatus()?->value ?? 'unknown',
+                    'status' => $e->getStatus()->value ?? 'unknown',
                 ]));
             }
         }
