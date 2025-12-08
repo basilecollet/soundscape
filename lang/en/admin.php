@@ -335,6 +335,7 @@ return [
             'content' => 'Content',
             'status' => 'Status',
             'actions' => 'Actions',
+            'aria_label' => 'Content management table',
         ],
 
         'errors' => [

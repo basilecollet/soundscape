@@ -59,14 +59,18 @@
 
     @if($contents->count() > 0)
         {{-- Desktop Table - Hidden on mobile --}}
-        <div class="hidden md:block bg-white dark:bg-zinc-900 rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-zinc-700">
+        <div
+            role="region"
+            aria-label="{{ __('admin.content.table.aria_label') }}"
+            class="hidden md:block bg-white dark:bg-zinc-900 rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-zinc-700"
+        >
             <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
                 <thead class="bg-gray-50 dark:bg-zinc-800">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.key') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.title') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.page') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.content') }}</th>
+                        <th class="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.page') }}</th>
+                        <th class="hidden xl:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.content') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">{{ __('admin.content.table.actions') }}</th>
                     </tr>
                 </thead>
@@ -97,7 +101,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ \App\PageBadgeColor::getClasses($content->page) }}">
                                     <svg class="mr-1.5 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3" />
@@ -105,7 +109,7 @@
                                     {{ ucfirst($content->page) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-zinc-400">
+                            <td class="hidden xl:table-cell px-6 py-4 text-sm text-gray-600 dark:text-zinc-400">
                                 <div class="max-w-xs">
                                     @if($content->content)
                                         <p class="truncate">{{ Str::limit($content->content, 60) }}</p>
