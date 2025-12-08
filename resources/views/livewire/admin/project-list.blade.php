@@ -5,11 +5,11 @@
             <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-zinc-100">No projects found</h3>
-            <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">Get started by creating your first project.</p>
+            <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-zinc-100">{{ __('admin.projects.empty_state.title') }}</h3>
+            <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">{{ __('admin.projects.empty_state.description') }}</p>
             <div class="mt-6">
                 <flux:button href="{{ route('admin.project.create') }}" variant="primary">
-                    Create Project
+                    {{ __('admin.projects.empty_state.create_first') }}
                 </flux:button>
             </div>
         </div>
@@ -21,19 +21,19 @@
                     <thead class="bg-gray-50 dark:bg-zinc-800">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Project
+                                {{ __('ui.common.project') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Status
+                                {{ __('ui.common.status') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Client
+                                {{ __('ui.common.client') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Date
+                                {{ __('ui.common.date') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Actions
+                                {{ __('ui.common.actions') }}
                             </th>
                         </tr>
                     </thead>
@@ -68,15 +68,15 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($project->status === 'draft')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                                            Draft
+                                            {{ __('ui.status.draft') }}
                                         </span>
                                     @elseif($project->status === 'published')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                            Published
+                                            {{ __('ui.status.published') }}
                                         </span>
                                     @elseif($project->status === 'archived')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
-                                            Archived
+                                            {{ __('ui.status.archived') }}
                                         </span>
                                     @endif
                                 </td>
@@ -96,7 +96,7 @@
                                         variant="ghost"
                                         href="{{ route('admin.project.edit', ['project' => $project->slug]) }}"
                                     >
-                                        Edit
+                                        {{ __('ui.common.edit') }}
                                     </flux:button>
                                 </td>
                             </tr>

@@ -8,6 +8,6 @@ final class ProjectCannotBeDraftedException extends \DomainException
 {
     public static function alreadyDraft(): self
     {
-        return new self('Project is already in draft status');
+        return new self('Technical: Project is already in draft status');
     }
 }

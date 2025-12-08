@@ -30,13 +30,17 @@ class SectionSettingsManager extends Component
             $this->sectionSettings[$page][$sectionKey] = $newState;
 
             $label = SectionKeys::getLabel($sectionKey);
-            $status = $newState ? 'enabled' : 'disabled';
+            $statusKey = $newState ? 'ui.status.active' : 'ui.status.inactive';
 
-            $this->dispatch('section-toggled', ['message' => "Section '{$label}' has been {$status}."]);
-            session()->flash('message', "Section '{$label}' has been {$status}.");
+            $message = __('admin.settings.updated_successfully');
+
+            $this->dispatch('section-toggled', ['message' => $message]);
+            session()->flash('message', $message);
         } else {
-            $this->dispatch('section-toggle-error', ['message' => 'Unable to modify this section.']);
-            session()->flash('error', 'Unable to modify this section.');
+            $message = __('ui.errors.unauthorized');
+
+            $this->dispatch('section-toggle-error', ['message' => $message]);
+            session()->flash('error', $message);
         }
     }
 

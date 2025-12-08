@@ -81,7 +81,7 @@ class ContentEdit extends Component
 
         // Validate uniqueness using service
         if (! $this->getContentManagementService()->validateUniqueKey($this->key, $this->contentId)) {
-            $this->addError('key', 'The key has already been taken.');
+            $this->addError('key', __('admin.content.errors.duplicate_key'));
 
             return;
         }
@@ -90,7 +90,7 @@ class ContentEdit extends Component
 
         // Validate key is valid for the selected page
         if (! ContentKeys::isValidKeyForPage($this->key, $this->page)) {
-            $this->addError('key', 'The selected key is not valid for the '.$this->page.' page.');
+            $this->addError('key', __('admin.content.errors.invalid_key'));
 
             return;
         }

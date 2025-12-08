@@ -31,7 +31,7 @@ test('dashboard displays content statistics', function () {
         ->get('/admin');
 
     $response->assertOk();
-    $response->assertSeeText('Total Content');
+    $response->assertSeeText(__('admin.dashboard.stats.total_content'));
     $response->assertSeeText('5'); // Le nombre de contenus créés
 });
 
@@ -45,7 +45,7 @@ test('dashboard shows recent contact messages', function () {
         ->get('/admin');
 
     $response->assertOk();
-    $response->assertSeeText('Recent Contact Messages');
+    $response->assertSeeText(__('admin.dashboard.recent_messages.title'));
 
     // Vérifier que les noms et sujets sont affichés
     foreach ($messages as $message) {

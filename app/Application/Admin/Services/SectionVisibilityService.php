@@ -88,7 +88,7 @@ readonly class SectionVisibilityService
             foreach ($disableableSections as $sectionKey) {
                 $pageSettings[] = [
                     'section_key' => $sectionKey,
-                    'label' => SectionKeys::getLabel($sectionKey),
+                    'label' => __("admin.settings.sections.{$page}.{$sectionKey}.title"),
                     'is_enabled' => $this->isSectionEnabled($sectionKey, $page),
                 ];
             }

@@ -36,7 +36,7 @@
                                 :href="$link['href'] ?? '#'"
                                 :primary="$link['primary'] ?? false"
                             >
-                                {{ $link['text'] ?? 'Learn More' }}
+                                {{ $link['text'] ?? __('portfolio.cta.learn_more') }}
                             </x-portfolio.cta-link>
                         @endforeach
                     </div>

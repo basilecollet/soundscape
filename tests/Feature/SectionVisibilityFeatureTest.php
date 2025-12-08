@@ -17,7 +17,7 @@ test('home page shows all sections when enabled', function () {
     $response->assertStatus(200);
     // These strings would be present when features section is enabled
     $response->assertSee('Mixing'); // Feature 1 title
-    $response->assertSee('ready to start your project?'); // CTA section
+    $response->assertSee(__('portfolio.home.cta.ready_title')); // CTA section
 });
 
 test('home page hides features section when disabled', function () {
@@ -40,8 +40,8 @@ test('home page hides CTA section when disabled', function () {
 
     $response->assertStatus(200);
     // CTA should not be visible
-    $response->assertDontSee('ready to start your project?');
-    $response->assertDontSee('let\'s discuss how we can bring');
+    $response->assertDontSee(__('portfolio.home.cta.ready_title'));
+    $response->assertDontSee(__('portfolio.home.cta.ready_description'));
 });
 
 test('about page shows all sections when enabled', function () {
@@ -50,8 +50,8 @@ test('about page shows all sections when enabled', function () {
     $response->assertStatus(200);
     // These would be present when sections are enabled
     $response->assertSee('10+'); // Experience years
-    $response->assertSee('services'); // Services section heading
-    $response->assertSee('our philosophy'); // Philosophy section heading
+    $response->assertSee(__('portfolio.about.services_title')); // Services section heading
+    $response->assertSee(__('portfolio.about.philosophy_title')); // Philosophy section heading
 });
 
 test('about page hides experience section when disabled', function () {
@@ -65,9 +65,9 @@ test('about page hides experience section when disabled', function () {
 
     $response->assertStatus(200);
     // Experience stats should not be visible
-    $response->assertDontSee('Years of experience');
-    $response->assertDontSee('projects completed');
-    $response->assertDontSee('happy clients');
+    $response->assertDontSee(__('portfolio.about.experience.years'));
+    $response->assertDontSee(__('portfolio.about.experience.projects'));
+    $response->assertDontSee(__('portfolio.about.experience.clients'));
 });
 
 test('about page hides services section when disabled', function () {
@@ -78,7 +78,7 @@ test('about page hides services section when disabled', function () {
 
     $response->assertStatus(200);
     // Services section should not be visible
-    $response->assertDontSee('services');
+    $response->assertDontSee(__('portfolio.about.services_title'));
     $response->assertDontSee('Recording'); // Service item
 });
 
@@ -90,7 +90,7 @@ test('about page hides philosophy section when disabled', function () {
 
     $response->assertStatus(200);
     // Philosophy section should not be visible
-    $response->assertDontSee('our philosophy');
+    $response->assertDontSee(__('portfolio.about.philosophy_title'));
     $response->assertDontSee('Every audio project tells a story');
 });
 
@@ -100,9 +100,9 @@ test('admin can access section settings page', function () {
     $response = $this->actingAs($user)->get('/admin/section-settings');
 
     $response->assertStatus(200);
-    $response->assertSee('Section Settings');
-    $response->assertSee('home Page');
-    $response->assertSee('about Page');
+    $response->assertSee(__('admin.settings.section_visibility'));
+    $response->assertSee(__('admin.settings.sections.home.title'));
+    $response->assertSee(__('admin.settings.sections.about.title'));
 });
 
 test('section settings manager shows correct sections', function () {
@@ -112,9 +112,9 @@ test('section settings manager shows correct sections', function () {
 
     $response->assertStatus(200);
     // Should show disableable sections
-    $response->assertSee('Features Section');
-    $response->assertSee('Call to Action Section');
-    $response->assertSee('Experience Stats Section');
-    $response->assertSee('Services Section');
-    $response->assertSee('Philosophy Section');
+    $response->assertSee(__('admin.settings.sections.home.features.title'));
+    $response->assertSee(__('admin.settings.sections.home.cta.title'));
+    $response->assertSee(__('admin.settings.sections.about.experience.title'));
+    $response->assertSee(__('admin.settings.sections.about.services.title'));
+    $response->assertSee(__('admin.settings.sections.about.philosophy.title'));
 });

@@ -27,15 +27,15 @@
             <div class="grid md:grid-cols-3 gap-8 md:gap-12">
                 <div class="text-center space-y-2">
                     <div class="text-4xl md:text-5xl font-bold text-portfolio-accent">{{ $content['experience']['years'] }}</div>
-                    <div class="text-sm text-portfolio-text/70">years of experience</div>
+                    <div class="text-sm text-portfolio-text/70">{{ __('portfolio.about.experience.years') }}</div>
                 </div>
                 <div class="text-center space-y-2">
                     <div class="text-4xl md:text-5xl font-bold text-portfolio-accent">{{ $content['experience']['projects'] }}</div>
-                    <div class="text-sm text-portfolio-text/70">projects completed</div>
+                    <div class="text-sm text-portfolio-text/70">{{ __('portfolio.about.experience.projects') }}</div>
                 </div>
                 <div class="text-center space-y-2">
                     <div class="text-4xl md:text-5xl font-bold text-portfolio-accent">{{ $content['experience']['clients'] }}</div>
-                    <div class="text-sm text-portfolio-text/70">happy clients</div>
+                    <div class="text-sm text-portfolio-text/70">{{ __('portfolio.about.experience.clients') }}</div>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <!-- Services -->
     <section class="py-20 bg-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 text-portfolio-dark">services</h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 text-portfolio-dark">{{ __('portfolio.about.services_title') }}</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
                 @foreach($content['services'] as $service)
                 <div class="flex items-center gap-2 group">
@@ -64,7 +64,7 @@
     <section class="py-20 bg-portfolio-dark text-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
             <div class="max-w-4xl mx-auto text-center space-y-6">
-                <h2 class="text-2xl md:text-3xl font-bold">our philosophy</h2>
+                <h2 class="text-2xl md:text-3xl font-bold">{{ __('portfolio.about.philosophy_title') }}</h2>
                 <p class="text-base md:text-lg text-portfolio-light/80 leading-relaxed">{{ $content['philosophy'] }}</p>
             </div>
         </div>

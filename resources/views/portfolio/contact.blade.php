@@ -19,12 +19,12 @@
                 <!-- Contact Information -->
                 <div class="space-y-8">
                     <div>
-                        <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">contact information</h2>
+                        <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">{{ __('portfolio.contact.info_title') }}</h2>
                         <div class="space-y-6">
                             <div class="flex items-start gap-3">
                                 <span class="text-portfolio-accent mt-1">></span>
                                 <div>
-                                    <p class="text-sm text-portfolio-text/60 mb-1">email</p>
+                                    <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.email') }}</p>
                                     <a href="mailto:{{ $content['info']['email'] }}" class="text-portfolio-text hover:text-portfolio-accent transition-colors">
                                         {{ $content['info']['email'] }}
                                     </a>
@@ -33,7 +33,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="text-portfolio-accent mt-1">></span>
                                 <div>
-                                    <p class="text-sm text-portfolio-text/60 mb-1">phone</p>
+                                    <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.phone') }}</p>
                                     <a href="tel:{{ $content['info']['phone'] }}" class="text-portfolio-text hover:text-portfolio-accent transition-colors">
                                         {{ $content['info']['phone'] }}
                                     </a>
@@ -42,7 +42,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="text-portfolio-accent mt-1">></span>
                                 <div>
-                                    <p class="text-sm text-portfolio-text/60 mb-1">location</p>
+                                    <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.location') }}</p>
                                     <p class="text-portfolio-text">{{ $content['info']['location'] }}</p>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
 
                 <!-- Contact Form -->
                 <div class="bg-portfolio-secondary p-6 md:p-8 lg:p-10 rounded-sm">
-                    <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">send a message</h2>
+                    <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">{{ __('portfolio.contact.form_title') }}</h2>
                     <livewire:contact-form />
                 </div>
             </div>

@@ -8,8 +8,8 @@
         :description="$content['hero_text']"
         :showIllustration="true"
         :ctaLinks="[
-            ['text' => 'explore our work', 'href' => route('about'), 'primary' => true],
-            ['text' => 'get in touch', 'href' => route('contact'), 'primary' => false]
+            ['text' => __('portfolio.home.cta.explore_work'), 'href' => route('about'), 'primary' => true],
+            ['text' => __('portfolio.home.cta.get_in_touch'), 'href' => route('contact'), 'primary' => false]
         ]"
     />
 
@@ -44,11 +44,11 @@
     <section class="py-20 bg-gradient-to-b from-portfolio-light to-portfolio-secondary">
         <div class="container mx-auto px-6 lg:px-12 text-center">
             <div class="max-w-3xl mx-auto space-y-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-portfolio-dark">ready to start your project?</h2>
-                <p class="text-lg text-portfolio-text/80">let's discuss how we can bring your audio vision to life.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-portfolio-dark">{{ __('portfolio.home.cta.ready_title') }}</h2>
+                <p class="text-lg text-portfolio-text/80">{{ __('portfolio.home.cta.ready_description') }}</p>
                 <div class="pt-4">
                     <x-portfolio.cta-link href="{{ route('contact') }}" :primary="true">
-                        get in touch
+                        {{ __('portfolio.home.cta.get_in_touch') }}
                     </x-portfolio.cta-link>
                 </div>
             </div>

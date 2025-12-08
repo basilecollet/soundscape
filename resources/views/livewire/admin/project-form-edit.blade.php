@@ -7,8 +7,8 @@
             <!-- Form Header -->
             <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 flex items-start justify-between">
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">Project Information</h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">Update the project details below.</p>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-zinc-100">{{ __('admin.projects.form.edit_title') }}</h2>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-zinc-400">{{ __('admin.projects.form.form_description') }}</p>
                 </div>
 
                 <!-- Status Badge - Desktop (top right) -->
@@ -27,12 +27,12 @@
                 <!-- Title (Required) -->
                 <div>
                     <flux:label for="title">
-                        Title <span class="text-red-500">*</span>
+                        {{ __('admin.projects.form.title.label') }} <span class="text-red-500">*</span>
                     </flux:label>
                     <flux:input
                         wire:model="title"
                         id="title"
-                        placeholder="Enter project title"
+                        placeholder="{{ __('admin.projects.form.title.placeholder') }}"
                         class="mt-1"
                     />
                     @error('title')
@@ -43,30 +43,30 @@
                 <!-- Description -->
                 <div>
                     <flux:label for="description">
-                        Description
+                        {{ __('admin.projects.form.description.label') }}
                     </flux:label>
                     <flux:textarea
                         wire:model="description"
                         id="description"
-                        placeholder="Enter project description (supports Markdown)"
+                        placeholder="{{ __('admin.projects.form.description.placeholder') }}"
                         rows="6"
                         class="mt-1"
                     />
                     @error('description')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400">You can use Markdown formatting for rich text.</p>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400">{{ __('admin.projects.form.description.help') }}</p>
                 </div>
 
                 <!-- Short Description -->
                 <div>
                     <flux:label for="shortDescription">
-                        Short Description
+                        {{ __('admin.projects.form.short_description.label') }}
                     </flux:label>
                     <flux:textarea
                         wire:model="shortDescription"
                         id="shortDescription"
-                        placeholder="Enter a brief description (max 500 characters)"
+                        placeholder="{{ __('admin.projects.form.short_description.placeholder') }}"
                         rows="3"
                         class="mt-1"
                     />
@@ -80,12 +80,12 @@
                     <!-- Client Name -->
                     <div>
                         <flux:label for="clientName">
-                            Client Name
+                            {{ __('admin.projects.form.client_name.label') }}
                         </flux:label>
                         <flux:input
                             wire:model="clientName"
                             id="clientName"
-                            placeholder="Enter client name"
+                            placeholder="{{ __('admin.projects.form.client_name.placeholder') }}"
                             class="mt-1"
                         />
                         @error('clientName')
@@ -96,7 +96,7 @@
                     <!-- Project Date -->
                     <div>
                         <flux:label for="projectDate">
-                            Project Date
+                            {{ __('admin.projects.form.project_date.label') }}
                         </flux:label>
                         <flux:input
                             wire:model="projectDate"
@@ -113,12 +113,12 @@
                 <!-- Bandcamp Player -->
                 <div>
                     <flux:label for="bandcampPlayer">
-                        Bandcamp Player
+                        {{ __('admin.projects.form.bandcamp_player.label') }}
                     </flux:label>
                     <flux:textarea
                         wire:model="bandcampPlayer"
                         id="bandcampPlayer"
-                        placeholder="Paste your Bandcamp embed iframe code here"
+                        placeholder="{{ __('admin.projects.form.bandcamp_player.placeholder') }}"
                         rows="4"
                         class="mt-1 font-mono text-sm"
                     />
@@ -126,20 +126,19 @@
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                     <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400">
-                        Copy the entire iframe embed code from Bandcamp (starting with &lt;iframe...)
+                        {{ __('admin.projects.form.bandcamp_player.help') }}
                     </p>
                 </div>
 
                 <!-- Media Management Section -->
                 <div class="border-t border-gray-200 dark:border-zinc-700 pt-6">
-                    <h3 class="text-base font-semibold text-gray-900 dark:text-zinc-100 mb-4">Project Images</h3>
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-zinc-100 mb-4">{{ __('admin.projects.form.section.media') }}</h3>
 
                     <!-- Featured Image -->
                     <div class="mb-6">
-                        <flux:label>Featured Image</flux:label>
+                        <flux:label>{{ __('admin.projects.form.featured_image.label') }}</flux:label>
                         <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">
-                            The main image that will be displayed for this project<br>
-                            <span class="font-medium">Requirements:</span> Min. 800x600px, max 10MB, formats: JPEG, PNG, GIF, WebP
+                            {{ __('admin.projects.form.featured_image.help') }}
                         </p>
 
                         @if($project->getFirstMedia('featured'))
@@ -147,15 +146,15 @@
                             <div class="relative inline-block">
                                 <img
                                     src="{{ $project->getFirstMediaUrl('featured') }}"
-                                    alt="Featured image"
+                                    alt="{{ __('admin.projects.form.featured_image.alt') }}"
                                     class="w-64 h-48 object-cover rounded-lg border border-gray-200 dark:border-zinc-700"
                                 />
                                 <button
                                     type="button"
                                     wire:click="deleteFeaturedImage"
-                                    wire:confirm="Are you sure you want to delete this image?"
+                                    wire:confirm="{{ __('ui.confirmation.are_you_sure') }}"
                                     class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-2 transition-colors"
-                                    aria-label="Delete featured image"
+                                    aria-label="{{ __('admin.projects.form.featured_image.remove') }}"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -180,13 +179,13 @@
                                         <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-zinc-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                             <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p class="mt-2 text-sm text-gray-600 dark:text-zinc-400">Click to upload featured image</p>
+                                        <p class="mt-2 text-sm text-gray-600 dark:text-zinc-400">{{ __('admin.projects.form.featured_image.upload') }}</p>
                                     </div>
                                 </label>
 
                                 @if ($featuredImage)
                                     <div class="mt-3">
-                                        <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">Preview:</p>
+                                        <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">{{ __('ui.common.preview') }}:</p>
                                         <img
                                             src="{{ $this->getFeaturedImagePreviewUrl() }}"
                                             class="w-64 h-48 object-cover rounded-lg border border-gray-200 dark:border-zinc-700"
@@ -198,7 +197,8 @@
                                             size="sm"
                                             class="mt-2"
                                         >
-                                            Upload Featured Image
+                                            <span wire:loading.remove wire:target="saveFeaturedImage">{{ __('admin.projects.form.featured_image.upload_button') }}</span>
+                                            <span wire:loading wire:target="saveFeaturedImage">{{ __('ui.common.uploading') }}</span>
                                         </flux:button>
                                     </div>
                                 @endif
@@ -212,10 +212,9 @@
 
                     <!-- Gallery Images -->
                     <div>
-                        <flux:label>Gallery Images</flux:label>
+                        <flux:label>{{ __('admin.projects.form.gallery_images.label') }}</flux:label>
                         <p class="mt-1 text-xs text-gray-500 dark:text-zinc-400 mb-3">
-                            Additional images for this project gallery (max 10 images)<br>
-                            <span class="font-medium">Requirements:</span> Min. 800x600px, max 10MB each, formats: JPEG, PNG, GIF, WebP
+                            {{ __('admin.projects.form.gallery_images.help') }}
                         </p>
 
                         <!-- Display Current Gallery Images -->
@@ -225,15 +224,15 @@
                                     <div class="relative group">
                                         <img
                                             src="{{ $media->getUrl() }}"
-                                            alt="Gallery image"
+                                            alt="{{ __('admin.projects.form.gallery_images.alt') }}"
                                             class="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-zinc-700"
                                         />
                                         <button
                                             type="button"
                                             wire:click="deleteGalleryImage({{ $media->id }})"
-                                            wire:confirm="Are you sure you want to delete this image?"
+                                            wire:confirm="{{ __('ui.confirmation.are_you_sure') }}"
                                             class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                                            aria-label="Delete gallery image"
+                                            aria-label="{{ __('admin.projects.form.gallery_images.remove') }}"
                                         >
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -262,16 +261,16 @@
                                     <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-zinc-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <p class="mt-2 text-sm text-gray-600 dark:text-zinc-400">Click to upload gallery images (multiple allowed)</p>
+                                    <p class="mt-2 text-sm text-gray-600 dark:text-zinc-400">{{ __('admin.projects.form.gallery_images.upload') }}</p>
                                 </div>
                             </label>
 
                             @if (count($galleryImages) > 0)
                                 <div class="mt-3">
-                                    <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">Preview ({{ count($galleryImages) }} image{{ count($galleryImages) > 1 ? 's' : '' }}):</p>
+                                    <p class="text-sm text-gray-600 dark:text-zinc-400 mb-2">{{ __('ui.common.preview') }}: {{ __('admin.projects.form.gallery_images.preview_count', ['count' => count($galleryImages)]) }}</p>
                                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                         @foreach($galleryImages as $image)
-                                            <img src="{{ $this->getGalleryImagePreviewUrl($image) }}" class="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
+                                            <img src="{{ $this->getGalleryImagePreviewUrl($image) }}" alt="{{ __('admin.projects.form.gallery_images.preview_alt') }}" class="w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-zinc-700">
                                         @endforeach
                                     </div>
                                     <flux:button
@@ -281,7 +280,8 @@
                                         size="sm"
                                         class="mt-2"
                                     >
-                                        Upload Gallery Images
+                                        <span wire:loading.remove wire:target="saveGalleryImages">{{ __('admin.projects.form.gallery_images.upload_button') }}</span>
+                                        <span wire:loading wire:target="saveGalleryImages">{{ __('ui.common.uploading') }}</span>
                                     </flux:button>
                                 </div>
                             @endif
@@ -304,27 +304,27 @@
                         type="button"
                         class="w-full sm:w-auto"
                     >
-                        Cancel
+                        {{ __('ui.common.cancel') }}
                     </flux:button>
 
                     <flux:button
-                        variant="primary"
+                    variant="primary"
                         type="submit"
                         wire:loading.attr="disabled"
                         class="w-full sm:w-auto"
                     >
-                        <span wire:loading.remove wire:target="save">Update Project</span>
-                        <span wire:loading wire:target="save">Updating...</span>
+                        <span wire:loading.remove wire:target="save">{{ __('ui.common.update') }}</span>
+                        <span wire:loading wire:target="save">{{ __('ui.common.updating') }}</span>
                     </flux:button>
                 </div>
 
                 <!-- Status Management Section -->
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-2">Project Status</h3>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-2">{{ __('admin.projects.form.status.label') }}</h3>
                     <p class="text-xs text-gray-600 dark:text-zinc-400 mb-4">
-                        Change the publication status of this project.
+                        {{ __('admin.projects.form.status.current') }}
                         @if($project->status->isDraft())
-                            Publishing requires a description to be set.
+                            {{ __('domain.project.cannot_publish_missing_description') }}
                         @endif
                     </p>
 
@@ -338,8 +338,8 @@
                                     wire:target="publish"
                                     class="w-full sm:w-auto"
                                 >
-                                    <span wire:loading.remove wire:target="publish">Publish Project</span>
-                                    <span wire:loading wire:target="publish">Publishing...</span>
+                                    <span wire:loading.remove wire:target="publish">{{ __('admin.projects.actions.publish') }}</span>
+                                    <span wire:loading wire:target="publish">{{ __('admin.projects.actions.publishing') }}</span>
                                 </flux:button>
                             </flux:modal.trigger>
                         @endif
@@ -347,7 +347,7 @@
                         @if($this->canArchive)
                             <flux:modal.trigger name="confirm-archive">
                                 <flux:button variant="danger" type="button" class="w-full sm:w-auto">
-                                    Archive Project
+                                    {{ __('admin.projects.actions.archive') }}
                                 </flux:button>
                             </flux:modal.trigger>
                         @endif
@@ -355,7 +355,7 @@
                         @if($this->canDraft)
                             <flux:modal.trigger name="confirm-draft">
                                 <flux:button variant="filled" type="button" class="w-full sm:w-auto">
-                                    Set to Draft
+                                    {{ __('admin.projects.actions.set_to_draft') }}
                                 </flux:button>
                             </flux:modal.trigger>
                         @endif
@@ -368,15 +368,15 @@
     <!-- Publish Confirmation Modal -->
     <x-admin.confirmation-modal
         name="confirm-publish"
-        title="Publish this project?"
-        message="This project will become visible on your public portfolio. Make sure all content is finalized and a description is provided."
+        :title="__('admin.projects.modals.publish.title')"
+        :message="__('admin.projects.modals.publish.message')"
         action="publish"
-        actionText="Publish Project"
+        :actionText="__('admin.projects.actions.publish')"
         actionVariant="primary"
     >
         @if(empty($description))
             <strong class="block mt-2 text-red-600 dark:text-red-400">
-                ⚠️ Warning: No description is currently set. Publishing will fail without a description.
+                ⚠️ {{ __('admin.projects.modals.publish.warning') }}
             </strong>
         @endif
     </x-admin.confirmation-modal>
@@ -385,10 +385,10 @@
     @if($this->canArchive)
         <x-admin.confirmation-modal
             name="confirm-archive"
-            title="Archive this project?"
-            message="This project will no longer be visible on your public portfolio. You can restore it later by setting it back to draft or published status."
+            :title="__('admin.projects.modals.archive.title')"
+            :message="__('admin.projects.modals.archive.message')"
             action="archive"
-            actionText="Archive Project"
+            :actionText="__('admin.projects.actions.archive')"
             actionVariant="danger"
         />
     @endif
@@ -397,18 +397,18 @@
     @if($this->canDraft)
         <x-admin.confirmation-modal
             name="confirm-draft"
-            title="Set back to draft?"
+            :title="__('admin.projects.modals.draft.title')"
             action="draft"
-            actionText="Set to Draft"
+            :actionText="__('admin.projects.actions.set_to_draft')"
             actionVariant="primary"
         >
-            This project will be set back to draft status and will no longer be publicly visible
+            {{ __('admin.projects.modals.draft.message') }}
             @if($project->status->isPublished())
-                on your portfolio.
+                {{ __('admin.projects.modals.draft.from_published') }}
             @else
-                if it was archived.
+                {{ __('admin.projects.modals.draft.from_archived') }}
             @endif
-            You can publish it again at any time.
+            {{ __('admin.projects.modals.draft.can_publish_again') }}
         </x-admin.confirmation-modal>
     @endif
 </div>

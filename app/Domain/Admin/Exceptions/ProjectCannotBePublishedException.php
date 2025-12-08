@@ -8,15 +8,20 @@ use App\Domain\Admin\Entities\Enums\ProjectStatus;
 
 final class ProjectCannotBePublishedException extends \DomainException
 {
+    private ProjectStatus $status;
+
     public static function invalidStatus(ProjectStatus $status): self
     {
-        return new self(
-            sprintf('Cannot publish project with status "%s". Only draft projects can be published.', $status->value)
+        $instance = new self(
+            sprintf('Technical: Cannot publish project with status "%s". Only draft projects can be published.', $status->value)
         );
+        $instance->status = $status;
+
+        return $instance;
     }
 
-    public static function missingDescription(): self
+    public function getStatus(): ProjectStatus
     {
-        return new self('Cannot publish project without description');
+        return $this->status;
     }
 }

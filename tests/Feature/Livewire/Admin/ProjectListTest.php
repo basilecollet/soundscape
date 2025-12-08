@@ -83,11 +83,11 @@ test('displays archived status badge', function () {
 test('shows empty state when no projects exist', function () {
     Livewire::actingAs(User::factory()->create())
         ->test(ProjectList::class)
-        ->assertSee('No projects found');
+        ->assertSee(__('admin.projects.empty_state.title'));
 });
 
 test('empty state has create project button', function () {
     Livewire::actingAs(User::factory()->create())
         ->test(ProjectList::class)
-        ->assertSee('Create Project');
+        ->assertSee(__('admin.projects.empty_state.create_first'));
 });

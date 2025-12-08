@@ -117,13 +117,13 @@ describe('Project Archiving', function () {
         $archivedProject = Project::factory()->create(['status' => ProjectStatus::Archived]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $publishedProject])
-            ->assertSee('Archive Project');
+            ->assertSee(__('admin.projects.actions.archive'));
 
         Livewire::test(ProjectFormEdit::class, ['project' => $draftProject])
-            ->assertDontSee('Archive Project');
+            ->assertDontSee(__('admin.projects.actions.archive'));
 
         Livewire::test(ProjectFormEdit::class, ['project' => $archivedProject])
-            ->assertDontSee('Archive Project');
+            ->assertDontSee(__('admin.projects.actions.archive'));
     });
 });
 
@@ -175,13 +175,13 @@ describe('Project Drafting', function () {
         $draftProject = Project::factory()->create(['status' => ProjectStatus::Draft]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $publishedProject])
-            ->assertSee('Set to Draft');
+            ->assertSee(__('admin.projects.actions.set_to_draft'));
 
         Livewire::test(ProjectFormEdit::class, ['project' => $archivedProject])
-            ->assertSee('Set to Draft');
+            ->assertSee(__('admin.projects.actions.set_to_draft'));
 
         Livewire::test(ProjectFormEdit::class, ['project' => $draftProject])
-            ->assertDontSee('Set to Draft');
+            ->assertDontSee(__('admin.projects.actions.set_to_draft'));
     });
 });
 
@@ -190,21 +190,21 @@ describe('Status Badge Display', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Draft]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Draft');
+            ->assertSee(__('ui.status.draft'));
     });
 
     test('displays published badge for published projects', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Published]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Published');
+            ->assertSee(__('ui.status.published'));
     });
 
     test('displays archived badge for archived projects', function () {
         $project = Project::factory()->create(['status' => ProjectStatus::Archived]);
 
         Livewire::test(ProjectFormEdit::class, ['project' => $project])
-            ->assertSee('Archived');
+            ->assertSee(__('ui.status.archived'));
     });
 });
 
