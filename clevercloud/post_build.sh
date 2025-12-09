@@ -9,6 +9,7 @@ echo "📊 Running migrations..."
 php artisan migrate --force --no-interaction
 
 # Create the necessary sub folders
+echo "📁 Create the necessary sub folders..."
 mkdir -p storage/app/private storage/app/public
 
 # Create storage link if it doesn't exist
