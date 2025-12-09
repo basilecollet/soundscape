@@ -9,11 +9,26 @@ use Illuminate\View\View;
 class AboutController extends Controller
 {
     public function __construct(
-        private readonly ContentService $contentService
+        private readonly ContentService $contentService,
     ) {}
 
     public function __invoke(): View
     {
+        // Check if minimum content exists using domain entity
+        $aboutPage = $this->contentService->getAboutPage();
+
+        if (! $aboutPage->hasMinimumContent()) {
+            return view('portfolio.empty-state', [
+                'title' => __('portfolio.empty_state.about.title'),
+                'description' => __('portfolio.empty_state.about.description'),
+                'seo' => [
+                    'title' => 'About Soundscape - Under Construction',
+                    'description' => 'This page is currently under construction.',
+                    'keywords' => 'about audio engineer',
+                ],
+            ]);
+        }
+
         $content = $this->contentService->getAboutContent();
 
         return view('portfolio.about', [

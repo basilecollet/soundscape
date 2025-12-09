@@ -9,6 +9,9 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     // Seed default section settings for all tests
     $this->artisan('db:seed', ['--class' => 'DefaultSectionSettingsSeeder']);
+
+    // Seed default content for all tests
+    $this->artisan('db:seed', ['--class' => 'DefaultContentSeeder']);
 });
 
 test('home page shows all sections when enabled', function () {
@@ -22,7 +25,10 @@ test('home page shows all sections when enabled', function () {
 
 test('home page hides features section when disabled', function () {
     // Disable features section
-    SectionSetting::setSectionEnabled('features', 'home', false);
+    SectionSetting::updateOrCreate(
+        ['section_key' => 'features', 'page' => 'home'],
+        ['is_enabled' => false]
+    );
 
     $response = $this->get('/');
 
@@ -34,7 +40,10 @@ test('home page hides features section when disabled', function () {
 
 test('home page hides CTA section when disabled', function () {
     // Disable CTA section
-    SectionSetting::setSectionEnabled('cta', 'home', false);
+    SectionSetting::updateOrCreate(
+        ['section_key' => 'cta', 'page' => 'home'],
+        ['is_enabled' => false]
+    );
 
     $response = $this->get('/');
 
@@ -56,10 +65,10 @@ test('about page shows all sections when enabled', function () {
 
 test('about page hides experience section when disabled', function () {
     // Disable experience section
-    SectionSetting::setSectionEnabled('experience', 'about', false);
-
-    // Debug: verify the section is disabled
-    expect(SectionSetting::isSectionEnabled('experience', 'about'))->toBeFalse();
+    SectionSetting::updateOrCreate(
+        ['section_key' => 'experience', 'page' => 'about'],
+        ['is_enabled' => false]
+    );
 
     $response = $this->get('/about');
 
@@ -72,7 +81,10 @@ test('about page hides experience section when disabled', function () {
 
 test('about page hides services section when disabled', function () {
     // Disable services section
-    SectionSetting::setSectionEnabled('services', 'about', false);
+    SectionSetting::updateOrCreate(
+        ['section_key' => 'services', 'page' => 'about'],
+        ['is_enabled' => false]
+    );
 
     $response = $this->get('/about');
 
@@ -84,7 +96,10 @@ test('about page hides services section when disabled', function () {
 
 test('about page hides philosophy section when disabled', function () {
     // Disable philosophy section
-    SectionSetting::setSectionEnabled('philosophy', 'about', false);
+    SectionSetting::updateOrCreate(
+        ['section_key' => 'philosophy', 'page' => 'about'],
+        ['is_enabled' => false]
+    );
 
     $response = $this->get('/about');
 

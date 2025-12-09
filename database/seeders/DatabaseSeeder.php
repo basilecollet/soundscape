@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PageContentSeeder::class,
-            DefaultContentSeeder::class,
+            // DefaultContentSeeder is available but not run by default
+            // To seed default content for demo/test purposes, run:
+            // php artisan db:seed --class=DefaultContentSeeder
         ]);
     }
 }

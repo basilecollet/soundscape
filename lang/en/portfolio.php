@@ -82,4 +82,19 @@ return [
     'cta' => [
         'learn_more' => 'learn more',
     ],
+
+    'empty_state' => [
+        'home' => [
+            'title' => 'page under construction',
+            'description' => 'this page content is currently being configured. check back soon to discover our work.',
+        ],
+        'about' => [
+            'title' => 'about - under construction',
+            'description' => 'information for this page will be available soon. we\'re preparing exciting content to share with you.',
+        ],
+        'contact' => [
+            'title' => 'contact - under construction',
+            'description' => 'contact details are currently being configured. check back soon to get in touch with us.',
+        ],
+    ],
 ];

@@ -1,14 +1,34 @@
 <?php
 
 use App\Application\Portfolio\Services\ContentService;
+use App\Models\PageContent;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('contact page is accessible', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'contact_title', 'content' => 'Get in Touch', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_subtitle', 'content' => 'Let\'s discuss your project', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_description', 'content' => 'Ready to elevate your audio?', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_email', 'content' => 'contact@soundscape.audio', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_phone', 'content' => '+33 6 XX XX XX XX', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_location', 'content' => 'Paris, France', 'page' => 'contact']);
+
     $response = $this->get('/contact');
 
     $response->assertStatus(200);
 });
 
 test('contact page contains proper SEO meta tags', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'contact_title', 'content' => 'Get in Touch', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_subtitle', 'content' => 'Let\'s discuss your project', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_description', 'content' => 'Ready to elevate your audio?', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_email', 'content' => 'contact@soundscape.audio', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_phone', 'content' => '+33 6 XX XX XX XX', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_location', 'content' => 'Paris, France', 'page' => 'contact']);
+
     $response = $this->get('/contact');
 
     $response->assertSee('<title>Contact Soundscape - Get in Touch</title>', false);
@@ -17,6 +37,14 @@ test('contact page contains proper SEO meta tags', function () {
 });
 
 test('contact page displays content from ContentService', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'contact_title', 'content' => 'Get in Touch', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_subtitle', 'content' => 'Let\'s discuss your project', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_description', 'content' => 'Ready to elevate your audio?', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_email', 'content' => 'contact@soundscape.audio', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_phone', 'content' => '+33 6 XX XX XX XX', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_location', 'content' => 'Paris, France', 'page' => 'contact']);
+
     $contentService = app(ContentService::class);
     $content = $contentService->getContactContent();
 
@@ -31,6 +59,14 @@ test('contact page displays content from ContentService', function () {
 });
 
 test('contact page shows contact form', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'contact_title', 'content' => 'Get in Touch', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_subtitle', 'content' => 'Let\'s discuss your project', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_description', 'content' => 'Ready to elevate your audio?', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_email', 'content' => 'contact@soundscape.audio', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_phone', 'content' => '+33 6 XX XX XX XX', 'page' => 'contact']);
+    PageContent::factory()->create(['key' => 'contact_location', 'content' => 'Paris, France', 'page' => 'contact']);
+
     $response = $this->get('/contact');
 
     $response->assertSee('wire:model="name"', false);

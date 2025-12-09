@@ -27,4 +27,22 @@ class PageContent extends Model
 
         return $content ? $content->content : $default;
     }
+
+    /**
+     * Check if content exists for a given key
+     */
+    public static function hasContent(string $key): bool
+    {
+        return self::where('key', $key)->exists();
+    }
+
+    /**
+     * Get content by key without fallback
+     */
+    public static function getContentOrNull(string $key): ?string
+    {
+        $content = self::where('key', $key)->first();
+
+        return $content?->content;
+    }
 }

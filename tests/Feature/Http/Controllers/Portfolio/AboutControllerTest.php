@@ -1,14 +1,38 @@
 <?php
 
 use App\Application\Portfolio\Services\ContentService;
+use App\Models\PageContent;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 test('about page is accessible', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'about_title', 'content' => 'About Soundscape', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_intro', 'content' => 'Professional audio engineer', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
+
+    // And: Sections are disabled
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+
     $response = $this->get('/about');
 
     $response->assertStatus(200);
 });
 
 test('about page contains proper SEO meta tags', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'about_title', 'content' => 'About Soundscape', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_intro', 'content' => 'Professional audio engineer', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
+
+    // And: Sections are disabled
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+
     $response = $this->get('/about');
 
     $response->assertSee('<title>About Soundscape - Professional Audio Engineering</title>', false);
@@ -17,6 +41,16 @@ test('about page contains proper SEO meta tags', function () {
 });
 
 test('about page displays content from ContentService', function () {
+    // Given: Minimum content exists
+    PageContent::factory()->create(['key' => 'about_title', 'content' => 'About Soundscape', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_intro', 'content' => 'Professional audio engineer', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
+
+    // And: Sections are disabled
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+
     $contentService = app(ContentService::class);
     $content = $contentService->getAboutContent();
 
@@ -25,14 +59,27 @@ test('about page displays content from ContentService', function () {
     $response->assertSee($content['title']);
     $response->assertSee($content['intro']);
     $response->assertSee($content['bio']);
-    if (isset($content['experience'])) {
-        $response->assertSee($content['experience']['years']);
-        $response->assertSee($content['experience']['projects']);
-        $response->assertSee($content['experience']['clients']);
-    }
 });
 
-test('about page shows all services', function () {
+test('about page shows all services when section is enabled', function () {
+    // Given: Minimum content + services exist
+    PageContent::factory()->create(['key' => 'about_title', 'content' => 'About Soundscape', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_intro', 'content' => 'Professional audio engineer', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
+
+    // And: Services content exists
+    PageContent::factory()->create(['key' => 'about_service_1', 'content' => 'Recording', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_service_2', 'content' => 'Mixing', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_service_3', 'content' => 'Mastering', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_service_4', 'content' => 'Sound Design', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_service_5', 'content' => 'Audio Restoration', 'page' => 'about']);
+    PageContent::factory()->create(['key' => 'about_service_6', 'content' => 'Podcast Production', 'page' => 'about']);
+
+    // And: Services section is enabled, others disabled
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => true]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+
     $contentService = app(ContentService::class);
     $content = $contentService->getAboutContent();
 

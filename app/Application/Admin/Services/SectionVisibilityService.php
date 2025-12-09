@@ -6,8 +6,9 @@ namespace App\Application\Admin\Services;
 
 use App\Domain\Admin\Enums\SectionKeys;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
+use App\Domain\Admin\Services\SectionVisibilityServiceInterface;
 
-readonly class SectionVisibilityService
+readonly class SectionVisibilityService implements SectionVisibilityServiceInterface
 {
     public function __construct(
         private SectionSettingRepository $sectionSettingRepository

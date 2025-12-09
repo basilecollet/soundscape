@@ -9,11 +9,26 @@ use Illuminate\View\View;
 class ContactController extends Controller
 {
     public function __construct(
-        private readonly ContentService $contentService
+        private readonly ContentService $contentService,
     ) {}
 
     public function __invoke(): View
     {
+        // Check if minimum content exists using domain entity
+        $contactPage = $this->contentService->getContactPage();
+
+        if (! $contactPage->hasMinimumContent()) {
+            return view('portfolio.empty-state', [
+                'title' => __('portfolio.empty_state.contact.title'),
+                'description' => __('portfolio.empty_state.contact.description'),
+                'seo' => [
+                    'title' => 'Contact Soundscape - Under Construction',
+                    'description' => 'This page is currently under construction.',
+                    'keywords' => 'contact audio engineer',
+                ],
+            ]);
+        }
+
         $content = $this->contentService->getContactContent();
 
         return view('portfolio.contact', [
