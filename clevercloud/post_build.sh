@@ -8,6 +8,9 @@ echo "🚀 Running post-build hooks for Soundscape..."
 echo "📊 Running migrations..."
 php artisan migrate --force --no-interaction
 
+# Create the necessary sub folders
+mkdir -p storage/app/private storage/app/public
+
 # Create storage link if it doesn't exist
 echo "🔗 Creating storage link..."
 php artisan storage:link --force
@@ -15,8 +18,5 @@ php artisan storage:link --force
 # Clear and cache config for production
 echo "⚡ Optimizing application..."
 php artisan optimize
-
-# Create the necessary sub folders
-mkdir -p storage/app/private storage/app/public
 
 echo "✅ Post-build hooks completed successfully!"
