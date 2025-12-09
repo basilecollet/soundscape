@@ -16,4 +16,7 @@ php artisan storage:link --force
 echo "⚡ Optimizing application..."
 php artisan optimize
 
+# Create the necessary sub folders
+mkdir -p storage/app/private storage/app/public
+
 echo "✅ Post-build hooks completed successfully!"
