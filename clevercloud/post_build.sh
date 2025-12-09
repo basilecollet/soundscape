@@ -4,7 +4,15 @@ set -e
 
 echo "🚀 Running post-build hooks for Soundscape..."
 
-# Run database migrations
+# Verify database connection
+echo "🔍 Verifying database connection..."
+if ! php artisan db:show --no-interaction > /dev/null 2>&1; then
+    echo "❌ Database connection failed. Aborting deployment."
+    exit 1
+fi
+echo "✅ Database connection verified"
+
+# Run database migrations (NEVER use migrate:fresh in production)
 echo "📊 Running migrations..."
 php artisan migrate --force --no-interaction
 
