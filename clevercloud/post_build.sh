@@ -8,9 +8,11 @@ echo "🚀 Running post-build hooks for Soundscape..."
 echo "📊 Running migrations..."
 php artisan migrate --force --no-interaction
 
-# Create the necessary sub folders
-echo "📁 Create the necessary sub folders..."
-mkdir -p storage/app/private storage/app/public
+# Create the necessary sub folders inside FS Bucket mount
+echo "📁 Creating storage structure inside FS Bucket..."
+mkdir -p storage/app/private
+mkdir -p storage/app/public
+chmod -R 775 storage/app
 
 # Create storage link if it doesn't exist
 echo "🔗 Creating storage link..."
