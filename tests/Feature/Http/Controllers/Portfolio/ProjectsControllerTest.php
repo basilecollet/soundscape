@@ -233,3 +233,27 @@ test('project details page escapes HTML in markdown description', function () {
         ->assertSee('Bold text') // Markdown should still work
         ->assertSee('<strong>Bold text</strong>', false); // Markdown rendered correctly
 });
+
+test('projects page hides decorative SVG icons from screen readers', function () {
+    // Act
+    $response = $this->get('/projects');
+
+    // Assert: SVG icons should have aria-hidden="true"
+    $response->assertStatus(200)
+        ->assertSee('aria-hidden="true"', false);
+});
+
+test('project details page hides decorative SVG icons from screen readers', function () {
+    // Arrange: Create a published project
+    $project = ProjectDatabase::factory()
+        ->withATitle('Accessibility Test Project')
+        ->published()
+        ->create();
+
+    // Act
+    $response = $this->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert: SVG icons should have aria-hidden="true"
+    $response->assertStatus(200)
+        ->assertSee('aria-hidden="true"', false);
+});
