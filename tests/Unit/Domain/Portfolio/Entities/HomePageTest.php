@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Portfolio\Entities\HomePage;
-use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityQueryInterface;
 use App\Domain\Portfolio\ValueObjects\PageField;
 use Mockery\Expectation;
 use Mockery\MockInterface;
@@ -17,8 +17,8 @@ test('home page has minimum content with only hero section', function () {
     ];
 
     // And: Features section disabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -41,8 +41,8 @@ test('home page missing hero field', function () {
         // home_hero_text is missing
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -71,8 +71,8 @@ test('home page has minimum content with features enabled and complete', functio
         PageField::fromKeyAndContent('home_feature_3_description', 'F3 Desc'),
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -97,8 +97,8 @@ test('home page missing features field when section enabled', function () {
         // Missing other features
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -120,8 +120,8 @@ test('home page identifies empty fields as missing', function () {
         PageField::fromKeyAndContent('home_hero_text', '   '),
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -142,8 +142,8 @@ test('home page should show cta when enabled', function () {
         PageField::fromKeyAndContent('home_hero_text', 'Text'),
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');

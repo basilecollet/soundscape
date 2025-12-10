@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin;
 
-use App\Application\Portfolio\Services\SectionVisibilityService;
 use App\Domain\Admin\Enums\SectionKeys;
+use App\Domain\Admin\Services\SectionSettingsCommandInterface;
 use Livewire\Component;
 
 class SectionSettingsManager extends Component
@@ -15,17 +15,17 @@ class SectionSettingsManager extends Component
      */
     public array $sectionSettings = [];
 
-    public function mount(SectionVisibilityService $sectionVisibilityService): void
+    public function mount(SectionSettingsCommandInterface $sectionSettingsService): void
     {
-        $this->loadSectionSettings($sectionVisibilityService);
+        $this->loadSectionSettings($sectionSettingsService);
     }
 
-    public function toggleSection(string $sectionKey, string $page, SectionVisibilityService $sectionVisibilityService): void
+    public function toggleSection(string $sectionKey, string $page, SectionSettingsCommandInterface $sectionSettingsService): void
     {
-        $currentState = $sectionVisibilityService->isSectionEnabled($sectionKey, $page);
+        $currentState = $this->sectionSettings[$page][$sectionKey] ?? false;
         $newState = ! $currentState;
 
-        if ($sectionVisibilityService->setSectionEnabled($sectionKey, $page, $newState)) {
+        if ($sectionSettingsService->setSectionEnabled($sectionKey, $page, $newState)) {
             // Update local state for immediate UI feedback
             $this->sectionSettings[$page][$sectionKey] = $newState;
 
@@ -44,24 +44,26 @@ class SectionSettingsManager extends Component
         }
     }
 
-    public function render(SectionVisibilityService $sectionVisibilityService): \Illuminate\View\View
+    public function render(SectionSettingsCommandInterface $sectionSettingsService): \Illuminate\View\View
     {
-        $availableSettings = $sectionVisibilityService->getAvailableSectionSettings();
+        $availableSettings = $sectionSettingsService->getAvailableSectionSettings();
 
         return view('livewire.admin.section-settings-manager', [
             'availableSettings' => $availableSettings,
         ]);
     }
 
-    private function loadSectionSettings(SectionVisibilityService $sectionVisibilityService): void
+    private function loadSectionSettings(SectionSettingsCommandInterface $sectionSettingsService): void
     {
+        $availableSettings = $sectionSettingsService->getAvailableSectionSettings();
+
         $this->sectionSettings = [];
 
-        foreach (SectionKeys::getAvailablePages() as $page) {
+        foreach ($availableSettings as $page => $sections) {
             $this->sectionSettings[$page] = [];
 
-            foreach (SectionKeys::getDisableableSectionsForPage($page) as $sectionKey) {
-                $this->sectionSettings[$page][$sectionKey] = $sectionVisibilityService->isSectionEnabled($sectionKey, $page);
+            foreach ($sections as $section) {
+                $this->sectionSettings[$page][$section['section_key']] = $section['is_enabled'];
             }
         }
     }

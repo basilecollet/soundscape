@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Portfolio\Entities;
 
-use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityQueryInterface;
 use App\Domain\Portfolio\ValueObjects\PageField;
 
 final class AboutPage extends PortfolioPage
@@ -37,7 +37,7 @@ final class AboutPage extends PortfolioPage
      */
     private function __construct(
         array $fields,
-        private readonly SectionVisibilityServiceInterface $sectionVisibilityService,
+        private readonly SectionVisibilityQueryInterface $sectionVisibilityService,
     ) {
         parent::__construct($fields);
     }
@@ -47,7 +47,7 @@ final class AboutPage extends PortfolioPage
      */
     public static function reconstitute(
         array $fields,
-        SectionVisibilityServiceInterface $sectionVisibilityService
+        SectionVisibilityQueryInterface $sectionVisibilityService
     ): self {
         return new self($fields, $sectionVisibilityService);
     }

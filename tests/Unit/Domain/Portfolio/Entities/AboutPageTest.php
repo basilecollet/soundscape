@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Domain\Portfolio\Entities\AboutPage;
-use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityQueryInterface;
 use App\Domain\Portfolio\ValueObjects\PageField;
 use Mockery\Expectation;
 use Mockery\MockInterface;
@@ -17,8 +17,8 @@ test('about page has minimum content with only hero and bio', function () {
     ];
 
     // And: All optional sections are disabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');
@@ -50,8 +50,8 @@ test('about page missing hero field', function () {
         // about_bio is missing
     ];
 
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');
@@ -85,8 +85,8 @@ test('about page has minimum content with complete experience section', function
     ];
 
     // And: Experience is enabled, others disabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');
@@ -124,8 +124,8 @@ test('about page does not have minimum content with incomplete services', functi
     ];
 
     // And: Services section is enabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');
@@ -157,8 +157,8 @@ test('about page has minimum content with philosophy', function () {
     ];
 
     // And: Philosophy is enabled, others disabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');
@@ -203,8 +203,8 @@ test('about page with all sections enabled and complete', function () {
     ];
 
     // And: All sections enabled
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation1 */
     $expectation1 = $sectionService->shouldReceive('isSectionEnabled');

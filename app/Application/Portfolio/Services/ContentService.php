@@ -6,12 +6,13 @@ use App\Domain\Portfolio\Entities\AboutPage;
 use App\Domain\Portfolio\Entities\ContactPage;
 use App\Domain\Portfolio\Entities\HomePage;
 use App\Domain\Portfolio\Repositories\PageContentRepositoryInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityQueryInterface;
 use App\Models\PageContent;
 
 class ContentService
 {
     public function __construct(
-        private readonly SectionVisibilityService $sectionVisibilityService,
+        private readonly SectionVisibilityQueryInterface $sectionVisibilityService,
         private readonly PageContentRepositoryInterface $pageContentRepository,
     ) {}
 
