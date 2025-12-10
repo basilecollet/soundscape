@@ -31,10 +31,11 @@
                     id="name"
                     required
                     aria-required="true"
+                    aria-describedby="name-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('name')
-                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
+                    <p id="name-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -52,10 +53,11 @@
                     id="email"
                     required
                     aria-required="true"
+                    aria-describedby="email-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('email')
-                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
+                    <p id="email-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -71,10 +73,11 @@
                     type="text"
                     wire:model="subject"
                     id="subject"
+                    aria-describedby="subject-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('subject') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('subject')
-                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
+                    <p id="subject-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -92,10 +95,11 @@
                     rows="5"
                     required
                     aria-required="true"
+                    aria-describedby="message-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 ></textarea>
                 @error('message')
-                    <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
+                    <p id="message-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
                         <span>{{ $message }}</span>
                     </p>
@@ -109,6 +113,7 @@
                     id="gdpr_consent"
                     required
                     aria-required="true"
+                    aria-describedby="gdpr-consent-error"
                     class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 <label for="gdpr_consent" class="ml-3 text-sm text-portfolio-text/80">
@@ -116,7 +121,7 @@
                 </label>
             </div>
             @error('gdpr_consent')
-                <p class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
+                <p id="gdpr-consent-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                     <span aria-hidden="true">⚠</span>
                     <span>{{ $message }}</span>
                 </p>
