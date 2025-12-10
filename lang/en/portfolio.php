@@ -99,4 +99,8 @@ return [
             'description' => 'contact details are currently being configured. check back soon to get in touch with us.',
         ],
     ],
+
+    'accessibility' => [
+        'skip_to_content' => 'Skip to main content',
+    ],
 ];

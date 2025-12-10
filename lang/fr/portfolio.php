@@ -99,4 +99,8 @@ return [
             'description' => 'les coordonnées de contact sont en cours de configuration. revenez bientôt pour nous joindre.',
         ],
     ],
+
+    'accessibility' => [
+        'skip_to_content' => 'Aller au contenu principal',
+    ],
 ];
