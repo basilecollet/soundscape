@@ -66,6 +66,7 @@ return [
         'listen_title' => 'écouter',
         'bandcamp_player_title' => 'Lecteur audio Bandcamp pour :project',
         'gallery_title' => 'galerie du projet',
+        'gallery_image' => 'Image :index de la galerie du projet :project',
         'explore_more_title' => 'découvrir plus de projets',
         'explore_more_description' => 'explorez d\'autres travaux d\'ingénierie audio de notre portfolio.',
         'back_to_projects' => 'retour aux projets',

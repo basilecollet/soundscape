@@ -66,6 +66,7 @@ return [
         'listen_title' => 'listen',
         'bandcamp_player_title' => 'Bandcamp audio player for :project',
         'gallery_title' => 'project gallery',
+        'gallery_image' => 'Gallery image :index for project :project',
         'explore_more_title' => 'explore more projects',
         'explore_more_description' => 'explore more audio engineering work from our portfolio.',
         'back_to_projects' => 'back to projects',

@@ -130,7 +130,7 @@
                                 <div class="aspect-video overflow-hidden bg-portfolio-secondary">
                                     <img
                                         src="{{ $image->thumbUrl }}"
-                                        alt="{{ $image->alt ?? $project->title }}"
+                                        alt="{{ $image->alt ?? __('portfolio.projects.gallery_image', ['project' => $project->title, 'index' => $loop->iteration]) }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         loading="lazy"
                                     >
