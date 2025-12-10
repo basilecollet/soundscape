@@ -39,9 +39,13 @@ return [
         'form_title' => 'envoyer un message',
         'form' => [
             'name_label' => 'nom *',
+            'name_hint' => 'Maximum 255 caractères',
             'email_label' => 'email *',
+            'email_hint' => 'Maximum 255 caractères',
             'subject_label' => 'sujet',
+            'subject_hint' => 'Maximum 255 caractères',
             'message_label' => 'message *',
+            'message_hint' => 'Maximum 2000 caractères',
             'gdpr_consent' => 'je consens au traitement de mes données personnelles conformément à la politique de confidentialité. *',
             'send_button' => 'envoyer le message',
             'sending' => 'envoi en cours...',

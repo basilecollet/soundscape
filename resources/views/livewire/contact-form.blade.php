@@ -31,9 +31,13 @@
                     id="name"
                     required
                     aria-required="true"
-                    aria-describedby="name-error"
+                    maxlength="255"
+                    aria-describedby="name-hint name-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
+                <p id="name-hint" class="mt-1 text-xs text-portfolio-text/60">
+                    {{ __('portfolio.contact.form.name_hint') }}
+                </p>
                 @error('name')
                     <p id="name-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
@@ -53,9 +57,13 @@
                     id="email"
                     required
                     aria-required="true"
-                    aria-describedby="email-error"
+                    maxlength="255"
+                    aria-describedby="email-hint email-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
+                <p id="email-hint" class="mt-1 text-xs text-portfolio-text/60">
+                    {{ __('portfolio.contact.form.email_hint') }}
+                </p>
                 @error('email')
                     <p id="email-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
@@ -73,9 +81,13 @@
                     type="text"
                     wire:model="subject"
                     id="subject"
-                    aria-describedby="subject-error"
+                    maxlength="255"
+                    aria-describedby="subject-hint subject-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('subject') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
+                <p id="subject-hint" class="mt-1 text-xs text-portfolio-text/60">
+                    {{ __('portfolio.contact.form.subject_hint') }}
+                </p>
                 @error('subject')
                     <p id="subject-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
@@ -95,9 +107,13 @@
                     rows="5"
                     required
                     aria-required="true"
-                    aria-describedby="message-error"
+                    maxlength="2000"
+                    aria-describedby="message-hint message-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 ></textarea>
+                <p id="message-hint" class="mt-1 text-xs text-portfolio-text/60">
+                    {{ __('portfolio.contact.form.message_hint') }}
+                </p>
                 @error('message')
                     <p id="message-error" class="mt-2 text-sm text-portfolio-error flex items-start gap-1">
                         <span aria-hidden="true">⚠</span>
