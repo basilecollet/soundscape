@@ -6,7 +6,7 @@ namespace App\Application\Portfolio\Services;
 
 use App\Domain\Admin\Enums\SectionKeys;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
-use App\Domain\Admin\Services\SectionVisibilityServiceInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
 
 readonly class SectionVisibilityService implements SectionVisibilityServiceInterface
 {

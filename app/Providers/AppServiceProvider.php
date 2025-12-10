@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Service bindings
         $this->app->bind(
-            \App\Domain\Admin\Services\SectionVisibilityServiceInterface::class,
+            \App\Domain\Portfolio\Services\SectionVisibilityServiceInterface::class,
             \App\Application\Portfolio\Services\SectionVisibilityService::class
         );
     }

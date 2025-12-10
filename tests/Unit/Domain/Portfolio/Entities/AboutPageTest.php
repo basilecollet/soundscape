@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Domain\Admin\Services\SectionVisibilityServiceInterface;
 use App\Domain\Portfolio\Entities\AboutPage;
+use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
 use App\Domain\Portfolio\ValueObjects\PageField;
 use Mockery\Expectation;
 use Mockery\MockInterface;

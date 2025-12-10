@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Portfolio\Entities;
 
-use App\Domain\Admin\Services\SectionVisibilityServiceInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityServiceInterface;
 use App\Domain\Portfolio\ValueObjects\PageField;
 
 final class AboutPage extends PortfolioPage
