@@ -143,9 +143,20 @@
                 </p>
             @enderror
 
+            <!-- Live region for loading state announcements -->
+            <div wire:loading
+                 role="status"
+                 aria-live="polite"
+                 aria-atomic="true"
+                 class="sr-only">
+                {{ __('portfolio.contact.form.sending_status') }}
+            </div>
+
             <button
                 type="submit"
                 wire:loading.attr="disabled"
+                wire:loading.attr="aria-busy=true"
+                aria-busy="false"
                 class="w-full bg-portfolio-accent hover:bg-portfolio-accent-dark disabled:bg-portfolio-accent/50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-sm transition-all duration-200 hover:shadow-md"
             >
                 <span wire:loading.remove>{{ __('portfolio.contact.form.send_button') }}</span>

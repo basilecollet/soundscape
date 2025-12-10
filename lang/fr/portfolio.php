@@ -49,6 +49,7 @@ return [
             'gdpr_consent' => 'je consens au traitement de mes données personnelles conformément à la politique de confidentialité. *',
             'send_button' => 'envoyer le message',
             'sending' => 'envoi en cours...',
+            'sending_status' => 'Envoi en cours, veuillez patienter...',
             'success_title' => 'merci pour votre message !',
             'success_description' => 'nous vous répondrons bientôt.',
         ],
