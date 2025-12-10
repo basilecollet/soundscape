@@ -1,6 +1,6 @@
 <?php
 
-use App\Application\Admin\Services\SectionVisibilityService;
+use App\Application\Portfolio\Services\SectionVisibilityService;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
 use App\Models\SectionSetting;
 use Mockery\Expectation;

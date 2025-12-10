@@ -2,7 +2,6 @@
 
 namespace App\Application\Portfolio\Services;
 
-use App\Application\Admin\Services\SectionVisibilityService;
 use App\Domain\Portfolio\Entities\AboutPage;
 use App\Domain\Portfolio\Entities\ContactPage;
 use App\Domain\Portfolio\Entities\HomePage;

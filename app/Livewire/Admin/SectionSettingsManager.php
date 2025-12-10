@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Application\Admin\Services\SectionVisibilityService;
+use App\Application\Portfolio\Services\SectionVisibilityService;
 use App\Domain\Admin\Enums\SectionKeys;
 use Livewire\Component;
 

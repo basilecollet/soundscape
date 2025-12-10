@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Admin\Services;
+namespace App\Application\Portfolio\Services;
 
 use App\Domain\Admin\Enums\SectionKeys;
 use App\Domain\Admin\Repositories\SectionSettingRepository;

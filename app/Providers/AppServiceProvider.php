@@ -42,6 +42,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Portfolio\Repositories\PageContentRepositoryInterface::class,
             \App\Infra\Repositories\Portfolio\PageContentEloquentRepository::class
         );
+
+        // Service bindings
+        $this->app->bind(
+            \App\Domain\Admin\Services\SectionVisibilityServiceInterface::class,
+            \App\Application\Portfolio\Services\SectionVisibilityService::class
+        );
     }
 
     /**
