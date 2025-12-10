@@ -68,3 +68,15 @@ test('contact form requires gdpr consent', function () {
         ->call('submit')
         ->assertHasErrors(['gdpr_consent']);
 });
+
+test('contact form has ARIA live region for loading state announcements', function () {
+    Livewire::test(ContactForm::class)
+        ->assertSee('role="status"', false)
+        ->assertSee('aria-live="polite"', false)
+        ->assertSee('aria-atomic="true"', false);
+});
+
+test('contact form button has aria-busy attribute during loading', function () {
+    Livewire::test(ContactForm::class)
+        ->assertSee('wire:loading.attr="aria-busy=true"', false);
+});
