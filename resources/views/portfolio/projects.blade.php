@@ -17,7 +17,7 @@
                 <!-- Projects Count -->
                 <div class="mb-8">
                     <p class="text-sm text-portfolio-text/60">
-                        <span class="font-medium text-portfolio-accent">{{ $projects->count() }}</span>
+                        <span class="font-medium text-portfolio-accent-dark">{{ $projects->count() }}</span>
                         {{ $projects->count() === 1 ? __('portfolio.projects.project_singular') : __('portfolio.projects.project_plural') }}
                     </p>
                 </div>

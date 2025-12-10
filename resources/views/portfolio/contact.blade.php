@@ -22,7 +22,7 @@
                         <h2 class="text-2xl font-bold mb-8 text-portfolio-dark">{{ __('portfolio.contact.info_title') }}</h2>
                         <div class="space-y-6">
                             <div class="flex items-start gap-3">
-                                <span class="text-portfolio-accent mt-1">></span>
+                                <span class="text-portfolio-accent-dark mt-1">></span>
                                 <div>
                                     <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.email') }}</p>
                                     <a href="mailto:{{ $content['info']['email'] }}" class="text-portfolio-text hover:text-portfolio-accent transition-colors">
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <span class="text-portfolio-accent mt-1">></span>
+                                <span class="text-portfolio-accent-dark mt-1">></span>
                                 <div>
                                     <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.phone') }}</p>
                                     <a href="tel:{{ $content['info']['phone'] }}" class="text-portfolio-text hover:text-portfolio-accent transition-colors">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <span class="text-portfolio-accent mt-1">></span>
+                                <span class="text-portfolio-accent-dark mt-1">></span>
                                 <div>
                                     <p class="text-sm text-portfolio-text/60 mb-1">{{ __('portfolio.contact.location') }}</p>
                                     <p class="text-portfolio-text">{{ $content['info']['location'] }}</p>
