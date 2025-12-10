@@ -6,7 +6,6 @@ namespace App\Application\Admin\Services;
 
 use App\Application\Admin\DTOs\ContentData;
 use App\Application\Admin\DTOs\ContentListFilterData;
-use App\Application\Admin\DTOs\ContentUpdateData;
 use App\Domain\Admin\Repositories\ContentRepository;
 use App\Models\PageContent;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,15 +15,6 @@ class ContentManagementService
     public function __construct(
         private readonly ContentRepository $contentRepository
     ) {}
-
-    public function updateContent(ContentUpdateData $data): void
-    {
-        $this->contentRepository->store([
-            'key' => $this->getContentById($data->id)->key, // Garder la même clé
-            'content' => $data->content,
-            'title' => $data->title,
-        ]);
-    }
 
     public function getContentById(int $id): PageContent
     {
