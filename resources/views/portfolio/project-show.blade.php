@@ -94,6 +94,7 @@
                     <!-- Bandcamp Player - Secure rendering -->
                     <div class="flex justify-center">
                         <iframe
+                            title="{{ __('portfolio.projects.bandcamp_player_title', ['project' => $project->title]) }}"
                             style="border: 0; width: 350px; height: 654px;"
                             src="{{ $project->bandcampPlayer->getSrc() }}"
                             seamless

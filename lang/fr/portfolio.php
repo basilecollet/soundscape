@@ -59,6 +59,7 @@ return [
         'empty_title' => 'aucun projet disponible pour le moment',
         'empty_description' => 'revenez bientôt pour découvrir de nouveaux travaux d\'ingénierie audio',
         'listen_title' => 'écouter',
+        'bandcamp_player_title' => 'Lecteur audio Bandcamp pour :project',
         'gallery_title' => 'galerie du projet',
         'explore_more_title' => 'découvrir plus de projets',
         'explore_more_description' => 'explorez d\'autres travaux d\'ingénierie audio de notre portfolio.',

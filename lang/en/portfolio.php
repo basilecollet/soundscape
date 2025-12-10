@@ -59,6 +59,7 @@ return [
         'empty_title' => 'no projects available at the moment',
         'empty_description' => 'check back soon to discover new audio engineering work',
         'listen_title' => 'listen',
+        'bandcamp_player_title' => 'Bandcamp audio player for :project',
         'gallery_title' => 'project gallery',
         'explore_more_title' => 'explore more projects',
         'explore_more_description' => 'explore more audio engineering work from our portfolio.',
