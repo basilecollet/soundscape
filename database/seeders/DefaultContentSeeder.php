@@ -5,6 +5,19 @@ namespace Database\Seeders;
 use App\Models\PageContent;
 use Illuminate\Database\Seeder;
 
+/**
+ * DefaultContentSeeder - Demo/Test Content Seeder
+ *
+ * This seeder provides default content for portfolio pages.
+ * It is NOT run automatically to enforce intentional content configuration.
+ *
+ * Usage:
+ * - For demo/testing: php artisan db:seed --class=DefaultContentSeeder
+ * - In production: Configure content via admin interface
+ *
+ * Note: Without this seeder or manual content configuration,
+ * portfolio pages will display an "under construction" empty state.
+ */
 class DefaultContentSeeder extends Seeder
 {
     /**

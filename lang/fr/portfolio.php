@@ -82,4 +82,19 @@ return [
     'cta' => [
         'learn_more' => 'en savoir plus',
     ],
+
+    'empty_state' => [
+        'home' => [
+            'title' => 'page en construction',
+            'description' => 'le contenu de cette page est en cours de configuration. revenez bientôt pour découvrir notre travail.',
+        ],
+        'about' => [
+            'title' => 'à propos - en construction',
+            'description' => 'les informations de cette page seront bientôt disponibles. nous préparons du contenu passionnant à partager avec vous.',
+        ],
+        'contact' => [
+            'title' => 'contact - en construction',
+            'description' => 'les coordonnées de contact sont en cours de configuration. revenez bientôt pour nous joindre.',
+        ],
+    ],
 ];

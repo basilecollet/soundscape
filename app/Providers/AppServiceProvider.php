@@ -37,6 +37,24 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Portfolio\Repositories\ProjectRepository::class,
             \App\Infra\Repositories\Portfolio\ProjectDatabaseRepository::class
         );
+
+        $this->app->bind(
+            \App\Domain\Portfolio\Repositories\PageContentRepositoryInterface::class,
+            \App\Infra\Repositories\Portfolio\PageContentEloquentRepository::class
+        );
+
+        // Service bindings - CQRS Pattern
+        // Portfolio Query Service (Read operations)
+        $this->app->bind(
+            \App\Domain\Portfolio\Services\SectionVisibilityQueryInterface::class,
+            \App\Application\Portfolio\Services\SectionVisibilityQueryService::class
+        );
+
+        // Admin Command Service (Write operations)
+        $this->app->bind(
+            \App\Domain\Admin\Services\SectionSettingsCommandInterface::class,
+            \App\Application\Admin\Services\SectionSettingsCommandService::class
+        );
     }
 
     /**

@@ -2,14 +2,49 @@
 
 namespace App\Application\Portfolio\Services;
 
-use App\Application\Admin\Services\SectionVisibilityService;
+use App\Domain\Portfolio\Entities\AboutPage;
+use App\Domain\Portfolio\Entities\ContactPage;
+use App\Domain\Portfolio\Entities\HomePage;
+use App\Domain\Portfolio\Repositories\PageContentRepositoryInterface;
+use App\Domain\Portfolio\Services\SectionVisibilityQueryInterface;
 use App\Models\PageContent;
 
 class ContentService
 {
     public function __construct(
-        private readonly SectionVisibilityService $sectionVisibilityService
+        private readonly SectionVisibilityQueryInterface $sectionVisibilityService,
+        private readonly PageContentRepositoryInterface $pageContentRepository,
     ) {}
+
+    /**
+     * Get HomePage entity with validation logic
+     */
+    public function getHomePage(): HomePage
+    {
+        $fields = $this->pageContentRepository->getFieldsForPage('home');
+
+        return HomePage::reconstitute($fields, $this->sectionVisibilityService);
+    }
+
+    /**
+     * Get AboutPage entity with validation logic
+     */
+    public function getAboutPage(): AboutPage
+    {
+        $fields = $this->pageContentRepository->getFieldsForPage('about');
+
+        return AboutPage::reconstitute($fields, $this->sectionVisibilityService);
+    }
+
+    /**
+     * Get ContactPage entity with validation logic
+     */
+    public function getContactPage(): ContactPage
+    {
+        $fields = $this->pageContentRepository->getFieldsForPage('contact');
+
+        return ContactPage::reconstitute($fields);
+    }
 
     /**
      * Get home page content
@@ -20,9 +55,9 @@ class ContentService
     {
         $content = [
             // Hero section is always enabled
-            'hero_title' => PageContent::getContent('home_hero_title', 'Soundscape Audio'),
-            'hero_subtitle' => PageContent::getContent('home_hero_subtitle', 'Professional Audio Engineering'),
-            'hero_text' => PageContent::getContent('home_hero_text', 'Transform your audio projects with industry-standard expertise. Professional mixing, mastering, and sound design services.'),
+            'hero_title' => PageContent::getContentOrNull('home_hero_title') ?? '',
+            'hero_subtitle' => PageContent::getContentOrNull('home_hero_subtitle') ?? '',
+            'hero_text' => PageContent::getContentOrNull('home_hero_text') ?? '',
         ];
 
         // Check if features section is enabled
@@ -32,16 +67,16 @@ class ContentService
         if ($showFeatures) {
             $content['features'] = [
                 [
-                    'title' => PageContent::getContent('home_feature_1_title', 'Mixing'),
-                    'description' => PageContent::getContent('home_feature_1_description', 'Professional mixing services for all genres'),
+                    'title' => PageContent::getContentOrNull('home_feature_1_title') ?? '',
+                    'description' => PageContent::getContentOrNull('home_feature_1_description') ?? '',
                 ],
                 [
-                    'title' => PageContent::getContent('home_feature_2_title', 'Mastering'),
-                    'description' => PageContent::getContent('home_feature_2_description', 'Industry-standard mastering for your tracks'),
+                    'title' => PageContent::getContentOrNull('home_feature_2_title') ?? '',
+                    'description' => PageContent::getContentOrNull('home_feature_2_description') ?? '',
                 ],
                 [
-                    'title' => PageContent::getContent('home_feature_3_title', 'Sound Design'),
-                    'description' => PageContent::getContent('home_feature_3_description', 'Creative sound design for media projects'),
+                    'title' => PageContent::getContentOrNull('home_feature_3_title') ?? '',
+                    'description' => PageContent::getContentOrNull('home_feature_3_description') ?? '',
                 ],
             ];
         }
@@ -61,9 +96,9 @@ class ContentService
     {
         $content = [
             // Hero and bio sections are always enabled
-            'title' => PageContent::getContent('about_title', 'About Soundscape'),
-            'intro' => PageContent::getContent('about_intro', 'Professional audio engineer with over 10 years of experience in music production and sound design.'),
-            'bio' => PageContent::getContent('about_bio', 'Specializing in mixing, mastering, and sound design, I bring technical expertise and creative vision to every project. My approach combines industry-standard techniques with innovative solutions to deliver exceptional audio results.'),
+            'title' => PageContent::getContentOrNull('about_title') ?? '',
+            'intro' => PageContent::getContentOrNull('about_intro') ?? '',
+            'bio' => PageContent::getContentOrNull('about_bio') ?? '',
         ];
 
         // Check if experience section is enabled
@@ -72,9 +107,9 @@ class ContentService
 
         if ($showExperience) {
             $content['experience'] = [
-                'years' => PageContent::getContent('about_experience_years', '10+'),
-                'projects' => PageContent::getContent('about_experience_projects', '500+'),
-                'clients' => PageContent::getContent('about_experience_clients', '200+'),
+                'years' => PageContent::getContentOrNull('about_experience_years') ?? '',
+                'projects' => PageContent::getContentOrNull('about_experience_projects') ?? '',
+                'clients' => PageContent::getContentOrNull('about_experience_clients') ?? '',
             ];
         }
 
@@ -84,12 +119,12 @@ class ContentService
 
         if ($showServices) {
             $content['services'] = [
-                PageContent::getContent('about_service_1', 'Recording'),
-                PageContent::getContent('about_service_2', 'Mixing'),
-                PageContent::getContent('about_service_3', 'Mastering'),
-                PageContent::getContent('about_service_4', 'Sound Design'),
-                PageContent::getContent('about_service_5', 'Audio Restoration'),
-                PageContent::getContent('about_service_6', 'Podcast Production'),
+                PageContent::getContentOrNull('about_service_1') ?? '',
+                PageContent::getContentOrNull('about_service_2') ?? '',
+                PageContent::getContentOrNull('about_service_3') ?? '',
+                PageContent::getContentOrNull('about_service_4') ?? '',
+                PageContent::getContentOrNull('about_service_5') ?? '',
+                PageContent::getContentOrNull('about_service_6') ?? '',
             ];
         }
 
@@ -98,7 +133,7 @@ class ContentService
         $content['show_philosophy'] = $showPhilosophy;
 
         if ($showPhilosophy) {
-            $content['philosophy'] = PageContent::getContent('about_philosophy', 'Every audio project tells a story. My mission is to enhance that story through precise technical execution and creative excellence.');
+            $content['philosophy'] = PageContent::getContentOrNull('about_philosophy') ?? '';
         }
 
         return $content;
@@ -112,13 +147,13 @@ class ContentService
     public function getContactContent(): array
     {
         return [
-            'title' => PageContent::getContent('contact_title', 'Get in Touch'),
-            'subtitle' => PageContent::getContent('contact_subtitle', 'Let\'s discuss your next audio project'),
-            'description' => PageContent::getContent('contact_description', 'Ready to elevate your audio? Contact me to discuss your project requirements and discover how we can bring your vision to life with professional audio engineering.'),
+            'title' => PageContent::getContentOrNull('contact_title') ?? '',
+            'subtitle' => PageContent::getContentOrNull('contact_subtitle') ?? '',
+            'description' => PageContent::getContentOrNull('contact_description') ?? '',
             'info' => [
-                'email' => PageContent::getContent('contact_email', 'contact@soundscape.audio'),
-                'phone' => PageContent::getContent('contact_phone', '+33 6 XX XX XX XX'),
-                'location' => PageContent::getContent('contact_location', 'Paris, France'),
+                'email' => PageContent::getContentOrNull('contact_email') ?? '',
+                'phone' => PageContent::getContentOrNull('contact_phone') ?? '',
+                'location' => PageContent::getContentOrNull('contact_location') ?? '',
             ],
         ];
     }

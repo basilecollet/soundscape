@@ -100,3 +100,45 @@ test('multiple contents can be retrieved for a specific page', function () {
     expect($aboutContents)->toHaveCount(2)
         ->and($aboutContents->pluck('key')->toArray())->toBe(['about_1', 'about_2']);
 });
+
+test('hasContent returns true when key exists', function () {
+    // Arrange
+    PageContent::create([
+        'key' => 'existing_key',
+        'content' => 'Some content',
+        'title' => 'Test',
+        'page' => 'home',
+    ]);
+
+    // Act & Assert
+    expect(PageContent::hasContent('existing_key'))->toBeTrue();
+});
+
+test('hasContent returns false when key does not exist', function () {
+    // Act & Assert
+    expect(PageContent::hasContent('non_existent_key'))->toBeFalse();
+});
+
+test('getContentOrNull returns content when key exists', function () {
+    // Arrange
+    PageContent::create([
+        'key' => 'test_key',
+        'content' => 'Test content',
+        'title' => 'Test',
+        'page' => 'home',
+    ]);
+
+    // Act
+    $content = PageContent::getContentOrNull('test_key');
+
+    // Assert
+    expect($content)->toBe('Test content');
+});
+
+test('getContentOrNull returns null when key does not exist', function () {
+    // Act
+    $content = PageContent::getContentOrNull('non_existent_key');
+
+    // Assert
+    expect($content)->toBeNull();
+});
