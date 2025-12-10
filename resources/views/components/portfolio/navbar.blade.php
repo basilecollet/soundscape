@@ -84,9 +84,12 @@
             </div>
             
             <!-- Mobile Menu Button -->
-            <button 
+            <button
                 @click="open = !open"
-                class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+                class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-2 rounded-md"
+                aria-label="{{ __('portfolio.navigation.toggle_menu') }}"
+                aria-expanded="false"
+                x-bind:aria-expanded="open.toString()"
             >
                 <span 
                     class="block w-6 h-[1.5px] bg-portfolio-dark transition-all duration-300"

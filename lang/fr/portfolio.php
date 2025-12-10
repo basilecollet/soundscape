@@ -72,6 +72,7 @@ return [
         'about' => 'à propos',
         'projects' => 'projets',
         'contact' => 'contact',
+        'toggle_menu' => 'Ouvrir/fermer le menu',
     ],
 
     'footer' => [
