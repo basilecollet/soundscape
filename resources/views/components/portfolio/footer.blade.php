@@ -4,9 +4,6 @@
             <!-- Links Section -->
             <div class="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
                 <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
-                    <span class="text-portfolio-accent">></span> {{ __('portfolio.footer.mailing_list') }}
-                </a>
-                <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
                     <span class="text-portfolio-accent">></span> {{ __('portfolio.footer.instagram') }}
                 </a>
                 <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
