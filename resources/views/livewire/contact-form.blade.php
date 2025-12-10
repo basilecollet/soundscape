@@ -29,6 +29,8 @@
                     type="text"
                     wire:model="name"
                     id="name"
+                    required
+                    aria-required="true"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('name')
@@ -48,6 +50,8 @@
                     type="email"
                     wire:model="email"
                     id="email"
+                    required
+                    aria-required="true"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 @error('email')
@@ -86,6 +90,8 @@
                     wire:model="message"
                     id="message"
                     rows="5"
+                    required
+                    aria-required="true"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 ></textarea>
                 @error('message')
@@ -101,6 +107,8 @@
                     type="checkbox"
                     wire:model="gdpr_consent"
                     id="gdpr_consent"
+                    required
+                    aria-required="true"
                     class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 <label for="gdpr_consent" class="ml-3 text-sm text-portfolio-text/80">
