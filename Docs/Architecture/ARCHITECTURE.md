@@ -256,7 +256,7 @@ final readonly class PageContentEloquentRepository implements PageContentReposit
 class ContentService
 {
     public function __construct(
-        private readonly SectionVisibilityService $sectionVisibilityService,
+        private readonly SectionVisibilityQueryInterface $sectionVisibilityService,
         private readonly PageContentRepositoryInterface $pageContentRepository,
     ) {}
 
@@ -319,8 +319,8 @@ test('home page has minimum content with only hero section', function () {
     ];
 
     // Mock only domain interfaces
-    /** @var SectionVisibilityServiceInterface&MockInterface $sectionService */
-    $sectionService = Mockery::mock(SectionVisibilityServiceInterface::class);
+    /** @var SectionVisibilityQueryInterface&MockInterface $sectionService */
+    $sectionService = Mockery::mock(SectionVisibilityQueryInterface::class);
 
     /** @var Expectation $expectation */
     $expectation = $sectionService->shouldReceive('isSectionEnabled');
@@ -459,6 +459,205 @@ public function __invoke(): View
 
 4. Write domain tests for new entity.
 
+### CQRS Pattern: Section Visibility Management
+
+The section visibility feature demonstrates a complete **Command Query Responsibility Segregation (CQRS)** implementation, separating read operations (Portfolio context) from write operations (Admin context).
+
+#### Problem & Solution
+
+**Challenge**: The original `SectionVisibilityService` mixed concerns:
+- Portfolio needed to CHECK if sections are enabled (READ)
+- Admin needed to MODIFY section settings (WRITE)
+- Single service violated Single Responsibility Principle
+- Difficult to test and maintain
+
+**Solution**: Split into two dedicated services following CQRS:
+1. **Query Service** (Portfolio) - READ-only operations
+2. **Command Service** (Admin) - WRITE operations
+
+#### Architecture Components
+
+**Query Side (Portfolio Context)**
+
+```php
+// Domain Interface
+interface SectionVisibilityQueryInterface
+{
+    public function isSectionEnabled(string $sectionKey, string $page): bool;
+    public function getEnabledSectionsForPage(string $page): array;
+    public function getNonDisableableSectionsForPage(string $page): array;
+}
+
+// Application Implementation
+readonly class SectionVisibilityQueryService implements SectionVisibilityQueryInterface
+{
+    public function __construct(
+        private SectionSettingRepository $sectionSettingRepository
+    ) {}
+
+    public function isSectionEnabled(string $sectionKey, string $page): bool
+    {
+        // Non-disableable sections always enabled
+        if (!SectionKeys::isValidSectionForPage($sectionKey, $page)) {
+            return true;
+        }
+
+        return $this->sectionSettingRepository->isSectionEnabled($sectionKey, $page);
+    }
+
+    // ... other read methods
+}
+```
+
+**Command Side (Admin Context)**
+
+```php
+// Domain Interface
+interface SectionSettingsCommandInterface
+{
+    public function setSectionEnabled(string $sectionKey, string $page, bool $enabled): bool;
+    public function getAvailableSectionSettings(): array;
+    public function bulkUpdateSectionSettings(array $settings): void;
+}
+
+// Application Implementation
+readonly class SectionSettingsCommandService implements SectionSettingsCommandInterface
+{
+    public function __construct(
+        private SectionSettingRepository $sectionSettingRepository
+    ) {}
+
+    public function setSectionEnabled(string $sectionKey, string $page, bool $enabled): bool
+    {
+        // Validate section can be modified
+        if (!SectionKeys::isValidSectionForPage($sectionKey, $page)) {
+            return false;
+        }
+
+        $this->sectionSettingRepository->setSectionEnabled($sectionKey, $page, $enabled);
+        return true;
+    }
+
+    // ... other write methods
+}
+```
+
+#### Service Bindings
+
+```php
+// AppServiceProvider.php
+public function register(): void
+{
+    // Query Service (Portfolio - Read)
+    $this->app->bind(
+        SectionVisibilityQueryInterface::class,
+        SectionVisibilityQueryService::class
+    );
+
+    // Command Service (Admin - Write)
+    $this->app->bind(
+        SectionSettingsCommandInterface::class,
+        SectionSettingsCommandService::class
+    );
+}
+```
+
+#### Consumers
+
+**Portfolio Consumers (Query Service)**:
+- `HomePage::reconstitute()` - Checks which sections to validate
+- `AboutPage::reconstitute()` - Checks optional sections
+- `ContentService` - Provides page data with section flags
+
+**Admin Consumers (Command Service)**:
+- `SectionSettingsManager` (Livewire) - Toggles section visibility
+- Admin settings interface - Manages section configuration
+
+#### Testing Strategy
+
+**Unit Tests (No Laravel dependencies)**:
+
+```php
+// Query Service Test
+test('isSectionEnabled returns true for non-disableable sections', function () {
+    /** @var SectionSettingRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(SectionSettingRepository::class);
+    $service = new SectionVisibilityQueryService($repository);
+
+    // Hero section is always enabled
+    $result = $service->isSectionEnabled('hero', 'home');
+
+    expect($result)->toBeTrue();
+});
+
+// Command Service Test
+test('setSectionEnabled returns false for non-disableable sections', function () {
+    /** @var SectionSettingRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(SectionSettingRepository::class);
+    $service = new SectionSettingsCommandService($repository);
+
+    // Cannot disable hero section
+    $result = $service->setSectionEnabled('hero', 'home', false);
+
+    expect($result)->toBeFalse();
+});
+```
+
+**Feature Tests (Integration)**:
+
+```php
+test('admin can toggle section settings', function () {
+    $user = User::factory()->create();
+
+    Livewire::actingAs($user)
+        ->test(SectionSettingsManager::class)
+        ->call('toggleSection', 'features', 'home')
+        ->assertDispatched('section-toggled');
+
+    // Verify in database
+    expect(SectionSetting::where('section_key', 'features')->first())
+        ->is_enabled->toBeFalse();
+});
+```
+
+#### Benefits
+
+1. **Clear Separation of Concerns**: Read and write operations isolated
+2. **Single Responsibility**: Each service has one purpose
+3. **Testability**: Pure unit tests without Laravel bootstrapping
+4. **Type Safety**: PHPStan level 9 compliant
+5. **Maintainability**: Easy to understand and extend
+6. **Performance**: No unnecessary coupling between contexts
+
+#### Non-disableable Sections
+
+Certain sections cannot be toggled off as they're essential:
+
+**Home Page**:
+- `hero` - Main landing section
+
+**About Page**:
+- `hero` - Page header
+- `bio` - Core biography content
+
+**Contact Page**:
+- `hero` - Page header
+- `form` - Contact form
+- `info` - Contact information
+
+#### Disableable Sections
+
+Optional sections that can be toggled:
+
+**Home Page**:
+- `features` - Feature highlights
+- `cta` - Call-to-action section
+
+**About Page**:
+- `experience` - Years/projects/clients statistics
+- `services` - Services offered list
+- `philosophy` - Work philosophy statement
+
 ## Admin Context Architecture
 
 The Admin context provides management capabilities for the portfolio. The administrator (sound engineer) can manage projects, content, and settings through a secure interface.
@@ -516,10 +715,33 @@ Draft → Published → Archived
 - Real-time editing with Livewire components
 - Content validation per page
 
-**Section Visibility**:
-- Toggle optional sections on/off (features, services, philosophy, etc.)
-- Non-disableable sections (hero, bio, form)
-- Per-page configuration
+**Section Visibility (CQRS Implementation)**:
+
+The section visibility feature follows a **CQRS pattern** with separate Query (Portfolio) and Command (Admin) services:
+
+**Query Side (Portfolio - READ operations)**:
+- Interface: `SectionVisibilityQueryInterface` (Domain/Portfolio/Services)
+- Service: `SectionVisibilityQueryService` (Application/Portfolio/Services)
+- Consumers: `HomePage`, `AboutPage`, `ContentService`
+- Methods:
+  - `isSectionEnabled(string $sectionKey, string $page): bool`
+  - `getEnabledSectionsForPage(string $page): array`
+  - `getNonDisableableSectionsForPage(string $page): array`
+
+**Command Side (Admin - WRITE operations)**:
+- Interface: `SectionSettingsCommandInterface` (Domain/Admin/Services)
+- Service: `SectionSettingsCommandService` (Application/Admin/Services)
+- Consumers: `SectionSettingsManager` (Livewire component)
+- Methods:
+  - `setSectionEnabled(string $sectionKey, string $page, bool $enabled): bool`
+  - `getAvailableSectionSettings(): array`
+  - `bulkUpdateSectionSettings(array $settings): void`
+
+**Features**:
+- Toggle optional sections on/off (features, services, philosophy, cta, experience)
+- Non-disableable sections (hero, bio, form, info)
+- Per-page configuration (home, about, contact)
+- Clear separation between read (display) and write (configuration) concerns
 
 ### Contact Management
 
