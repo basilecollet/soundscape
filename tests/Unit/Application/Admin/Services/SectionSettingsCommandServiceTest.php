@@ -6,8 +6,10 @@ use App\Application\Admin\Services\SectionSettingsCommandService;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(SectionSettingRepository::class);
-    $this->service = new SectionSettingsCommandService($this->repository);
+    /** @var SectionSettingRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(SectionSettingRepository::class);
+    $this->repository = $repository;
+    $this->service = new SectionSettingsCommandService($repository);
 });
 
 describe('setSectionEnabled', function () {

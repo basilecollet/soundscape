@@ -6,8 +6,10 @@ use App\Application\Portfolio\Services\SectionVisibilityQueryService;
 use App\Domain\Admin\Repositories\SectionSettingRepository;
 
 beforeEach(function () {
-    $this->repository = Mockery::mock(SectionSettingRepository::class);
-    $this->service = new SectionVisibilityQueryService($this->repository);
+    /** @var SectionSettingRepository&\Mockery\MockInterface $repository */
+    $repository = Mockery::mock(SectionSettingRepository::class);
+    $this->repository = $repository;
+    $this->service = new SectionVisibilityQueryService($repository);
 });
 
 describe('isSectionEnabled', function () {
