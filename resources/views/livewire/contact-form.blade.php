@@ -35,7 +35,7 @@
                     aria-describedby="name-hint name-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('name') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
-                <p id="name-hint" class="mt-1 text-xs text-portfolio-text/60">
+                <p id="name-hint" class="mt-1 text-xs text-portfolio-text/70">
                     {{ __('portfolio.contact.form.name_hint') }}
                 </p>
                 @error('name')
@@ -61,7 +61,7 @@
                     aria-describedby="email-hint email-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('email') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
-                <p id="email-hint" class="mt-1 text-xs text-portfolio-text/60">
+                <p id="email-hint" class="mt-1 text-xs text-portfolio-text/70">
                     {{ __('portfolio.contact.form.email_hint') }}
                 </p>
                 @error('email')
@@ -85,7 +85,7 @@
                     aria-describedby="subject-hint subject-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 @error('subject') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
-                <p id="subject-hint" class="mt-1 text-xs text-portfolio-text/60">
+                <p id="subject-hint" class="mt-1 text-xs text-portfolio-text/70">
                     {{ __('portfolio.contact.form.subject_hint') }}
                 </p>
                 @error('subject')
@@ -111,7 +111,7 @@
                     aria-describedby="message-hint message-error"
                     class="w-full px-4 py-3 border border-portfolio-accent/20 rounded-sm bg-white/50 focus:ring-2 focus:ring-portfolio-accent focus:border-portfolio-accent transition-all duration-200 resize-none @error('message') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 ></textarea>
-                <p id="message-hint" class="mt-1 text-xs text-portfolio-text/60">
+                <p id="message-hint" class="mt-1 text-xs text-portfolio-text/70">
                     {{ __('portfolio.contact.form.message_hint') }}
                 </p>
                 @error('message')
