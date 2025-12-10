@@ -114,7 +114,7 @@
                     required
                     aria-required="true"
                     aria-describedby="gdpr-consent-error"
-                    class="mt-1 h-4 w-4 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
+                    class="mt-1 h-5 w-5 text-portfolio-accent border-portfolio-accent/30 rounded-sm focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-0 transition-colors duration-200 @error('gdpr_consent') border-portfolio-error ring-1 ring-portfolio-error/20 @enderror"
                 >
                 <label for="gdpr_consent" class="ml-3 text-sm text-portfolio-text/80">
                     {{ __('portfolio.contact.form.gdpr_consent') }}
