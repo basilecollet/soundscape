@@ -43,7 +43,7 @@ describe('DashboardStatistics DTO', function () {
         expect($stats->totalContent)->toBe(25);
         expect($stats->recentMessages)->toBe(3);
         expect($stats->lastContentUpdate)->toBeInstanceOf(Carbon::class);
-        expect($stats->lastContentUpdate->format('Y-m-d H:i:s'))->toBe('2024-01-15 10:30:00');
+        expect($stats->lastContentUpdate?->format('Y-m-d H:i:s'))->toBe('2024-01-15 10:30:00');
     });
 
     test('can be created from array with missing values using defaults', function () {
