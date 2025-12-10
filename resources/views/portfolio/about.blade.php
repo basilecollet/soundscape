@@ -47,14 +47,14 @@
     <section class="py-20 bg-portfolio-light">
         <div class="container mx-auto px-6 lg:px-12">
             <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 text-portfolio-dark">{{ __('portfolio.about.services_title') }}</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto list-none">
                 @foreach($content['services'] as $service)
-                <div class="flex items-center gap-2 group">
-                    <span class="text-portfolio-accent-dark">></span>
+                <li class="flex items-center gap-2 group">
+                    <span class="text-portfolio-accent-dark" aria-hidden="true">></span>
                     <span class="text-portfolio-text/80 text-sm">{{ $service }}</span>
-                </div>
+                </li>
                 @endforeach
-            </div>
+            </ul>
         </div>
     </section>
     @endif
