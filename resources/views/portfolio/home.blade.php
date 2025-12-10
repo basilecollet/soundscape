@@ -21,7 +21,7 @@
                 @foreach($content['features'] as $feature)
                 <div class="space-y-4 group">
                     <div class="flex items-start gap-3">
-                        <span class="text-portfolio-accent text-lg mt-1">></span>
+                        <span class="text-portfolio-accent-dark text-lg mt-1">></span>
                         <div>
                             <h3 class="text-lg font-semibold text-portfolio-dark mb-2">{{ $feature['title'] }}</h3>
                             <p class="text-portfolio-text/70 text-sm leading-relaxed">{{ $feature['description'] }}</p>

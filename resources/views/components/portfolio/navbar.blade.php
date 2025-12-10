@@ -42,7 +42,8 @@
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
-                   }">
+                   }"
+                   @if(request()->routeIs('home')) aria-current="page" @endif>
                     {{ __('portfolio.navigation.home') }}
                     @if(request()->routeIs('home'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
@@ -53,7 +54,8 @@
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
-                   }">
+                   }"
+                   @if(request()->routeIs('about')) aria-current="page" @endif>
                     {{ __('portfolio.navigation.about') }}
                     @if(request()->routeIs('about'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
@@ -64,7 +66,8 @@
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
-                   }">
+                   }"
+                   @if(request()->routeIs('projects')) aria-current="page" @endif>
                     {{ __('portfolio.navigation.projects') }}
                     @if(request()->routeIs('projects'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
@@ -75,7 +78,8 @@
                    :class="{
                        'text-portfolio-dark hover:text-portfolio-accent': scrolled || open,
                        'text-portfolio-dark hover:text-portfolio-accent mix-blend-difference': !scrolled && !open
-                   }">
+                   }"
+                   @if(request()->routeIs('contact')) aria-current="page" @endif>
                     {{ __('portfolio.navigation.contact') }}
                     @if(request()->routeIs('contact'))
                         <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-portfolio-accent rounded-full"></span>
@@ -86,7 +90,7 @@
             <!-- Mobile Menu Button -->
             <button
                 @click="open = !open"
-                class="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-2 rounded-md"
+                class="md:hidden flex flex-col justify-center items-center w-12 h-12 space-y-1.5 focus:ring-2 focus:ring-portfolio-accent focus:ring-offset-2 rounded-md"
                 aria-label="{{ __('portfolio.navigation.toggle_menu') }}"
                 aria-expanded="false"
                 x-bind:aria-expanded="open.toString()"
@@ -122,7 +126,8 @@
             <div class="container mx-auto px-6 py-6 space-y-4">
                 <a href="{{ route('home') }}"
                    @click="open = false"
-                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm"
+                   @if(request()->routeIs('home')) aria-current="page" @endif>
                     @if(request()->routeIs('home'))
                         <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
                     @else
@@ -132,7 +137,8 @@
                 </a>
                 <a href="{{ route('about') }}"
                    @click="open = false"
-                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm"
+                   @if(request()->routeIs('about')) aria-current="page" @endif>
                     @if(request()->routeIs('about'))
                         <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
                     @else
@@ -142,7 +148,8 @@
                 </a>
                 <a href="{{ route('projects') }}"
                    @click="open = false"
-                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm"
+                   @if(request()->routeIs('projects')) aria-current="page" @endif>
                     @if(request()->routeIs('projects'))
                         <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
                     @else
@@ -152,7 +159,8 @@
                 </a>
                 <a href="{{ route('contact') }}"
                    @click="open = false"
-                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm">
+                   class="flex items-center gap-2 text-portfolio-dark hover:text-portfolio-accent transition-colors duration-200 text-sm"
+                   @if(request()->routeIs('contact')) aria-current="page" @endif>
                     @if(request()->routeIs('contact'))
                         <span class="w-2 h-2 bg-portfolio-accent rounded-full"></span>
                     @else

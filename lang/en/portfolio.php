@@ -39,9 +39,13 @@ return [
         'form_title' => 'send a message',
         'form' => [
             'name_label' => 'name *',
+            'name_hint' => 'Maximum 255 characters',
             'email_label' => 'email *',
+            'email_hint' => 'Maximum 255 characters',
             'subject_label' => 'subject',
+            'subject_hint' => 'Maximum 255 characters',
             'message_label' => 'message *',
+            'message_hint' => 'Maximum 2000 characters',
             'gdpr_consent' => 'I consent to the processing of my personal data in accordance with the privacy policy. *',
             'send_button' => 'send message',
             'sending' => 'sending...',
@@ -98,5 +102,9 @@ return [
             'title' => 'contact - under construction',
             'description' => 'contact details are currently being configured. check back soon to get in touch with us.',
         ],
+    ],
+
+    'accessibility' => [
+        'skip_to_content' => 'Skip to main content',
     ],
 ];

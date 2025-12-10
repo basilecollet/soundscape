@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,12 +29,18 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="min-h-screen bg-portfolio-light font-mono text-portfolio-text">
+    <!-- Skip link for keyboard accessibility -->
+    <a href="#main-content"
+       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-portfolio-accent-dark focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg">
+        {{ __('portfolio.accessibility.skip_to_content') }}
+    </a>
+
     <x-portfolio.navbar />
-    
-    <main>
+
+    <main id="main-content" tabindex="-1">
         @yield('content')
     </main>
-    
+
     <x-portfolio.footer />
 </body>
 </html>
