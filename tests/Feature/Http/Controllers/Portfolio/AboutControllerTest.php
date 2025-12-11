@@ -2,6 +2,7 @@
 
 use App\Application\Portfolio\Services\ContentService;
 use App\Models\PageContent;
+use App\Models\SectionSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -13,9 +14,9 @@ test('about page is accessible', function () {
     PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
 
     // And: Sections are disabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $response = $this->get('/about');
 
@@ -29,9 +30,9 @@ test('about page contains proper SEO meta tags', function () {
     PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
 
     // And: Sections are disabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $response = $this->get('/about');
 
@@ -47,9 +48,9 @@ test('about page displays content from ContentService', function () {
     PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
 
     // And: Sections are disabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $contentService = app(ContentService::class);
     $content = $contentService->getAboutContent();
@@ -76,9 +77,9 @@ test('about page shows all services when section is enabled', function () {
     PageContent::factory()->create(['key' => 'about_service_6', 'content' => 'Podcast Production', 'page' => 'about']);
 
     // And: Services section is enabled, others disabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => true]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => true]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $contentService = app(ContentService::class);
     $content = $contentService->getAboutContent();
@@ -103,9 +104,9 @@ test('about page services list uses semantic HTML structure', function () {
     PageContent::factory()->create(['key' => 'about_service_2', 'content' => 'Mixing', 'page' => 'about']);
 
     // And: Services section is enabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => true]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => true]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $response = $this->get('/about');
 
@@ -121,9 +122,9 @@ test('footer navigation uses semantic HTML structure', function () {
     PageContent::factory()->create(['key' => 'about_bio', 'content' => 'Specializing in mixing and mastering', 'page' => 'about']);
 
     // And: Sections are disabled
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
-    \App\Models\SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'experience', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'services', 'page' => 'about', 'is_enabled' => false]);
+    SectionSetting::factory()->create(['section_key' => 'philosophy', 'page' => 'about', 'is_enabled' => false]);
 
     $response = $this->get('/about');
 
