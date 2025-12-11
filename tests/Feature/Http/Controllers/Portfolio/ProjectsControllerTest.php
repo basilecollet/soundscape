@@ -2,6 +2,7 @@
 
 use App\Models\Project as ProjectDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
@@ -256,4 +257,29 @@ test('project details page hides decorative SVG icons from screen readers', func
     // Assert: SVG icons should have aria-hidden="true"
     $response->assertStatus(200)
         ->assertSee('aria-hidden="true"', false);
+});
+
+test('project gallery images have descriptive alt text with position', function () {
+    // Arrange: Create a published project with gallery images
+    $project = ProjectDatabase::factory()
+        ->withATitle('Gallery Test Project')
+        ->published()
+        ->create();
+
+    // Add 3 gallery images
+    $project->addMedia(UploadedFile::fake()->image('gallery1.jpg'))
+        ->toMediaCollection('gallery');
+    $project->addMedia(UploadedFile::fake()->image('gallery2.jpg'))
+        ->toMediaCollection('gallery');
+    $project->addMedia(UploadedFile::fake()->image('gallery3.jpg'))
+        ->toMediaCollection('gallery');
+
+    // Act
+    $response = $this->get(route('projects.show', ['project' => $project->slug]));
+
+    // Assert: Gallery images should have descriptive alt text with position (FR locale)
+    $response->assertStatus(200)
+        ->assertSee('Image 1 de la galerie du projet Gallery Test Project')
+        ->assertSee('Image 2 de la galerie du projet Gallery Test Project')
+        ->assertSee('Image 3 de la galerie du projet Gallery Test Project');
 });
