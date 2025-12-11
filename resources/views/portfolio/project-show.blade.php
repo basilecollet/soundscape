@@ -17,7 +17,7 @@
                     <!-- Date -->
                     @if($project->projectDate)
                         <div class="flex items-center gap-2 text-portfolio-accent-dark font-medium">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -53,7 +53,7 @@
                         <div
                             class="w-full aspect-video bg-gradient-to-br from-portfolio-accent/20 to-portfolio-accent/5 rounded-xl flex items-center justify-center">
                             <svg class="w-24 h-24 text-portfolio-accent/30" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
+                                 viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                       d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
                             </svg>
@@ -130,7 +130,7 @@
                                 <div class="aspect-video overflow-hidden bg-portfolio-secondary">
                                     <img
                                         src="{{ $image->thumbUrl }}"
-                                        alt="{{ $image->alt ?? $project->title }}"
+                                        alt="{{ $image->alt ?? __('portfolio.projects.gallery_image', ['project' => $project->title, 'index' => $loop->iteration]) }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         loading="lazy"
                                     >

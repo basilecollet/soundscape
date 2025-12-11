@@ -2,14 +2,20 @@
     <div class="container mx-auto px-6 lg:px-12">
         <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             <!-- Links Section -->
-            <div class="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
-                <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
-                    <span class="text-portfolio-accent-dark">></span> {{ __('portfolio.footer.instagram') }}
-                </a>
-                <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
-                    <span class="text-portfolio-accent-dark">></span> {{ __('portfolio.footer.legal') }}
-                </a>
-            </div>
+            <nav aria-label="Footer links">
+                <ul class="flex flex-wrap justify-center md:justify-start gap-6 text-sm list-none">
+                    <li>
+                        <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
+                            <span class="text-portfolio-accent-dark" aria-hidden="true">></span> {{ __('portfolio.footer.instagram') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-portfolio-primary transition-colors duration-200 flex items-center gap-1">
+                            <span class="text-portfolio-accent-dark" aria-hidden="true">></span> {{ __('portfolio.footer.legal') }}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             
             <!-- Copyright -->
             <div class="text-sm text-portfolio-light/70">

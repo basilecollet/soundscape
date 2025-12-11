@@ -20,7 +20,7 @@
     @else
         <!-- Placeholder when no image -->
         <div class="aspect-video bg-gradient-to-br from-portfolio-accent/20 to-portfolio-accent/5 flex items-center justify-center">
-            <svg class="w-16 h-16 text-portfolio-accent/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-16 h-16 text-portfolio-accent/30" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
             </svg>
         </div>
@@ -44,7 +44,7 @@
         <div class="flex items-center justify-between pt-2 border-t border-portfolio-accent/10">
             @if($projectDate)
                 <div class="flex items-center gap-2 text-xs text-portfolio-accent-dark">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     <time datetime="{{ $projectDate }}">
@@ -58,7 +58,7 @@
             <!-- View project arrow -->
             <div class="flex items-center gap-1 text-xs font-medium text-portfolio-accent-dark group-hover:gap-2 transition-all duration-200">
                 <span>{{ __('portfolio.projects.view') }}</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
